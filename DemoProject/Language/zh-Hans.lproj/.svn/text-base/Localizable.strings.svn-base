@@ -1,0 +1,63 @@
+
+/*请求*/
+"Request_ServerError"  = "服务器错误";
+"Request_ConnectError" = "网络不可用,请检查网络";
+"Request_TimeOutError" = "连接超时";
+
+/*Alert框提示语*/
+"Cancel" = "取消";
+"Ok" = "确定";
+
+
+
+
+//登陆
+"login_navigation_title" = "注册";
+"login_loginButton_title" = "登录";
+"Login_UserName_isEmpty" = "用户名为空";
+"Login_Password_isEmpty" = "密码为空";
+"Login_UserNameOrPasswordError" = "用户名或者密码错误";
+
+
+//注册
+"Register_navigation_title" = "注册";
+"Register_DoneButton_title" = "完成";
+"Register_NickName_isEmpty" = "昵称为空";
+"Register_Email_isEmpty" = "邮箱为空";
+"Register_Password_isEmpty"= "密码为空";
+"Register_ConfirmPassword_isEmpty" = "确认密码为空";
+"Register_Password_NotEqual" = "密码不一致";
+"Register_RegisterSuccess"= "注册成功,请登陆";
+"Register_RegisterFailed_UserExistd" = "注册失败,用户名已存在";
+
+
+//设置页面
+"Setting_AccountCell_Title" = "账户";
+"Setting_HelpCell_Title" = "常见问题及帮助";
+"Setting_GradeCell_Title" = "给我们打个分吧";
+"Setting_FollowCell_Title" = "关注我们的微博";
+"Setting_AboutCell_Title" = "关于星愿";
+"Setting_ServiceCell_Title" = "客服电话";
+
+
+//收货信息
+"Delivery_Address_isEmpty" = "收货地址为空";
+"Delivery_Address_isEmpty" = "收货人名字为空";
+"Delivery_Phone_isEmpty"   = "手机号码为空";
+"Delivery_Type_isEmpty"    = "配送方式为空";
+
+//绑定手机号码
+"BindMobile_Phone_isEmpty" = "手机号码为空";
+"BindMobile_CheckSum_isEmpty" = "校验码为空";
+"BindMobile_VerifyCheckSum_Success" = "校验成功";
+"BindMobile_VerifyCheckSum_Error" = "校验失败";
+
+
+//粉丝许愿
+"MakeWish_WishTheme_isEmpty" = "愿望主题为空";
+"MakeWish_Address_isEmpty" = "实现地址为空";
+"MakeWish_WishTime_isEmpty" = "实现时间为空";
+"MakeWish_WishPriceRange_isEmpty" = "价格范围为空";
+"MakeWish_PubWish_success" = "许愿成功";
+"MakeWish_PubWish_Failed" = "许愿失败";
+

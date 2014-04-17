@@ -1,0 +1,29 @@
+
+/*请求*/
+"Request_ServerError"  = "服务器错误";
+"Request_ConnectError" = "网络不可用,请检查网络";
+"Request_TimeOutError" = "连接超时";
+
+
+/*Alert框提示语*/
+"Alert_Cancel" = "取消";
+"Alert_Ok" = "确定";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

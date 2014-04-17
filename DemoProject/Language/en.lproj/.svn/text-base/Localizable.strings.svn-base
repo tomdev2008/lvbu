@@ -1,0 +1,6 @@
+
+
+/*请求*/
+"Request_ServerError"  = "Server error";
+"Request_ConnectError" = "Network unavailable. Please check your network connection";
+"Request_TimeOutError" = "Connection timed out";

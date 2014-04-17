@@ -1,0 +1,763 @@
+{\rtf1\ansi\ansicpg936\cocoartf1187\cocoasubrtf340
+{\fonttbl\f0\fnil\fcharset134 STSong;\f1\fnil\fcharset0 Georgia;\f2\fnil\fcharset0 HelveticaNeue;
+\f3\fnil\fcharset0 Menlo-Regular;\f4\fnil\fcharset0 Menlo-Bold;\f5\fnil\fcharset0 Menlo-Italic;
+\f6\fnil\fcharset134 STHeitiSC-Light;\f7\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red26\green26\blue26;\red246\green246\blue246;\red21\green78\blue144;
+\red55\green55\blue55;\red154\green154\blue154;\red203\green204\blue204;\red71\green91\blue98;\red10\green41\blue51;
+\red2\green16\blue20;\red129\green144\blue144;\red33\green118\blue199;\red4\green32\blue41;\red115\green138\blue5;
+\red37\green146\blue134;\red189\green54\blue19;\red60\green110\blue115;\red96\green40\blue147;\red48\green17\blue105;
+\red176\green14\blue139;\red34\green17\blue197;\red202\green22\blue28;\red36\green71\blue75;\red15\green115\blue27;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww20580\viewh12580\viewkind0
+\deftab720
+\pard\pardeftab720\sa540
+
+\f0\fs56 \cf2 \cb3 \'c7\'b0\'d1\'d4
+\f1\b \
+\pard\pardeftab720\sa540
+
+\b0\fs36 \cf2 \cb3 SQLite ({\field{\*\fldinst{HYPERLINK "http://www.sqlite.org/docs.html"}}{\fldrslt \cf4 \cb3 \ul \ulc4 http://www.sqlite.org/docs.html}}) 
+\f0 \'ca\'c7\'d2\'bb\'b8\'f6\'c7\'e1\'c1\'bf\'bc\'b6\'b5\'c4\'b9\'d8\'cf\'b5\'ca\'fd\'be\'dd\'bf\'e2\'a1\'a3
+\f1 iOS SDK
+\f0 \'ba\'dc\'d4\'e7\'be\'cd\'d6\'a7\'b3\'d6\'c1\'cb
+\f1 SQLite
+\f0 \'a3\'ac\'d4\'da\'ca\'b9\'d3\'c3\'ca\'b1\'a3\'ac\'d6\'bb\'d0\'e8\'d2\'aa\'bc\'d3\'c8\'eb
+\f1  libsqlite3.dylib 
+\f0 \'d2\'c0\'c0\'b5\'d2\'d4\'bc\'b0\'d2\'fd\'c8\'eb
+\f1  sqlite3.h 
+\f0 \'cd\'b7\'ce\'c4\'bc\'fe\'bc\'b4\'bf\'c9\'a1\'a3\'b5\'ab\'ca\'c7\'a3\'ac\'d4\'ad\'c9\'fa\'b5\'c4
+\f1 SQLite API
+\f0 \'d4\'da\'ca\'b9\'d3\'c3\'c9\'cf\'cf\'e0\'b5\'b1\'b2\'bb\'d3\'d1\'ba\'c3\'a3\'ac\'d4\'da\'ca\'b9\'d3\'c3\'ca\'b1\'a3\'ac\'b7\'c7\'b3\'a3\'b2\'bb\'b1\'e3\'a1\'a3\'d3\'da\'ca\'c7\'a3\'ac\'bf\'aa\'d4\'b4\'c9\'e7\'c7\'f8\'d6\'d0\'be\'cd\'b3\'f6\'cf\'d6\'c1\'cb\'d2\'bb\'cf\'b5\'c1\'d0\'bd\'ab
+\f1 SQLite API
+\f0 \'bd\'f8\'d0\'d0\'b7\'e2\'d7\'b0\'b5\'c4\'bf\'e2\'a3\'ac\'b6\'f8
+\f1 FMDB ({\field{\*\fldinst{HYPERLINK "https://github.com/ccgus/fmdb"}}{\fldrslt \cf4 \ul \ulc4 https://github.com/ccgus/fmdb}}) 
+\f0 \'d4\'f2\'ca\'c7\'bf\'aa\'d4\'b4\'c9\'e7\'c7\'f8\'d6\'d0\'b5\'c4\'d3\'c5\'d0\'e3\'d5\'df\'a1\'a3
+\f1 \
+FMDB
+\f0 \'d4\'da\'ca\'b9\'d3\'c3\'c9\'cf\'cf\'e0\'b5\'b1\'b7\'bd\'b1\'e3\'a1\'a3\'d2\'d4\'cf\'c2\'ca\'c7\'d2\'bb\'b8\'f6\'bc\'f2\'b5\'a5\'b5\'c4\'c0\'fd\'d7\'d3\'a3\'ba
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth18640\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 3\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 4\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 5\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 6\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 7\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 8\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 9\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 10\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 11\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf12 \cb13 \shad0 NSString
+\f4\b \cf11 *
+\f3\b0  \cf12 docsdir\cf11  
+\f4\b =
+\f3\b0  [\cf12 NSSearchPathForDirectoriesInDomains\cf11 ( \cf12 NSDocumentDirectory\cf11 , \cf12 NSUserDomainMask\cf11 , \cf12 YES\cf11 ) \cf12 lastObject\cf11 ];\
+\cf12 NSString
+\f4\b \cf11 *
+\f3\b0  \cf12 dbpath\cf11  
+\f4\b =
+\f3\b0  [\cf12 docsdir\cf11  \cf14 stringByAppendingPathComponent:\cf15 @"user.sqlite"\cf11 ];\
+\cf12 FMDatabase
+\f4\b \cf11 *
+\f3\b0  \cf12 db\cf11  
+\f4\b =
+\f3\b0  [\cf12 FMDatabase\cf11  \cf14 databaseWithPath:\cf12 dbpath\cf11 ];\
+[\cf12 db\cf11  \cf12 open\cf11 ];\
+\cf12 FMResultSet\cf11  
+\f4\b *
+\f3\b0 \cf12 rs\cf11  
+\f4\b =
+\f3\b0  [\cf12 db\cf11  \cf14 executeQuery:\cf15 @"select * from people"\cf11 ];\
+\pard\intbl\itap1\pardeftab720
+\cf16 while\cf11  ([\cf12 rs\cf11  \cf12 next\cf11 ]) \{\
+    \cf12 NSLog\cf11 (\cf15 @"%@ %@"\cf11 ,\
+        [\cf12 rs\cf11  \cf14 stringForColumn:\cf15 @"firstname"\cf11 ],\
+        [\cf12 rs\cf11  \cf14 stringForColumn:\cf15 @"lastname"\cf11 ]);\
+\}\
+[\cf12 db\cf11  \cf12 close\cf11 ];\cell \lastrow\row
+\pard\pardeftab720\sa540
+
+\f0\fs36 \cf2 \cb3 \'bf\'c9\'d2\'d4\'bf\'b4\'b5\'bd\'a3\'ac\'ca\'b9\'d3\'c3
+\f1 FMDB
+\f0 \'ba\'f3\'b5\'c4\'ca\'fd\'be\'dd\'bf\'e2\'b4\'fa\'c2\'eb\'c7\'e5\'ce\'fa\'c3\'f7\'c1\'cb\'a3\'ac\'b1\'c8\'d4\'ad\'c9\'fa\'b5\'c4
+\f1 API
+\f0 \'d3\'c5\'d1\'c5\'b6\'e0\'c1\'cb\'a1\'a3\'c1\'ed\'cd\'e2\'a3\'ac
+\f1 FMDB
+\f0 \'cd\'ac\'ca\'b1\'bc\'e6\'c8\'dd
+\f1 ARC
+\f0 \'ba\'cd\'b7\'c7
+\f1 ARC
+\f0 \'b9\'a4\'b3\'cc\'a3\'ac\'bb\'e1\'d7\'d4\'b6\'af\'b8\'f9\'be\'dd\'b9\'a4\'b3\'cc\'c5\'e4\'d6\'c3\'c0\'b4\'b5\'f7\'d5\'fb\'cf\'e0\'b9\'d8\'b5\'c4\'c4\'da\'b4\'e6\'b9\'dc\'c0\'ed\'b4\'fa\'c2\'eb\'a1\'a3
+\f1 \
+\pard\pardeftab720\sa540
+
+\f0\fs56 \cf2 \cb3 \'ca\'b9\'d3\'c3\'cb\'b5\'c3\'f7
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'b8\'c3\'ca\'b9\'d3\'c3\'cb\'b5\'c3\'f7\'d6\'f7\'d2\'aa\'b7\'ad\'d2\'eb\'d7\'d4
+\f1 fmdb
+\f0 \'b5\'c4
+\f1 github
+\f0 \'cf\'ee\'c4\'bf\'cb\'b5\'c3\'f7\'ce\'c4\'b5\'b5
+\f1 : {\field{\*\fldinst{HYPERLINK "https://github.com/ccgus/fmdb"}}{\fldrslt \cf4 \ul \ulc4 https://github.com/ccgus/fmdb}}\
+\pard\pardeftab720\sa460
+
+\f0\fs48 \cf2 \cb3 \'d2\'fd\'c8\'eb\'cf\'e0\'b9\'d8\'ce\'c4\'bc\'fe
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'ca\'d7\'cf\'c8\'bd\'ab
+\f1 FMDB
+\f0 \'b4\'d3
+\f1 github
+\f0 \'c9\'cf
+\f1 clone
+\f0 \'cf\'c2\'c0\'b4\'a3\'ac\'c8\'bb\'ba\'f3\'bd\'ab\'d2\'d4\'cf\'c2\'ce\'c4\'bc\'fe
+\f1 copy
+\f0 \'b5\'bd\'c4\'e3\'b5\'c4\'b9\'a4\'b3\'cc\'d6\'d0\'a3\'ba
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 3\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 4\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 5\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 6\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 7\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 8\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 9\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 10\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf12 \cb13 \shad0 FMDatabase\cf11 .\cf12 h\cf11 \
+\cf12 FMDatabase\cf11 .\cf12 m\cf11 \
+\cf12 FMDatabaseAdditions\cf11 .\cf12 h\cf11 \
+\cf12 FMDatabaseAdditions\cf11 .\cf12 m\cf11 \
+\cf12 FMDatabasePool\cf11 .\cf12 h\cf11 \
+\cf12 FMDatabasePool\cf11 .\cf12 m\cf11 \
+\cf12 FMDatabaseQueue\cf11 .\cf12 h\cf11 \
+\cf12 FMDatabaseQueue\cf11 .\cf12 m\cf11 \
+\cf12 FMResultSet\cf11 .\cf12 h\cf11 \
+\cf12 FMResultSet\cf11 .\cf12 m\cf11 \cell \lastrow\row
+\pard\pardeftab720\sa460
+
+\f0\fs48 \cf2 \cb3 \'bd\'a8\'c1\'a2\'ca\'fd\'be\'dd\'bf\'e2
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'bd\'a8\'c1\'a2\'ca\'fd\'be\'dd\'bf\'e2\'d6\'bb\'d0\'e8\'d2\'aa\'c8\'e7\'cf\'c2\'d2\'bb\'d0\'d0\'bc\'b4\'bf\'c9
+\f1 ,
+\f0 \'b5\'b1\'b8\'c3\'ce\'c4\'bc\'fe\'b2\'bb\'b4\'e6\'d4\'da\'ca\'b1\'a3\'ac
+\f1 fmdb
+\f0 \'bb\'e1\'d7\'d4\'bc\'ba\'b4\'b4\'bd\'a8\'d2\'bb\'b8\'f6\'a1\'a3\'c8\'e7\'b9\'fb\'c4\'e3\'b4\'ab\'c8\'eb\'b5\'c4\'b2\'ce\'ca\'fd\'ca\'c7\'bf\'d5\'b4\'ae\'a3\'ba
+\f1 @\'94\'94 
+\f0 \'a3\'ac\'d4\'f2
+\f1 fmdb
+\f0 \'bb\'e1\'d4\'da\'c1\'d9\'ca\'b1\'ce\'c4\'bc\'fe\'c4\'bf\'c2\'bc\'cf\'c2\'b4\'b4\'bd\'a8\'d5\'e2\'b8\'f6\'ca\'fd\'be\'dd\'bf\'e2\'a3\'ac\'c8\'e7\'b9\'fb\'c4\'e3\'b4\'ab\'c8\'eb\'b5\'c4\'b2\'ce\'ca\'fd\'ca\'c7
+\f1  NULL
+\f0 \'a3\'ac\'d4\'f2\'cb\'fc\'bb\'e1\'bd\'a8\'c1\'a2\'d2\'bb\'b8\'f6\'d4\'da\'c4\'da\'b4\'e6\'d6\'d0\'b5\'c4\'ca\'fd\'be\'dd\'bf\'e2\'a1\'a3
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf12 \cb13 \shad0 FMDatabase\cf11  
+\f4\b *
+\f3\b0 \cf12 db\cf11  
+\f4\b =
+\f3\b0  [\cf12 FMDatabase\cf11  \cf14 databaseWithPath:\cf15 @"/tmp/tmp.db"\cf11 ];\cell \lastrow\row
+\pard\pardeftab720\sa460
+
+\f0\fs48 \cf2 \cb3 \'b4\'f2\'bf\'aa\'ca\'fd\'be\'dd\'bf\'e2
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'ca\'b9\'d3\'c3\'c8\'e7\'cf\'c2\'d3\'ef\'be\'e4\'a3\'ac\'c8\'e7\'b9\'fb\'b4\'f2\'bf\'aa\'ca\'a7\'b0\'dc\'a3\'ac\'bf\'c9\'c4\'dc\'ca\'c7\'c8\'a8\'cf\'de\'b2\'bb\'d7\'e3\'bb\'f2\'d5\'df\'d7\'ca\'d4\'b4\'b2\'bb\'d7\'e3\'a1\'a3\'cd\'a8\'b3\'a3\'b4\'f2\'bf\'aa\'cd\'ea\'b2\'d9\'d7\'f7\'b2\'d9\'d7\'f7\'ba\'f3\'a3\'ac\'d0\'e8\'d2\'aa\'b5\'f7\'d3\'c3
+\f1 close
+\f0 \'b7\'bd\'b7\'a8\'c0\'b4\'b9\'d8\'b1\'d5\'ca\'fd\'be\'dd\'bf\'e2\'a1\'a3
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 3\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 4\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 5\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 6\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 7\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 8\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf16 \cb13 \shad0 if\cf11  (
+\f4\b !
+\f3\b0 [\cf12 db\cf11  \cf12 open\cf11 ]) \{\
+    
+\f5\i \cf8 // error 
+\f3\i0 \cf11 \
+    \cf16 return\cf11 ;\
+\}\
+
+\f5\i \cf8 // some operation
+\f3\i0 \cf11 \
+
+\f5\i \cf8 // ...
+\f3\i0 \cf11 \
+\
+[\cf12 db\cf11  \cf12 close\cf11 ];\cell \lastrow\row
+\pard\pardeftab720\sa460
+
+\f0\fs48 \cf2 \cb3 \'d6\'b4\'d0\'d0\'b8\'fc\'d0\'c2\'b2\'d9\'d7\'f7
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'b3\'fd\'c1\'cb
+\f1 Select
+\f0 \'b2\'d9\'d7\'f7\'d6\'ae\'cd\'e2\'a3\'ac\'c6\'e4\'cb\'fc\'b5\'c4\'b6\'bc\'ca\'c7\'b8\'fc\'d0\'c2\'b2\'d9\'d7\'f7\'a1\'a3\'b8\'fc\'d0\'c2\'b2\'d9\'d7\'f7\'ca\'b9\'d3\'c3\'c8\'e7\'cf\'c2\'b7\'bd\'b7\'a8\'a3\'ac\'c8\'e7\'b9\'fb\'d3\'d0\'b4\'ed\'ce\'f3\'a3\'ac\'bf\'c9\'d2\'d4\'d3\'c3
+\f1 error
+\f0 \'b2\'ce\'ca\'fd\'d6\'d0\'bb\'f1\'b5\'c3\'a1\'a3
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+
+\f4\b \cf11 \cb13 \shad0 -
+\f3\b0 [\cf12 FMDatabase\cf11  \cf14 executeUpdate:error:withArgumentsInArray:orVAList:\cf11 ]\cell \lastrow\row
+\pard\pardeftab720\sa460
+
+\f0\fs48 \cf2 \cb3 \'d6\'b4\'d0\'d0\'b2\'e9\'d1\'af\'b2\'d9\'d7\'f7
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'b2\'e9\'d1\'af\'b2\'d9\'d7\'f7\'ca\'be\'c0\'fd\'c8\'e7\'cf\'c2\'a1\'a3\'d7\'a2\'d2\'e2\'a3\'ba\'bc\'b4\'ca\'b9\'b2\'d9\'d7\'f7\'bd\'e1\'b9\'fb\'d6\'bb\'d3\'d0\'d2\'bb\'d0\'d0\'a3\'ac\'d2\'b2\'d0\'e8\'d2\'aa\'cf\'c8\'b5\'f7\'d3\'c3
+\f1 FMResultSet
+\f0 \'b5\'c4
+\f1 next
+\f0 \'b7\'bd\'b7\'a8\'a1\'a3
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 3\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 4\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 5\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 6\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 7\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 8\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 9\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf12 \cb13 \shad0 FMResultSet\cf11  
+\f4\b *
+\f3\b0 \cf12 s\cf11  
+\f4\b =
+\f3\b0  [\cf12 db\cf11  \cf14 executeQuery:\cf15 @"SELECT * FROM myTable"\cf11 ];\
+\pard\intbl\itap1\pardeftab720
+\cf16 while\cf11  ([\cf12 s\cf11  \cf12 next\cf11 ]) \{\
+    
+\f5\i \cf8 //retrieve values for each record
+\f3\i0 \cf11 \
+\}\
+\
+\pard\intbl\itap1\pardeftab720
+\cf12 FMResultSet\cf11  
+\f4\b *
+\f3\b0 \cf12 s\cf11  
+\f4\b =
+\f3\b0  [\cf12 db\cf11  \cf14 executeQuery:\cf15 @"SELECT COUNT(*) FROM myTable"\cf11 ];\
+\pard\intbl\itap1\pardeftab720
+\cf16 if\cf11  ([\cf12 s\cf11  \cf12 next\cf11 ]) \{\
+    \cf15 int\cf11  \cf12 totalCount\cf11  
+\f4\b =
+\f3\b0  [\cf12 s\cf11  \cf14 intForColumnIndex:\cf15 0\cf11 ];\
+\}\cell \lastrow\row
+\pard\pardeftab720\sa540
+
+\f1\fs36 \cf2 \cb3 FMDB
+\f0 \'cc\'e1\'b9\'a9\'c8\'e7\'cf\'c2\'b6\'e0\'b8\'f6\'b7\'bd\'b7\'a8\'c0\'b4\'bb\'f1\'c8\'a1\'b2\'bb\'cd\'ac\'c0\'e0\'d0\'cd\'b5\'c4\'ca\'fd\'be\'dd\'a3\'ba
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 3\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 4\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 5\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 6\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 7\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 8\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 9\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 10\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 11\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf14 \cb13 \shad0 intForColumn:\cf11 \
+\cf14 longForColumn:\cf11 \
+\cf14 longLongIntForColumn:\cf11 \
+\cf14 boolForColumn:\cf11 \
+\cf14 doubleForColumn:\cf11 \
+\cf14 stringForColumn:\cf11 \
+\cf14 dateForColumn:\cf11 \
+\cf14 dataForColumn:\cf11 \
+\cf14 dataNoCopyForColumn:\cf11 \
+\cf14 UTF8StringForColumnIndex:\cf11 \
+\cf14 objectForColumn:\cf11 \cell \lastrow\row
+\pard\pardeftab720\sa540
+
+\f0\fs36 \cf2 \cb3 \'cd\'a8\'b3\'a3\'c7\'e9\'bf\'f6\'cf\'c2\'a3\'ac\'c4\'e3\'b2\'a2\'b2\'bb\'d0\'e8\'d2\'aa\'b9\'d8\'b1\'d5
+\f1 FMResultSet
+\f0 \'a3\'ac\'d2\'f2\'ce\'aa\'cf\'e0\'b9\'d8\'b5\'c4\'ca\'fd\'be\'dd\'bf\'e2\'b9\'d8\'b1\'d5\'ca\'b1\'a3\'ac
+\f1 FMResultSet
+\f0 \'d2\'b2\'bb\'e1\'b1\'bb\'d7\'d4\'b6\'af\'b9\'d8\'b1\'d5\'a1\'a3
+\f1 \
+\pard\pardeftab720\sa460
+
+\f0\fs48 \cf2 \cb3 \'ca\'fd\'be\'dd\'b2\'ce\'ca\'fd
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'cd\'a8\'b3\'a3\'c7\'e9\'bf\'f6\'cf\'c2\'a3\'ac\'c4\'e3\'bf\'c9\'d2\'d4\'b0\'b4\'d5\'d5\'b1\'ea\'d7\'bc\'b5\'c4
+\f1 SQL
+\f0 \'d3\'ef\'be\'e4\'a3\'ac\'d3\'c3
+\f1 ?
+\f0 \'b1\'ed\'ca\'be\'d6\'b4\'d0\'d0\'d3\'ef\'be\'e4\'b5\'c4\'b2\'ce\'ca\'fd\'a3\'ac\'c8\'e7\'a3\'ba
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf12 \cb13 \shad0 INSERT\cf11  \cf12 INTO\cf11  \cf12 myTable\cf11  \cf12 VALUES\cf11  (
+\f4\b ?
+\f3\b0 , 
+\f4\b ?
+\f3\b0 , 
+\f4\b ?
+\f3\b0 )\cell \lastrow\row
+\pard\pardeftab720\sa540
+
+\f0\fs36 \cf2 \cb3 \'c8\'bb\'ba\'f3\'a3\'ac\'bf\'c9\'d2\'d4\'ce\'d2\'c3\'c7\'bf\'c9\'d2\'d4\'b5\'f7\'d3\'c3
+\f1 executeUpdate
+\f0 \'b7\'bd\'b7\'a8\'c0\'b4\'bd\'ab
+\f1 ?
+\f0 \'cb\'f9\'d6\'b8\'b4\'fa\'b5\'c4\'be\'df\'cc\'e5\'b2\'ce\'ca\'fd\'b4\'ab\'c8\'eb\'a3\'ac\'cd\'a8\'b3\'a3\'ca\'c7\'d3\'c3\'b1\'e4\'b3\'a4\'b2\'ce\'ca\'fd\'c0\'b4\'b4\'ab\'b5\'dd\'bd\'f8\'c8\'a5\'b5\'c4\'a3\'ac\'c8\'e7\'cf\'c2\'a3\'ba
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+\cf12 \cb13 \shad0 NSString\cf11  
+\f4\b *
+\f3\b0 \cf12 sql\cf11  
+\f4\b =
+\f3\b0  \cf15 @"insert into User (name, password) values (?, ?)"\cf11 ;\
+[\cf12 db\cf11  \cf14 executeUpdate:\cf12 sql\cf11 , \cf12 user\cf11 .\cf12 name\cf11 , \cf12 user\cf11 .\cf12 password\cf11 ];\cell \lastrow\row
+\pard\pardeftab720\sa540
+
+\f0\fs36 \cf2 \cb3 \'d5\'e2\'c0\'ef\'d0\'e8\'d2\'aa\'d7\'a2\'d2\'e2\'b5\'c4\'ca\'c7\'a3\'ac\'b2\'ce\'ca\'fd\'b1\'d8\'d0\'eb\'ca\'c7
+\f1 NSObject
+\f0 \'b5\'c4\'d7\'d3\'c0\'e0\'a3\'ac\'cb\'f9\'d2\'d4\'cf\'f3
+\f1 int,double,bool
+\f0 \'d5\'e2\'d6\'d6\'bb\'f9\'b1\'be\'c0\'e0\'d0\'cd\'a3\'ac\'d0\'e8\'d2\'aa\'b7\'e2\'d7\'b0\'b3\'c9\'b6\'d4\'d3\'a6\'b5\'c4\'b0\'fc\'d7\'b0\'c0\'e0\'b2\'c5\'d0\'d0\'a3\'ac\'c8\'e7\'cf\'c2\'cb\'f9\'ca\'be\'a3\'ba
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth580\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth13740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 3\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 4\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+
+\f5\i \cf8 \cb13 \shad0 // 
+\f6\i0 \'b4\'ed\'ce\'f3\'a3\'ac
+\f5\i 42
+\f6\i0 \'b2\'bb\'c4\'dc\'d7\'f7\'ce\'aa\'b2\'ce\'ca\'fd
+\f3 \cf11 \
+[\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , \cf15 42\cf11 ];\
+
+\f5\i \cf8 // 
+\f6\i0 \'d5\'fd\'c8\'b7\'a3\'ac\'bd\'ab
+\f5\i 42
+\f6\i0 \'b7\'e2\'d7\'b0\'b3\'c9
+\f5\i  NSNumber 
+\f6\i0 \'c0\'e0
+\f3 \cf11 \
+[\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 42\cf11 ]];\cell \lastrow\row
+\pard\pardeftab720\sa460
+
+\f0\fs48 \cf2 \cb3 \'cf\'df\'b3\'cc\'b0\'b2\'c8\'ab
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'c8\'e7\'b9\'fb\'ce\'d2\'c3\'c7\'b5\'c4
+\f1 app
+\f0 \'d0\'e8\'d2\'aa\'b6\'e0\'cf\'df\'b3\'cc\'b2\'d9\'d7\'f7\'ca\'fd\'be\'dd\'bf\'e2\'a3\'ac\'c4\'c7\'c3\'b4\'be\'cd\'d0\'e8\'d2\'aa\'ca\'b9\'d3\'c3
+\f1 FMDatabaseQueue
+\f0 \'c0\'b4\'b1\'a3\'d6\'a4\'cf\'df\'b3\'cc\'b0\'b2\'c8\'ab\'c1\'cb\'a1\'a3
+\f1  
+\f0 \'c7\'d0\'bc\'c7\'b2\'bb\'c4\'dc\'d4\'da\'b6\'e0\'b8\'f6\'cf\'df\'b3\'cc\'d6\'d0\'b9\'b2\'cd\'ac\'d2\'bb\'b8\'f6
+\f1 FMDatabase
+\f0 \'b6\'d4\'cf\'f3\'b2\'a2\'c7\'d2\'d4\'da\'b6\'e0\'b8\'f6\'cf\'df\'b3\'cc\'d6\'d0\'cd\'ac\'ca\'b1\'ca\'b9\'d3\'c3\'a3\'ac\'d5\'e2\'b8\'f6\'c0\'e0\'b1\'be\'c9\'ed\'b2\'bb\'ca\'c7\'cf\'df\'b3\'cc\'b0\'b2\'c8\'ab\'b5\'c4\'a3\'ac\'d5\'e2\'d1\'f9\'ca\'b9\'d3\'c3\'bb\'e1\'d4\'ec\'b3\'c9\'ca\'fd\'be\'dd\'bb\'ec\'c2\'d2\'b5\'c8\'ce\'ca\'cc\'e2\'a1\'a3
+\f1 \
+
+\f0 \'ca\'b9\'d3\'c3
+\f1 FMDatabaseQueue
+\f0 \'ba\'dc\'bc\'f2\'b5\'a5\'a3\'ac\'ca\'d7\'cf\'c8\'d3\'c3\'d2\'bb\'b8\'f6\'ca\'fd\'be\'dd\'bf\'e2\'ce\'c4\'bc\'fe\'b5\'d8\'d6\'b7\'c0\'b4\'b3\'f5\'ca\'b9\'bb\'af
+\f1 FMDatabaseQueue
+\f0 \'a3\'ac\'c8\'bb\'ba\'f3\'be\'cd\'bf\'c9\'d2\'d4\'bd\'ab\'d2\'bb\'b8\'f6\'b1\'d5\'b0\'fc
+\f1 (block)
+\f0 \'b4\'ab\'c8\'eb
+\f1 inDatabase
+\f0 \'b7\'bd\'b7\'a8\'d6\'d0\'a1\'a3
+\f1  
+\f0 \'d4\'da\'b1\'d5\'b0\'fc\'d6\'d0\'b2\'d9\'d7\'f7\'ca\'fd\'be\'dd\'bf\'e2\'a3\'ac\'b6\'f8\'b2\'bb\'d6\'b1\'bd\'d3\'b2\'ce\'d3\'eb
+\f1 FMDatabase
+\f0 \'b5\'c4\'b9\'dc\'c0\'ed\'a1\'a3
+\f1 \
+\pard\pardeftab720\qc
+
+\f2\fs26 \cf5 \cb6 \shad\shadx0\shady-20\shadr0\shado255 \shadc7 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth740\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth14000\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl0 \clpadr0 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\qr
+
+\f3 \cf8 \cb9 \shad\shadx0\shady20\shadr0\shado255 \shadc10 1\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 2\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 3\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 4\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 5\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 6\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 7\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 8\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 9\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 10\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 11\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 12\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 13\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 14\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 15\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 16\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 17\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 18\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 19\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 20\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 21\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 22\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 23\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 24\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 25\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 26\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 27\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \
+\cf8 \shad\shadx0\shady20\shadr0\shado255 \shadc10 28\cf11 \shad\shadx0\shady20\shadr0\shado255 \shadc10 \cell 
+\pard\intbl\itap1\pardeftab720
+
+\f5\i \cf8 \cb13 \shad0 // 
+\f6\i0 \'b4\'b4\'bd\'a8\'a3\'ac\'d7\'ee\'ba\'c3\'b7\'c5\'d4\'da\'d2\'bb\'b8\'f6\'b5\'a5\'c0\'fd\'b5\'c4\'c0\'e0\'d6\'d0
+\f3 \cf11 \
+\pard\intbl\itap1\pardeftab720
+\cf12 FMDatabaseQueue\cf11  
+\f4\b *
+\f3\b0 \cf12 queue\cf11  
+\f4\b =
+\f3\b0  [\cf12 FMDatabaseQueue\cf11  \cf14 databaseQueueWithPath:\cf12 aPath\cf11 ];\
+\
+\pard\intbl\itap1\pardeftab720
+
+\f5\i \cf8 // 
+\f6\i0 \'ca\'b9\'d3\'c3
+\f3 \cf11 \
+[\cf12 queue\cf11  \cf14 inDatabase:
+\f4\b \cf11 ^
+\f3\b0 (\cf12 FMDatabase\cf11  
+\f4\b *
+\f3\b0 \cf12 db\cf11 ) \{\
+    [\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 1\cf11 ]];\
+    [\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 2\cf11 ]];\
+    [\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 3\cf11 ]];\
+\
+    \cf12 FMResultSet\cf11  
+\f4\b *
+\f3\b0 \cf12 rs\cf11  
+\f4\b =
+\f3\b0  [\cf12 db\cf11  \cf14 executeQuery:\cf15 @"select * from foo"\cf11 ];\
+    \cf16 while\cf11  ([\cf12 rs\cf11  \cf12 next\cf11 ]) \{\
+        
+\f5\i \cf8 // \'85
+\f3\i0 \cf11 \
+    \}\
+\}];\
+\
+
+\f5\i \cf8 // 
+\f6\i0 \'c8\'e7\'b9\'fb\'d2\'aa\'d6\'a7\'b3\'d6\'ca\'c2\'ce\'f1
+\f3 \cf11 \
+[\cf12 queue\cf11  \cf14 inTransaction:
+\f4\b \cf11 ^
+\f3\b0 (\cf12 FMDatabase\cf11  
+\f4\b *
+\f3\b0 \cf12 db\cf11 , \cf15 BOOL\cf11  
+\f4\b *
+\f3\b0 \cf12 rollback\cf11 ) \{\
+    [\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 1\cf11 ]];\
+    [\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 2\cf11 ]];\
+    [\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 3\cf11 ]];\
+\
+    \cf16 if\cf11  (\cf12 whoopsSomethingWrongHappened\cf11 ) \{\
+        
+\f4\b *
+\f3\b0 \cf12 rollback\cf11  
+\f4\b =
+\f3\b0  \cf12 YES\cf11 ;\
+        \cf16 return\cf11 ;\
+    \}\
+    
+\f5\i \cf8 // etc\'85
+\f3\i0 \cf11 \
+    [\cf12 db\cf11  \cf14 executeUpdate:\cf15 @"INSERT INTO myTable VALUES (?)"\cf11 , [\cf12 NSNumber\cf11  \cf14 numberWithInt:\cf15 4\cf11 ]];\
+\}];\cell \lastrow\row
+\pard\pardeftab720\sa540
+
+\f0\fs56 \cf2 \cb3 \'b9\'a4\'be\'df
+\f1\b \
+\pard\pardeftab720\sa540
+
+\f0\b0\fs36 \cf2 \cb3 \'ce\'aa\'c1\'cb\'b2\'e9\'bf\'b4
+\f1 Sqlite
+\f0 \'d6\'d0\'b5\'c4\'ca\'fd\'be\'dd\'a3\'ac\'d2\'bb\'b8\'f6\'ba\'c3\'b5\'c4\'cd\'bc\'d0\'ce\'bb\'af\'bd\'e7\'c3\'e6\'b5\'c4\'ca\'fd\'be\'dd\'bf\'e2\'b9\'dc\'c0\'ed\'b3\'cc\'d0\'f2\'ca\'c7\'b1\'d8\'b2\'bb\'bf\'c9\'c9\'d9\'b5\'c4\'a1\'a3
+\f1 mysql
+\f0 \'d3\'d0
+\f1 phpMyAdmin
+\f0 \'a3\'ac\'c4\'c7\'c3\'b4
+\f1 sqlite
+\f0 \'c4\'d8\'a3\'bf
+\f1 \
+
+\f0 \'ce\'d2\'d6\'f7\'d2\'aa\'ca\'b9\'d3\'c3\'b5\'c4\'ca\'c7
+\f1 Firefox
+\f0 \'b5\'c4\'d2\'bb\'b8\'f6\'c3\'fb\'ce\'aa
+\f1 SQLite Manager
+\f0 \'b5\'c4\'b2\'e5\'bc\'fe\'a3\'ac\'b0\'b2\'d7\'b0\'b4\'cb\'b2\'e5\'bc\'fe\'ba\'f3\'a3\'ac\'bf\'c9\'d2\'d4\'d6\'b1\'bd\'d3\'b4\'f2\'bf\'aa\'ba\'f3\'d7\'ba\'c3\'fb\'ce\'aa
+\f1 sqlite
+\f0 \'b5\'c4\'ca\'fd\'be\'dd\'bf\'e2\'ce\'c4\'bc\'fe\'a1\'a3
+\f1 SQLite Manager
+\f0 \'cc\'e1\'b9\'a9\'d2\'bb\'b8\'f6\'cd\'bc\'d0\'ce\'bb\'af\'b5\'c4\'bd\'e7\'c3\'e6\'c0\'b4\'d6\'b4\'d0\'d0\'ca\'fd\'be\'dd\'b2\'e9\'d1\'af\'bb\'f2\'b8\'fc\'b8\'c4\'b2\'d9\'d7\'f7\'a1\'a3\'c8\'e7\'cf\'c2\'cd\'bc\'cb\'f9\'ca\'be\'a3\'ba
+\f1 \
+\pard\pardeftab720\sa540
+
+\f7\fs24 \cf0 \cb3 {{\NeXTGraphic sqlite_manager.jpg \width10080 \height5120 \noorient
+}¬}\pard\pardeftab720\sa540
+
+\f1\fs36 \cf2 \cb3 \
+\pard\pardeftab720\sa540
+
+\f0\fs56 \cf2 \cb3 \'d7\'dc\'bd\'e1
+\f1\b \
+\pard\pardeftab720\sa540
+
+\b0\fs36 \cf2 \cb3 FMDB
+\f0 \'bd\'ab
+\f1 SQLite API
+\f0 \'bd\'f8\'d0\'d0\'c1\'cb\'ba\'dc\'d3\'d1\'ba\'c3\'b5\'c4\'b7\'e2\'d7\'b0\'a3\'ac\'ca\'b9\'d3\'c3\'c9\'cf\'b7\'c7\'b3\'a3\'b7\'bd\'b1\'e3\'a3\'ac\'b6\'d4\'d3\'da\'c4\'c7\'d0\'a9\'ca\'b9\'d3\'c3\'b4\'bf
+\f1 Sqlite API
+\f0 \'c0\'b4\'bd\'f8\'d0\'d0\'ca\'fd\'be\'dd\'bf\'e2\'b2\'d9\'d7\'f7\'b5\'c4
+\f1 app
+\f0 \'a3\'ac\'bf\'c9\'d2\'d4\'bf\'bc\'c2\'c7\'bd\'ab\'c6\'e4\'c7\'a8\'d2\'c6\'b5\'bd\'bb\'f9\'d3\'da
+\f1 FMDB
+\f0 \'c9\'cf\'a3\'ac\'d5\'e2\'b6\'d4\'d3\'da\'d2\'d4\'ba\'f3\'ca\'fd\'be\'dd\'bf\'e2\'cf\'e0\'b9\'d8\'b9\'a6\'c4\'dc\'b5\'c4\'bf\'aa\'b7\'a2\'ce\'ac\'bb\'a4\'a3\'ac\'bf\'c9\'d2\'d4\'cc\'e1\'b8\'df\'b2\'bb\'c9\'d9\'d0\'a7\'c2\'ca\'a1\'a3\
+\
+\
+\pard\pardeftab720
+
+\f3\fs22 \cf17 \cb1 FMDatabase
+\f0 \'a1\'a1\'b5\'c4\'ca\'b9\'d3\'c3\'b7\'bd\'b7\'a8
+\f3 \
+
+\f0 \'c6\'e4\'ca\'b5\'be\'cd\'ca\'c7sqlite\'b5\'c4\'d2\'bb\'b8\'f6\'b7\'e2\'d7\'b0\'a3\'ac\'d3\'c3\'b9\'fdsqlite\'b6\'bc\'bb\'e1\'ba\'dc\'bf\'ec\'d4\'cb\'d3\'c3
+\f3 \
+\pard\pardeftab720
+
+\f0\fs24 \cf0 \
+\pard\pardeftab720
+
+\f3\fs22 \cf0 - (\cf18 NSString\cf0 *) getPath \{\
+\'a0 \'a0\cf18 NSArray\cf0 * paths =\cf19 NSSearchPathForDirectoriesInDomains\cf0 (\cf19 NSDocumentDirectory\cf0 ,\cf19 NSUserDomainMask\cf0 , \cf20 YES\cf0 ) ;\cf19 \
+\cf0 \'a0 \'a0\cf20 return\cf0  [[paths\cf19 objectAtIndex\cf0 :\cf21 0\cf0 ]\cf19 stringByAppendingPathComponent\cf0 :\cf22 @"MyTable"\cf0 ] ;\cf19 \
+\cf0 \}\
+\
+\
+\pard\pardeftab720
+
+\f0\fs24 \cf0 \'a3\'b1.\'b4\'b4\'bd\'a8\'ca\'fd\'be\'dd\'bf\'e2\
+\pard\pardeftab720
+
+\f3\fs22 \cf0 -(void)CreateTable;\
+\{\
+\pard\pardeftab720
+\cf17 dataBase\cf0  = [\cf17 FMDatabase\cf23 databaseWithPath\cf0 :[\cf20 self\cf23 getPath\cf0 ]];\cf23 \
+\pard\pardeftab720
+\cf0 \'a0 \'a0 \cf20 if\cf0  (![\cf17 dataBase\cf0  \cf23 open\cf0 ])\
+\'a0 \'a0 \'a0 \'a0\cf19 NSLog\cf0 (\cf22 @"OPEN FAIL"\cf0 );\cf22 \
+\cf0 \'a0 \'a0 \}\
+\'a0\'a0 \'a0 \'a0 \'a0\
+\'a0 \'a0 [\cf17 dataBase\cf23 executeUpdate\cf0 :\cf22 @"CREATE TABLE IF NOT EXISTS MyTable(aa float,bb text,cc integer,dd integer,ee text)"\cf0 ];\cf22 \
+\cf0 \'a0 \'a0 [\cf17 dataBase\cf23 close\cf0 ];\
+\}\
+\
+\
+\
+\pard\pardeftab720
+
+\f0 \cf0 \'a3\'b2
+\f3 .
+\f0 \'b2\'e9\'d1\'af\'ca\'fd\'be\'dd\
+\pard\pardeftab720
+
+\f3 \cf0 -(void)QueryData\
+\{\
+\pard\pardeftab720
+\cf24 //
+\f0 \'bb\'f1\'c8\'a1\'ca\'fd\'be\'dd\
+\pard\pardeftab720
+
+\f3 \cf0 \'a0 \'a0\cf17 recordArray\cf0  = [[\cf18 NSMutableArray\cf19 alloc\cf0 ]\cf19 init\cf0 ];\cf18 \
+\cf0 \'a0\'a0 \'a0\
+\'a0 \'a0\cf17 db\cf0  = [[\cf17 FMDatabase\cf19 alloc\cf0 ]\cf23 initWithPath\cf0 :[\cf20 self\cf23 getPath\cf0 ]];\cf23 \
+\cf0 \'a0\'a0 \'a0\
+\'a0 \'a0 \cf20 if\cf0  ([\cf17 db\cf0  \cf23 open\cf0 ]) \{\
+\'a0 \'a0 \'a0 \'a0\cf17 FMResultSet\cf0  *rs = [\cf17 db\cf23 executeQuery\cf0 :\cf22 @"SELECT * FROM MyTable"\cf0 ];\cf22 \
+\cf0 \'a0 \'a0 \'a0 \'a0 \cf20 while\cf0  ([rs \cf23 next\cf0 ])\{\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \cf17 OneRecord\cf0  = [[\cf17 OneRecord\cf0  \cf19 alloc\cf0 ]\cf19 init\cf0 ];\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \cf17 OneRecord\cf0 .\cf17 aa\cf0  = [\cf18 NSNumber\cf19 numberWithFloat\cf0 :[rs \cf23 doubleForColumn\cf0 :\cf22 @"aa"\cf0 ]];\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \cf17 OneRecord\cf0 .\cf17 bb\cf0  = [rs \cf23 stringForColumn\cf0 :\cf22 @"bb"\cf0 ];\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \cf17 OneRecord\cf0 .\cf17 cc\cf0  = [\cf18 NSNumber\cf19 numberWithInt\cf0 :[rs \cf23 intForColumn\cf0 :\cf22 @"cc"\cf0 ]];\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \cf17 OneRecord\cf0 .\cf17 dd\cf0  = [\cf18 NSNumber\cf19 numberWithInt\cf0 :[rs \cf23 intForColumn\cf0 :\cf22 @"dd"\cf0 ]];\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \cf17 OneRecord\cf0 .\cf17 ee\cf0  = [rs \cf23 stringForColumn\cf0 :\cf22 @"ee"\cf0 ];\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 [\cf17 recordArray\cf19 addObject\cf0 : \cf17 OneRecord\cf0 ];\cf17 \
+\cf0 \'a0 \'a0 \'a0 \'a0 \'a0 \'a0 [\cf17 OneRecord\cf19 release\cf0 ];\
+\'a0 \'a0 \'a0 \'a0 \}\
+\'a0 \'a0 \'a0 \'a0 [rs \cf23 close\cf0 ];\
+\'a0 \'a0 \'a0 \'a0 [\cf17 db\cf23 close\cf0 ];\
+\}\
+\
+\pard\pardeftab720
+
+\f0 \cf0 \'a3\'b3
+\f3 .
+\f0 \'b8\'fc\'d0\'c2\'ca\'fd\'be\'dd\
+\pard\pardeftab720
+
+\f3 \cf0 -(void)UpdateData\
+\{\
+\cf20 if\cf0  ([\cf17 db\cf23 open\cf0 ]) \{\
+\'a0\'a0 \'a0 \'a0 \'a0 [\cf17 db\cf23 beginTransaction\cf0 ];\cf23 \
+\cf0 \'a0\'a0 \'a0 \'a0 \'a0 [\cf17 db\cf23 executeUpdate\cf0 :\cf22 @"UPDATE MyTable SET aa = ? WHERE date = ?"\cf0 ,\cf17 aa1,aa2\cf0 ];\cf22 \
+\cf0 \'a0\'a0 \'a0 \'a0 \'a0 [\cf17 db\cf23 executeUpdate\cf0 :\cf22 @"UPDATE MyTable SET bb = ? WHERE date = ?"\cf0 ,bb1,\cf17 bb2\cf0 ];\cf22 \
+\cf0 \'a0\'a0 \'a0 \'a0 \'a0 [\cf17 db\cf23 executeUpdate\cf0 :\cf22 @"UPDATE MyTable SET cc = ? WHERE date = ?"\cf0 ,cc1,\cf17 cc2\cf0 ];\cf22 \
+\cf0 \'a0\'a0 \'a0 \'a0 \'a0 [\cf17 db\cf23 executeUpdate\cf0 :\cf22 @"UPDATE MyTable SET dd = ? WHERE date = ?"\cf0 ,\cf17 dd1,\cf0 dd2];\cf22 \
+\cf0 \'a0\'a0 \'a0 \'a0 \'a0 [\cf17 db\cf23 commit\cf0 ];\
+\'a0\'a0 \'a0 \'a0 \'a0 \cf17 db\cf0  \cf23 close\cf0 ];\
+\'a0\'a0 \}\
+\
+\}\
+\
+\pard\pardeftab720
+
+\f0 \cf0 \'a3\'b4\'a1\'a3\'b2\'e5\'c8\'eb\'ca\'fd\'be\'dd\
+\pard\pardeftab720
+
+\f3 \cf0 -(void)insertData\
+\{\
+\pard\pardeftab720
+\cf24 //
+\f0 \'b2\'e5\'c8\'eb\'ca\'fd\'be\'dd\'bf\'e2\
+\pard\pardeftab720
+
+\f3 \cf0 \'a0 \'a0 [\cf17 db\cf23 beginTransaction\cf0 ];\cf23 \
+\cf0 \'a0 \'a0 [\cf17 db\cf23 executeUpdate\cf0 :\cf22 @"INSERT INTO MyTable (aa,bb,cc,dd,ee) VALUES (?,?,?,?,?)"\cf0 ,\cf22 \
+\cf0 \'a0 \'a0 \cf18 NSNumber\cf0  \cf19 numberWithFloat\cf0 :\cf17 aa\cf0 ],\cf17 bb\cf0 ,cc,dd,\cf17 ee\cf0 ];\
+\'a0 \'a0 \cf17 [db\cf0  \cf23 commit\cf0 ];\
+\'a0\'a0\'a0 \cf17 [db\cf0  \cf23 close\cf0 ];\
+\
+\}\
+\pard\pardeftab720\sa540
+
+\f0\fs36 \cf2 \cb3 \
+\
+\
+\
+\
+}

@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/xingyuan/!svn/ver/58/trunk/xinyuanProject/Vendor/AFNetworking
+END
+AFHTTPClient.m
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFHTTPClient.m
+END
+AFNetworking.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/xingyuan/!svn/ver/58/trunk/xinyuanProject/Vendor/AFNetworking/AFNetworking.h
+END
+AFXMLRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFXMLRequestOperation.h
+END
+UIImageView+AFNetworking.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/UIImageView+AFNetworking.h
+END
+AFNetworkActivityIndicatorManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFNetworkActivityIndicatorManager.h
+END
+AFXMLRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFXMLRequestOperation.m
+END
+AFDownloadRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/xingyuan/!svn/ver/58/trunk/xinyuanProject/Vendor/AFNetworking/AFDownloadRequestOperation.h
+END
+UIImageView+AFNetworking.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/UIImageView+AFNetworking.m
+END
+AFJSONRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFJSONRequestOperation.h
+END
+AFNetworkActivityIndicatorManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFNetworkActivityIndicatorManager.m
+END
+AFURLConnectionOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFURLConnectionOperation.h
+END
+AFDownloadRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/xingyuan/!svn/ver/58/trunk/xinyuanProject/Vendor/AFNetworking/AFDownloadRequestOperation.m
+END
+AFURLConnectionOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFURLConnectionOperation.m
+END
+AFJSONRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFJSONRequestOperation.m
+END
+AFHTTPRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFHTTPRequestOperation.h
+END
+AFPropertyListRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFPropertyListRequestOperation.h
+END
+AFImageRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFImageRequestOperation.h
+END
+AFHTTPRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFHTTPRequestOperation.m
+END
+AFHTTPClient.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFHTTPClient.h
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/readme.txt
+END
+AFPropertyListRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFPropertyListRequestOperation.m
+END
+AFImageRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/xingyuan/!svn/ver/57/trunk/xinyuanProject/Vendor/AFNetworking/AFImageRequestOperation.m
+END

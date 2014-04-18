@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>8009D135-64A7-4A81-A138-F2FF834DFF3D</string>
+	<string>5D162336-736D-408D-9218-6E2251E15C2F</string>
 	<key>IDESourceControlProjectName</key>
 	<string>DemoProject</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>B8C742CB-0D42-494C-892A-58A2FEB837E1</key>
-		<string>https://github.com/zhouzhiqun/myScale.git</string>
+		<key>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</key>
+		<string>https://github.com/zhouzhiqun/--.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>DemoProject.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>B8C742CB-0D42-494C-892A-58A2FEB837E1</key>
+		<key>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/zhouzhiqun/myScale.git</string>
+	<string>https://github.com/zhouzhiqun/--.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>B8C742CB-0D42-494C-892A-58A2FEB837E1</string>
+	<string>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B8C742CB-0D42-494C-892A-58A2FEB837E1</string>
+			<string>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</string>
 			<key>IDESourceControlWCCName</key>
-			<string>myScale</string>
+			<string>lvbu</string>
 		</dict>
 	</array>
 </dict>

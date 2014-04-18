@@ -19,4 +19,7 @@
 @property(nonatomic, strong)UIButton    *graphButton;
 @property(nonatomic, strong)UILabel     *titleLabel;
 
+
+
+
 @end

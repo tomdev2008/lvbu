@@ -128,6 +128,7 @@
 		6AFF893A186C65DC004032C3 /* UIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFF8922186C65DC004032C3 /* UIFactory.m */; };
 		E70A460A18E3A78A00146711 /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E70A460918E3A78A00146711 /* CustomTextField.m */; };
 		E70F5ECB18F3EFC60007A598 /* CreateUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E70F5EC418F3EFC60007A598 /* CreateUserViewController.m */; };
+		E71132001901009E006C053D /* TestHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E71131FF1901009E006C053D /* TestHttpRequest.m */; };
 		E712962118FFF1900094B614 /* LoginView_login_c.png in Resources */ = {isa = PBXBuildFile; fileRef = E712961F18FFF1900094B614 /* LoginView_login_c.png */; };
 		E712962218FFF1900094B614 /* LoginView_login_n.png in Resources */ = {isa = PBXBuildFile; fileRef = E712962018FFF1900094B614 /* LoginView_login_n.png */; };
 		E712962518FFF5080094B614 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E712962418FFF5080094B614 /* SplashViewController.m */; };
@@ -400,6 +401,8 @@
 		E70A460918E3A78A00146711 /* CustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextField.m; sourceTree = "<group>"; };
 		E70F5EC318F3EFC60007A598 /* CreateUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateUserViewController.h; sourceTree = "<group>"; };
 		E70F5EC418F3EFC60007A598 /* CreateUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateUserViewController.m; sourceTree = "<group>"; };
+		E71131FE1901009E006C053D /* TestHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHttpRequest.h; sourceTree = "<group>"; };
+		E71131FF1901009E006C053D /* TestHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestHttpRequest.m; sourceTree = "<group>"; };
 		E712961F18FFF1900094B614 /* LoginView_login_c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginView_login_c.png; sourceTree = "<group>"; };
 		E712962018FFF1900094B614 /* LoginView_login_n.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginView_login_n.png; sourceTree = "<group>"; };
 		E712962318FFF5080094B614 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
@@ -894,6 +897,8 @@
 				6AEB5BD3186D5AEB00F82AAA /* HttpRequest.h */,
 				6AEB5BD4186D5AEB00F82AAA /* HttpRequest.m */,
 				6AEB5BD6186D6A5D00F82AAA /* HttpConfig.h */,
+				E71131FE1901009E006C053D /* TestHttpRequest.h */,
+				E71131FF1901009E006C053D /* TestHttpRequest.m */,
 			);
 			name = http;
 			sourceTree = "<group>";
@@ -1490,6 +1495,7 @@
 				6AAF75D1186C72D80026252F /* FMDatabaseAdditions.m in Sources */,
 				6ADC12D2186C8E65001EC9C5 /* JoyMsg.m in Sources */,
 				6AAF7616186C7C290026252F /* UIImage+GIF.m in Sources */,
+				E71132001901009E006C053D /* TestHttpRequest.m in Sources */,
 				E75E10CC18E4096200111D8E /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				6AAF75DA186C72D80026252F /* MBProgressHUD.m in Sources */,
 				6AAF75C9186C72D80026252F /* AFJSONRequestOperation.m in Sources */,

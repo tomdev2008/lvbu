@@ -13,6 +13,8 @@
 @implementation HttpRequest
 
 
+#pragma mark - JSON
+
 - (void)sendJSONRequestWithSuccess:(void (^)(NSDictionary *result))success
                            Failure:(void (^)(NSError *err))failure
 {
@@ -122,7 +124,7 @@
 
 }
 
-
+#pragma mark - XML
 
 - (void)sendXMLRequestWithSuccess:(void (^)(CXMLElement *rootElement))success
                           Failure:(void (^)(NSError *err))failure

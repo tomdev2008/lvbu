@@ -36,6 +36,4 @@
 - (void)sendPostXMLRequestWithSuccess:(void (^)(CXMLElement *rootElement))success
                               Failure:(void (^)(NSError *err))failure;
 
-
-
 @end

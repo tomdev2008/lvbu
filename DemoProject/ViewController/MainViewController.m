@@ -10,11 +10,14 @@
 #import "AppCore.h"
 #import "ModelCollection.h"
 
+#import "TestHttpRequest.h"
+
 
 
 @interface MainViewController ()
 
 @property(nonatomic, strong)TestBLEAdapter *testBleAdapter;
+@property(nonatomic, strong)HttpRequest *testHttp;
 
 - (void)onLeftSwipe;
 - (void)onRightSwipe;
@@ -82,46 +85,49 @@
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
     
     
-//    //自定义导航栏
-//    CGRect navBarFrame = [adapt getCustomNavigationBarFrame];
-//    self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame
-//                                                            image:nil];
-//    [self.customNavigationBar setUserInteractionEnabled:YES];
-//    [self.customNavigationBar setBackgroundColor:[UIColor clearColor]];
-//    [self.view addSubview:self.customNavigationBar];
-//    
-//    self.leftButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 32, 32)
-//                                               normal:@"MainView_home_n.png"
-//                                            highlight:@"MainView_home_c.png"
-//                                             selector:@selector(onLeft:)
-//                                               target:self];
-//    [self.customNavigationBar addSubview:self.leftButton];
-//    
-//    self.titleLabel = [UIFactory createLabelWith:CGRectMake(160 - 40, 0, 80, NavigationBarDefaultHeight)
-//                                            text:@"标题"
-//                                            font:[UIFont systemFontOfSize:18]
-//                                       textColor:[UIColor colorWithHex:@"#ffffff"]
-//                                 backgroundColor:[UIColor clearColor]];
-//    [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
-//    [self.titleLabel setText:[UIFactory localized:@"ScaleView_title"]];
-//    [self.customNavigationBar addSubview:self.titleLabel];
-//    
-//    
-//    
-//    self.graphButton = [UIFactory createButtonWithRect:CGRectMake(284, 6, 32, 32)
-//                                               normal:@"MainView_graph_n.png"
-//                                            highlight:@"MainView_graph_c.png"
-//                                             selector:@selector(onGraph:)
-//                                               target:self];
-//    [self.customNavigationBar addSubview:self.graphButton];
-//    
-//    
-//    UIImageView *lineImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(navBarFrame) -2 , 320, 2)];
-//    [lineImgView setImage:[UIImage imageNamedNoCache:@"MainView_navbar_separator.png"]];
-//    [self.customNavigationBar addSubview:lineImgView];
-//    
+    //自定义导航栏
+    CGRect navBarFrame = [adapt getCustomNavigationBarFrame];
+    self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame
+                                                            image:nil];
+    [self.customNavigationBar setUserInteractionEnabled:YES];
+    [self.customNavigationBar setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.customNavigationBar];
+    
+    self.leftButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 32, 32)
+                                               normal:@"MainView_home_n.png"
+                                            highlight:@"MainView_home_c.png"
+                                             selector:@selector(onLeft:)
+                                               target:self];
+    [self.customNavigationBar addSubview:self.leftButton];
+    
+    self.titleLabel = [UIFactory createLabelWith:CGRectMake(160 - 40, 0, 80, NavigationBarDefaultHeight)
+                                            text:@"标题"
+                                            font:[UIFont systemFontOfSize:18]
+                                       textColor:[UIColor colorWithHex:@"#ffffff"]
+                                 backgroundColor:[UIColor clearColor]];
+    [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.titleLabel setText:[UIFactory localized:@"ScaleView_title"]];
+    [self.customNavigationBar addSubview:self.titleLabel];
+    
+    
+    
+    self.graphButton = [UIFactory createButtonWithRect:CGRectMake(284, 6, 32, 32)
+                                               normal:@"MainView_graph_n.png"
+                                            highlight:@"MainView_graph_c.png"
+                                             selector:@selector(onGraph:)
+                                               target:self];
+    
+    [self.graphButton setBackgroundColor:[UIColor redColor]];
+    [self.graphButton setTitle:@"测试注册" forState:UIControlStateNormal];
+    [self.customNavigationBar addSubview:self.graphButton];
+    
+    
+    UIImageView *lineImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(navBarFrame) -2 , 320, 2)];
+    [lineImgView setImage:[UIImage imageNamedNoCache:@"MainView_navbar_separator.png"]];
+    [self.customNavigationBar addSubview:lineImgView];
+    
+
 //
-//    
 //    //背景view
 //    CGRect backViewFrame = [adapt getBackgroundViewFrame];
 //    
@@ -186,5 +192,28 @@
 
 }
 
+- (void)onGraph:(id)sender
+{
+
+    
+    if (self.testHttp == nil) {
+        
+        self.testHttp = [[HttpRequest alloc] init];
+        
+        NSString *pwd = @"gogogo";
+        NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+        [bodyParams setValue:@"zhouzhiqun@163.com" forKey:@"email"];
+        [bodyParams setValue:[pwd MD5Sum] forKey:@"password"];
+        
+        self.testHttp.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_REGISTER];
+        self.testHttp.bodyParams = bodyParams;
+    }
+
+    [self.testHttp sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+}
 
 @end

@@ -90,10 +90,7 @@
     
     [self.backgroundView addSubview:self.searchButton];
     
-    
 
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

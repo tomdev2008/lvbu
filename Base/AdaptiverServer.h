@@ -17,11 +17,18 @@ AS_SINGLETON(AdaptiverServer);
 - (void)setCustomTarBarHeight:(CGFloat)barHeight;
 
 - (CGRect)getCustomNavigationBarFrame;
+
+//无tabbar有navbar
 - (CGRect)getBackgroundViewFrame;
+
+//无tabbar无navbar
 - (CGRect)getBackgroundViewFrameWithoutNavigationBar;
 
 
-//减掉Tarbar高度
-- (CGRect)modifyBackgroundViewFrame:(CGRect)frame;
+//有tabbar有navbar
+- (CGRect)getBackgroundViewFrameWithTabBar;
+
+//有tabbar无navbar
+- (CGRect)getBackgroundViewFrameWithTabBarWithoutNavBar;
 
 @end

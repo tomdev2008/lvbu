@@ -112,14 +112,20 @@ DEF_SINGLETON(AdaptiverServer);
     return resultFrame;
 }
 
-
-
-
-- (CGRect)modifyBackgroundViewFrame:(CGRect)frame
+- (CGRect)getBackgroundViewFrameWithTabBar
 {
-    frame.size.height -= self.tabbarHeight;
-    return frame;
+    CGRect resultFrame = [self getBackgroundViewFrame];
+    resultFrame.size.height -= self.tabbarHeight;
+    return resultFrame;
 }
+
+- (CGRect)getBackgroundViewFrameWithTabBarWithoutNavBar
+{
+    CGRect resultFrame = [self getBackgroundViewFrameWithoutNavigationBar];
+    resultFrame.size.height -= self.tabbarHeight;
+    return resultFrame;
+}
+
 
 
 @end

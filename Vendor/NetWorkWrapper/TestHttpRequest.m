@@ -83,8 +83,11 @@
 - (void)testLogin
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"zhouzhiqun@163.com" forKey:@"email"];
-    [bodyParams setValue:@"zhou123" forKey:@"password"];
+    
+    
+    NSString *pwd = @"gogogo";
+    [bodyParams setValue:@"zhouzhiqun@sina.com" forKey:@"email"];
+    [bodyParams setValue:pwd forKey:@"password"];
 
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_LOGIN];

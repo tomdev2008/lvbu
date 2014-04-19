@@ -26,7 +26,7 @@
 
 
 //登录
-#define URL_LOGIN                   @"/v1/user/login"
+#define URL_LOGIN                   @"/v1/login/login1"
 
 
 //第三方登录

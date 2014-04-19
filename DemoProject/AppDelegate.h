@@ -15,7 +15,7 @@
 #import "PartnerViewController.h"
 
 
-@interface AppDelegate : BaseAppDelegate
+@interface AppDelegate : BaseAppDelegate<UITabBarControllerDelegate, UITabBarDelegate>
 {
     UIBackgroundTaskIdentifier backgroundTaskIdentifier;
     UIBackgroundTaskIdentifier oldBackgroundTaskIdentifier;

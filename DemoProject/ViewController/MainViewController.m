@@ -12,6 +12,10 @@
 
 #import "TestHttpRequest.h"
 
+#import "BleMatchViewController.h"
+#import "SportHistoryViewController.h"
+#import "SportViewController.h"
+
 
 
 @interface MainViewController ()
@@ -19,10 +23,17 @@
 @property(nonatomic, strong)TestBLEAdapter *testBleAdapter;
 @property(nonatomic, strong)HttpRequest *testHttp;
 
+- (void)onBleScan:(id)sender;
+- (void)onShowKm:(id)sender;
+- (void)onShowCal:(id)sender;
+- (void)onShowStep:(id)sender;
+- (void)onFriend:(id)sender;
+- (void)onNearby:(id)sender;
+
 - (void)onLeftSwipe;
 - (void)onRightSwipe;
 
-
+- (void)annotationAction;
 @end
 
 @implementation MainViewController
@@ -77,66 +88,95 @@
     // Do any additional setup after loading the view from its nib.
 
     [self.navigationController setNavigationBarHidden:YES];
-    
-    UIImageView *fullBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"MainView_background.png"]];
-    fullBackgroundImageView.frame = [[UIScreen mainScreen] bounds];
-    [self.view addSubview:fullBackgroundImageView];
-    
+
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
-    
     
     //自定义导航栏
     CGRect navBarFrame = [adapt getCustomNavigationBarFrame];
-    self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame
-                                                            image:nil];
+    NSLog(@"navBarFrame = %@", NSStringFromCGRect(navBarFrame));
+    
+    self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame image:nil];
     [self.customNavigationBar setUserInteractionEnabled:YES];
-    [self.customNavigationBar setBackgroundColor:[UIColor clearColor]];
+    [self.customNavigationBar setBackgroundColor:[UIColor blueColor]];
     [self.view addSubview:self.customNavigationBar];
     
-    self.leftButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 32, 32)
-                                               normal:@"MainView_home_n.png"
-                                            highlight:@"MainView_home_c.png"
-                                             selector:@selector(onLeft:)
-                                               target:self];
-    [self.customNavigationBar addSubview:self.leftButton];
     
-    self.titleLabel = [UIFactory createLabelWith:CGRectMake(160 - 40, 0, 80, NavigationBarDefaultHeight)
-                                            text:@"标题"
-                                            font:[UIFont systemFontOfSize:18]
-                                       textColor:[UIColor colorWithHex:@"#ffffff"]
-                                 backgroundColor:[UIColor clearColor]];
-    [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.titleLabel setText:[UIFactory localized:@"ScaleView_title"]];
-    [self.customNavigationBar addSubview:self.titleLabel];
-    
-    
-    
-    self.graphButton = [UIFactory createButtonWithRect:CGRectMake(284, 6, 32, 32)
-                                               normal:@"MainView_graph_n.png"
-                                            highlight:@"MainView_graph_c.png"
-                                             selector:@selector(onGraph:)
+    self.bleButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 60, 32)
+                                               normal:@""
+                                            highlight:@""
+                                             selector:@selector(onBleScan:)
                                                target:self];
     
-    [self.graphButton setBackgroundColor:[UIColor redColor]];
-    [self.graphButton setTitle:@"测试注册" forState:UIControlStateNormal];
-    [self.customNavigationBar addSubview:self.graphButton];
-    
-    
-    UIImageView *lineImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(navBarFrame) -2 , 320, 2)];
-    [lineImgView setImage:[UIImage imageNamedNoCache:@"MainView_navbar_separator.png"]];
-    [self.customNavigationBar addSubview:lineImgView];
+    [self.bleButton setBackgroundColor:[UIColor redColor]];
+    [self.bleButton setTitle:@"蓝牙连接" forState:UIControlStateNormal];
+    [self.customNavigationBar addSubview:self.bleButton];
     
 
-//
-//    //背景view
-//    CGRect backViewFrame = [adapt getBackgroundViewFrame];
-//    
-////    self.scaleView = [[ScaleView alloc] initWithFrame:backViewFrame];
-////    [self.scaleView setBackgroundColor:[UIColor clearColor]];
-////    [self.view addSubview:self.scaleView];
-////    self.scaleView.weekdayView.delegate = self;
-    
 
+    //背景view
+    CGRect backViewFrame = [adapt getBackgroundViewFrameWithTabBar];
+    
+    //初始化地图
+    self.mapView = [[MKMapView alloc] initWithFrame:backViewFrame];
+    [self.mapView setDelegate:self];
+    [self.mapView setShowsUserLocation:YES];
+    [self.view addSubview:self.mapView];
+
+    
+    //数据视图：千里，卡路里，步数
+    self.kmDataView     = [ViewFactory createSportDataView];
+    self.calDataView    = [ViewFactory createSportDataView];
+    self.stepDataView   = [ViewFactory createSportDataView];
+    
+    [self.kmDataView setBackgroundColor:[UIColor clearColor]];
+    [self.calDataView setBackgroundColor:[UIColor clearColor]];
+    [self.stepDataView setBackgroundColor:[UIColor clearColor]];
+
+    
+    self.kmDataView.frame   = CGRectMake(107*0, backViewFrame.origin.y, 107, 80);
+    self.calDataView.frame  = CGRectMake(107*1, backViewFrame.origin.y, 107, 80);
+    self.stepDataView.frame = CGRectMake(107*2, backViewFrame.origin.y, 107, 80);
+    
+    [self.view addSubview:self.kmDataView];
+    [self.view addSubview:self.calDataView];
+    [self.view addSubview:self.stepDataView];
+    
+    
+    [self.kmDataView.selectButton addTarget:self
+                                     action:@selector(onShowKm:)
+                           forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.calDataView.selectButton addTarget:self
+                                     action:@selector(onShowCal:)
+                           forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.stepDataView.selectButton addTarget:self
+                                     action:@selector(onShowStep:)
+                           forControlEvents:UIControlEventTouchUpInside];
+    
+    //人数视图：好友，附近
+    self.friendSportView = [ViewFactory createSporterView];
+    self.nearbySportView = [ViewFactory createSporterView];
+    
+    [self.friendSportView setBackgroundColor:[UIColor clearColor]];
+    [self.nearbySportView setBackgroundColor:[UIColor clearColor]];
+
+    self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
+    self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
+    
+    [self.view addSubview:self.friendSportView];
+    [self.view addSubview:self.nearbySportView];
+    
+    [self.friendSportView.selectButton addTarget:self
+                                      action:@selector(onFriend:)
+                            forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.nearbySportView.selectButton addTarget:self
+                                       action:@selector(onNearby:)
+                             forControlEvents:UIControlEventTouchUpInside];
+
+    
+    //手势：左扫，右扫
     UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(onLeftSwipe)];
     leftSwipeGesture.numberOfTouchesRequired = 1;
@@ -150,15 +190,9 @@
     rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightSwipeGesture];
     
-
 }
 
 
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -173,47 +207,146 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
 
         AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
-        CGRect backViewFrame = [adapt getBackgroundViewFrame];
-//        self.scaleView.frame = backViewFrame;
+        
+        //重置自定义navigationBar的frame
+        CGRect navBarFrame = [adapt getCustomNavigationBarFrame];
+        self.customNavigationBar.frame = navBarFrame;
+        
+        //重置地图的frame
+        CGRect backViewFrame = [adapt getBackgroundViewFrameWithTabBar];
+        self.mapView.frame = backViewFrame;
+        
+        //重置数据视图
+        self.kmDataView.frame   = CGRectMake(107*0, backViewFrame.origin.y, 107, 60);
+        self.calDataView.frame  = CGRectMake(107*1, backViewFrame.origin.y, 107, 60);
+        self.stepDataView.frame = CGRectMake(107*2, backViewFrame.origin.y, 107, 60);
+        
+        //重置人数视图
+        self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
+        self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
 
     });
 
 
+    [[[[[self tabBarController] tabBar] items] objectAtIndex:0] setBadgeValue:@"30"];
+    UITabBarItem *tabBarItem = (UITabBarItem *)[self.tabBarController.tabBar.items objectAtIndex:0];
+ 
 }
 
 
+- (void)onAction
+{
+    NSLog(@"helloworld");
+}
+
+#pragma mark - private
+
+- (void)onBleScan:(id)sender
+{
+    BleMatchViewController *bleMatchVC = [[BleMatchViewController alloc] init];
+    bleMatchVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:bleMatchVC animated:YES];
+    
+
+
+}
+
+
+- (void)onShowKm:(id)sender
+{
+    NSLog(@"show KM");
+    
+    SportHistoryViewController *sportHistoryVC = [[SportHistoryViewController alloc] init];
+    sportHistoryVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:sportHistoryVC animated:YES];
+}
+
+- (void)onShowCal:(id)sender
+{
+    NSLog(@"show CAL");
+
+    SportViewController *sportVC = [[SportViewController alloc] init];
+    sportVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:sportVC animated:YES];
+
+}
+
+- (void)onShowStep:(id)sender
+{
+    NSLog(@"show STEP");
+}
+
+- (void)onFriend:(id)sender
+{
+    NSLog(@"show Friend");
+}
+
+- (void)onNearby:(id)sender
+{
+    NSLog(@"show Nearby");
+    
+    TestHttpRequest *testHttp1 = [[TestHttpRequest alloc] init];
+    [testHttp1 testRegister];
+    
+    TestHttpRequest *testHttp2= [[TestHttpRequest alloc] init];
+    [testHttp2 testLogin];
+    
+    [self annotationAction];
+    
+}
+
 - (void)onLeftSwipe
 {
-
+    NSLog(@"leftSwipe");
 }
 
 - (void)onRightSwipe
 {
-
+    NSLog(@"rightSwipe");
 }
 
-- (void)onGraph:(id)sender
-{
 
+//放置标注
+- (void)annotationAction {
+    //创建CLLocation 设置经纬度
     
-    if (self.testHttp == nil) {
-        
-        self.testHttp = [[HttpRequest alloc] init];
-        
-        NSString *pwd = @"gogogo";
-        NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-        [bodyParams setValue:@"zhouzhiqun@163.com" forKey:@"email"];
-        [bodyParams setValue:[pwd MD5Sum] forKey:@"password"];
-        
-        self.testHttp.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_REGISTER];
-        self.testHttp.bodyParams = bodyParams;
-    }
-
-    [self.testHttp sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
-        NSLog(@"result = %@", result);
-    } Failure:^(NSError *err) {
-        NSLog(@"error = %@", [err description]);
-    }];
+    NSString *longitude = @"121.49656";
+    NSString *latitude  = @"31.21842";
+    
+    CLLocation *loc = [[CLLocation alloc]initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+    CLLocationCoordinate2D coord = [loc coordinate];
+    //创建标题
+    NSString *titile = [NSString stringWithFormat:@"%f,%f",coord.latitude,coord.longitude];
+    MyPoint *myPoint = [[MyPoint alloc] initWithCoordinate:coord andTitle:titile];
+    //添加标注
+    [self.mapView addAnnotation:myPoint];
+    
+    //放大到标注的位置
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 250, 250);
+    [self.mapView setRegion:region animated:YES];
 }
+
+#pragma mark - MKMapViewDelegate
+
+//MapView委托方法，当定位自身时调用
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation{
+    
+    CLLocationCoordinate2D loc = [userLocation coordinate];
+
+    //经度
+    NSString *longitude = [NSString stringWithFormat:@"%f",loc.longitude];
+    
+    //纬度
+    NSString *latitude  = [NSString stringWithFormat:@"%f",loc.latitude];
+    
+    //放大地图到自身的经纬度位置。
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(loc, 250, 250);
+    [self.mapView setRegion:region animated:YES];
+}
+
+
+
+
+
 
 @end

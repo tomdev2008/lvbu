@@ -44,7 +44,7 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
     self.parterNav  = [[UINavigationController alloc] initWithRootViewController:self.parterVC];
     self.moreNav    = [[UINavigationController alloc] initWithRootViewController:self.moreVC];
     
-    
+
     self.mainNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"侣步"
                                                             image:[UIImage imageNamed:@""]
                                                               tag:101];
@@ -62,6 +62,7 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
     
     NSArray *vcArr = [NSArray arrayWithObjects:self.mainNav, self.parterNav, self.moreNav, nil];
     self.rootTabBarController = [[UITabBarController alloc] init];
+    [self.rootTabBarController setDelegate:self];
     [self.rootTabBarController setViewControllers: vcArr];
     [self.rootTabBarController setSelectedIndex: 0];
 
@@ -90,6 +91,7 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
     
     //自定义导航栏的话，设置全局自定义导航栏高度
     [[AdaptiverServer sharedInstance] setCustomNavBarHeight:NavigationBarDefaultHeight];
+    [[AdaptiverServer sharedInstance] setCustomTarBarHeight:TabbarDefaultHeight];
     
     
     //注册消息推送
@@ -277,6 +279,20 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
     }
 }
 
+
+#pragma mark - UITabBarControllerDelegate
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    
+    NSLog(@"hello");
+}
+
+
+#pragma mark - UITabBarDelegate
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    NSLog(@"world");
+}
 
 @end
 

@@ -8,17 +8,25 @@
 
 #import "BaseViewController.h"
 #import "AppCore.h"
+#import "ViewFactory.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 
 
 
-@interface MainViewController: BaseViewController<UIScrollViewDelegate>
+@interface MainViewController: BaseViewController<UIScrollViewDelegate, MKMapViewDelegate>
 
 @property(nonatomic, strong)UIImageView *customNavigationBar;
-@property(nonatomic, strong)UIButton    *leftButton;
-@property(nonatomic, strong)UIButton    *graphButton;
-@property(nonatomic, strong)UILabel     *titleLabel;
+@property(nonatomic, strong)UIButton *bleButton;                        //蓝牙连接
 
+@property(nonatomic, strong)MKMapView *mapView;                         //地图
+@property(nonatomic, strong)SportDataView *kmDataView;                  //公里
+@property(nonatomic, strong)SportDataView *calDataView;                 //卡路里
+@property(nonatomic, strong)SportDataView *stepDataView;                //公里
+
+@property(nonatomic, strong)SporterView *friendSportView;               //正在运动的好友
+@property(nonatomic, strong)SporterView *nearbySportView;               //附近正在运动的人
 
 
 

@@ -126,6 +126,16 @@
 		6AFF8938186C65DC004032C3 /* MMThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFF891E186C65DC004032C3 /* MMThread.m */; };
 		6AFF8939186C65DC004032C3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFF8920186C65DC004032C3 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6AFF893A186C65DC004032C3 /* UIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AFF8922186C65DC004032C3 /* UIFactory.m */; };
+		E705B3FF19021C9E0067C30E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E705B3FE19021C9E0067C30E /* CoreLocation.framework */; };
+		E705B40E19023A360067C30E /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = E705B40519023A360067C30E /* MyPoint.m */; };
+		E705B40F19023A360067C30E /* SportDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = E705B40719023A360067C30E /* SportDataView.m */; };
+		E705B41019023A360067C30E /* SportDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E705B40819023A360067C30E /* SportDataView.xib */; };
+		E705B41119023A360067C30E /* SporterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E705B40A19023A360067C30E /* SporterView.m */; };
+		E705B41219023A360067C30E /* SporterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E705B40B19023A360067C30E /* SporterView.xib */; };
+		E705B41319023A360067C30E /* ViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E705B40D19023A360067C30E /* ViewFactory.m */; };
+		E705B416190247150067C30E /* BleMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E705B415190247150067C30E /* BleMatchViewController.m */; };
+		E705B419190247350067C30E /* SportHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E705B418190247350067C30E /* SportHistoryViewController.m */; };
+		E705B41C190254FD0067C30E /* SportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E705B41B190254FD0067C30E /* SportViewController.m */; };
 		E70A460A18E3A78A00146711 /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E70A460918E3A78A00146711 /* CustomTextField.m */; };
 		E70F5ECB18F3EFC60007A598 /* CreateUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E70F5EC418F3EFC60007A598 /* CreateUserViewController.m */; };
 		E71132001901009E006C053D /* TestHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E71131FF1901009E006C053D /* TestHttpRequest.m */; };
@@ -397,6 +407,23 @@
 		6AFF8920186C65DC004032C3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		6AFF8921186C65DC004032C3 /* UIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFactory.h; sourceTree = "<group>"; };
 		6AFF8922186C65DC004032C3 /* UIFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFactory.m; sourceTree = "<group>"; };
+		E705B3FE19021C9E0067C30E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E705B40419023A360067C30E /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPoint.h; sourceTree = "<group>"; };
+		E705B40519023A360067C30E /* MyPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPoint.m; sourceTree = "<group>"; };
+		E705B40619023A360067C30E /* SportDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportDataView.h; sourceTree = "<group>"; };
+		E705B40719023A360067C30E /* SportDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportDataView.m; sourceTree = "<group>"; };
+		E705B40819023A360067C30E /* SportDataView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SportDataView.xib; sourceTree = "<group>"; };
+		E705B40919023A360067C30E /* SporterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SporterView.h; sourceTree = "<group>"; };
+		E705B40A19023A360067C30E /* SporterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SporterView.m; sourceTree = "<group>"; };
+		E705B40B19023A360067C30E /* SporterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SporterView.xib; sourceTree = "<group>"; };
+		E705B40C19023A360067C30E /* ViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewFactory.h; sourceTree = "<group>"; };
+		E705B40D19023A360067C30E /* ViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewFactory.m; sourceTree = "<group>"; };
+		E705B414190247150067C30E /* BleMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleMatchViewController.h; sourceTree = "<group>"; };
+		E705B415190247150067C30E /* BleMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BleMatchViewController.m; sourceTree = "<group>"; };
+		E705B417190247350067C30E /* SportHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportHistoryViewController.h; sourceTree = "<group>"; };
+		E705B418190247350067C30E /* SportHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportHistoryViewController.m; sourceTree = "<group>"; };
+		E705B41A190254FD0067C30E /* SportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportViewController.h; sourceTree = "<group>"; };
+		E705B41B190254FD0067C30E /* SportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportViewController.m; sourceTree = "<group>"; };
 		E70A460818E3A78A00146711 /* CustomTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTextField.h; sourceTree = "<group>"; };
 		E70A460918E3A78A00146711 /* CustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextField.m; sourceTree = "<group>"; };
 		E70F5EC318F3EFC60007A598 /* CreateUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateUserViewController.h; sourceTree = "<group>"; };
@@ -586,6 +613,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E705B3FF19021C9E0067C30E /* CoreLocation.framework in Frameworks */,
+				6AAF7558186C6C050026252F /* MapKit.framework in Frameworks */,
 				E75E10DA18E40A7600111D8E /* CoreData.framework in Frameworks */,
 				E7E7FE3F18D7E7E8002B8FF3 /* CoreBluetooth.framework in Frameworks */,
 				6A5FBB90187534F600091808 /* CoreTelephony.framework in Frameworks */,
@@ -597,7 +626,6 @@
 				6AAF755E186C6C150026252F /* AddressBookUI.framework in Frameworks */,
 				E72C7A9C18DBC141002A0499 /* libCorePlot-CocoaTouch.a in Frameworks */,
 				6AAF755A186C6C0D0026252F /* CoreText.framework in Frameworks */,
-				6AAF7558186C6C050026252F /* MapKit.framework in Frameworks */,
 				6AAF7556186C6BFD0026252F /* ImageIO.framework in Frameworks */,
 				6AAF7554186C6BE90026252F /* Security.framework in Frameworks */,
 				6AAF7552186C6BE20026252F /* MessageUI.framework in Frameworks */,
@@ -640,6 +668,7 @@
 		6A785DEE186C4F700081F1E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E705B3FE19021C9E0067C30E /* CoreLocation.framework */,
 				E75E10D918E40A7600111D8E /* CoreData.framework */,
 				E7E7FE3E18D7E7E8002B8FF3 /* CoreBluetooth.framework */,
 				E7E7FE3C18D7E261002B8FF3 /* libxml2.2.dylib */,
@@ -1096,6 +1125,23 @@
 			path = Vendor;
 			sourceTree = "<group>";
 		};
+		E705B40319023A360067C30E /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				E705B40419023A360067C30E /* MyPoint.h */,
+				E705B40519023A360067C30E /* MyPoint.m */,
+				E705B40619023A360067C30E /* SportDataView.h */,
+				E705B40719023A360067C30E /* SportDataView.m */,
+				E705B40819023A360067C30E /* SportDataView.xib */,
+				E705B40919023A360067C30E /* SporterView.h */,
+				E705B40A19023A360067C30E /* SporterView.m */,
+				E705B40B19023A360067C30E /* SporterView.xib */,
+				E705B40C19023A360067C30E /* ViewFactory.h */,
+				E705B40D19023A360067C30E /* ViewFactory.m */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		E70F5EC218F3EFC60007A598 /* Guide */ = {
 			isa = PBXGroup;
 			children = (
@@ -1110,6 +1156,12 @@
 		E71296351900057C0094B614 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				E705B414190247150067C30E /* BleMatchViewController.h */,
+				E705B415190247150067C30E /* BleMatchViewController.m */,
+				E705B417190247350067C30E /* SportHistoryViewController.h */,
+				E705B418190247350067C30E /* SportHistoryViewController.m */,
+				E705B41A190254FD0067C30E /* SportViewController.h */,
+				E705B41B190254FD0067C30E /* SportViewController.m */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1256,6 +1308,7 @@
 		E72D459E18D94C1600FCAF83 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E705B40319023A360067C30E /* CustomView */,
 				E72C7B2818DC11F4002A0499 /* CustomCell */,
 			);
 			path = View;
@@ -1450,6 +1503,7 @@
 			files = (
 				6A785E12186C50750081F1E4 /* Default-568h@2x.png in Resources */,
 				E712962118FFF1900094B614 /* LoginView_login_c.png in Resources */,
+				E705B41219023A360067C30E /* SporterView.xib in Resources */,
 				6AFF8874186C550C004032C3 /* Localizable.strings in Resources */,
 				6AC83FD41889008C005D27BA /* Basecell_bg_first_n.png in Resources */,
 				6A785E13186C50750081F1E4 /* Default.png in Resources */,
@@ -1463,6 +1517,7 @@
 				6A785E16186C50750081F1E4 /* icon@2x.png in Resources */,
 				6AC83FD31889008C005D27BA /* Basecell_bg_first_c.png in Resources */,
 				6AC83FD81889008C005D27BA /* Basecell_bg_mid_n.png in Resources */,
+				E705B41019023A360067C30E /* SportDataView.xib in Resources */,
 				6AAF75D5186C72D80026252F /* FMDB教程.rtfd in Resources */,
 				6AC83FD51889008C005D27BA /* Basecell_bg_last_c.png in Resources */,
 				E712963F19001ACB0094B614 /* PartnerCell.xib in Resources */,
@@ -1518,6 +1573,7 @@
 				6AFF8934186C65DC004032C3 /* UIView+SSToolkitAdditions.m in Sources */,
 				6AAF75E5186C72D80026252F /* CXMLNode_PrivateExtensions.m in Sources */,
 				6AAF756E186C6E470026252F /* BaseViewController.m in Sources */,
+				E705B40F19023A360067C30E /* SportDataView.m in Sources */,
 				E75E10C318E4096200111D8E /* NSString+MagicalDataImport.m in Sources */,
 				6AAF75CA186C72D80026252F /* AFNetworkActivityIndicatorManager.m in Sources */,
 				6AAF75CF186C72D80026252F /* UIImageView+AFNetworking.m in Sources */,
@@ -1530,7 +1586,9 @@
 				6AFF8939186C65DC004032C3 /* Reachability.m in Sources */,
 				6AAF75CD186C72D80026252F /* AFXMLRequestOperation.m in Sources */,
 				E712963018FFF79C0094B614 /* MoreViewController.m in Sources */,
+				E705B41319023A360067C30E /* ViewFactory.m in Sources */,
 				6AFF892E186C65DC004032C3 /* UIColor+SSToolkitAdditions.m in Sources */,
+				E705B41C190254FD0067C30E /* SportViewController.m in Sources */,
 				6AAF75C5186C72D80026252F /* AFDownloadRequestOperation.m in Sources */,
 				6AC83FC91888FC2B005D27BA /* CustomNavigationController.m in Sources */,
 				6AAF75E6186C72D80026252F /* CXMLNode_XPathExtensions.m in Sources */,
@@ -1546,6 +1604,7 @@
 				6AAF754A186C6B980026252F /* UIImage+SSToolkitAdditions.m in Sources */,
 				6AAF75E3186C72D80026252F /* CXMLNamespaceNode.m in Sources */,
 				6AAF75E7186C72D80026252F /* CTidy.m in Sources */,
+				E705B40E19023A360067C30E /* MyPoint.m in Sources */,
 				6AEB5BD5186D5AEB00F82AAA /* HttpRequest.m in Sources */,
 				E75E10C518E4096200111D8E /* NSManagedObject+MagicalDataImport.m in Sources */,
 				6AFF8925186C65DC004032C3 /* NSData+SSToolkitAdditions.m in Sources */,
@@ -1563,6 +1622,7 @@
 				6AFF8933186C65DC004032C3 /* UIScrollView+SSToolkitAdditions.m in Sources */,
 				E75E10C718E4096200111D8E /* NSManagedObject+MagicalRecord.m in Sources */,
 				6AAF756B186C6E150026252F /* BaseAppDelegate.m in Sources */,
+				E705B416190247150067C30E /* BleMatchViewController.m in Sources */,
 				6AFF8932186C65DC004032C3 /* UIScreen+SSToolkitAdditions.m in Sources */,
 				E75E10BF18E4096200111D8E /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				6AAF7544186C6AF10026252F /* UITableView+SSToolkitAdditions.m in Sources */,
@@ -1582,6 +1642,7 @@
 				6AF83BBA188D169B00F037D1 /* UdpSocketWrapper.m in Sources */,
 				E75E10C018E4096200111D8E /* NSNumber+MagicalDataImport.m in Sources */,
 				6AFF892D186C65DC004032C3 /* UIApplication+SSToolkitAdditions.m in Sources */,
+				E705B41119023A360067C30E /* SporterView.m in Sources */,
 				6AAF75E0186C72D80026252F /* CXMLElement.m in Sources */,
 				E75E10C418E4096200111D8E /* NSManagedObject+MagicalAggregation.m in Sources */,
 				E7E7FE3A18D7E1DD002B8FF3 /* MainViewController.m in Sources */,
@@ -1590,6 +1651,7 @@
 				6AAF760C186C7C290026252F /* MKAnnotationView+WebCache.m in Sources */,
 				6AFF8929186C65DC004032C3 /* NSMutableArray+SSToolkitAdditions.m in Sources */,
 				6AAF7615186C7C290026252F /* UIButton+WebCache.m in Sources */,
+				E705B419190247350067C30E /* SportHistoryViewController.m in Sources */,
 				6AAF75DC186C72D80026252F /* CXMLNode_CreationExtensions.m in Sources */,
 				6ADC12D4186C8E65001EC9C5 /* MsgContentCodec.m in Sources */,
 				6AFF892F186C65DC004032C3 /* UIControl+SSToolkitAdditions.m in Sources */,

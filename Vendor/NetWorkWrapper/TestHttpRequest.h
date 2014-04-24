@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface TestHttpRequest : NSObject
 
 
@@ -16,6 +17,7 @@
 
 - (void)testModifyInfo;
 
+- (void)testModifyInfoByGet;
 
 - (void)testModifyPassword;
 
@@ -27,9 +29,11 @@
 
 
 - (void)testLogout;
-
+- (void)testLogoutByGet;
 
 - (void)testEye;
+
+- (void)testCancelEye;
 
 
 - (void)testGetFans;

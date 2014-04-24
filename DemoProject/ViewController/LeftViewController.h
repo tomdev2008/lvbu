@@ -1,0 +1,18 @@
+//
+//  LeftViewController.h
+//  DemoProject
+//
+//  Created by Proint on 14-4-22.
+//  Copyright (c) 2014年 zzc. All rights reserved.
+//
+
+#import "BaseViewController.h"
+
+@interface LeftViewController : BaseViewController
+
+@property(nonatomic, retain)UIView   *backgroundView;
+@property(nonatomic, retain)UIButton *mainButton;
+@property(nonatomic, retain)UIButton *partnerButton;
+@property(nonatomic, retain)UIButton *moreButton;
+
+@end

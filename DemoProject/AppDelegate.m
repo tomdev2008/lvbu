@@ -14,7 +14,7 @@
 
 
 static NSInteger count = 0;
-static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
+static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
 
 @implementation AppDelegate
 
@@ -28,45 +28,32 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
 
     //coredata初始化
     [self copyDefaultStoreIfNecessary];
-    [MagicalRecord setupCoreDataStackWithStoreNamed:weightScaleStoreName];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:lvbuStoreName];
     
-  
-    self.mainVC     = [[MainViewController alloc] init];
-    self.parterVC   = [[PartnerViewController alloc] init];
-    self.moreVC     = [[MoreViewController alloc] init];
+
+    //初始化各个主界面
+    self.mainVC = [[MainViewController alloc] init];
+    self.parterVC = [[PartnerViewController alloc] init];
+    self.moreVC = [[MoreViewController alloc] init];
+    self.leftVC = [[LeftViewController alloc] init];
     
+    self.rootNav = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
     
+    self.viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:self.rootNav
+                                                                      leftViewController:self.leftVC];
+    
+    self.viewDeckController.leftSize = self.window.width - (320 - 44.0);
+
+    
+    //暂时先隐藏导航栏
+    [self.rootNav setNavigationBarHidden:YES];
+
+
     self.mainVC.title      = @"侣步";
     self.parterVC.title    = @"陪伴";
     self.moreVC.title      = @"更多";
-    
-    self.mainNav    = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
-    self.parterNav  = [[UINavigationController alloc] initWithRootViewController:self.parterVC];
-    self.moreNav    = [[UINavigationController alloc] initWithRootViewController:self.moreVC];
-    
 
-    self.mainNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"侣步"
-                                                            image:[UIImage imageNamed:@""]
-                                                              tag:101];
-    
-    self.parterNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"陪伴"
-                                                              image:[UIImage imageNamed:@""]
-                                                                tag:102];
-    
-    
-    self.moreNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"更多"
-                                                            image:[UIImage imageNamed:@""]
-                                                              tag:103];
-    
-    
-    
-    NSArray *vcArr = [NSArray arrayWithObjects:self.mainNav, self.parterNav, self.moreNav, nil];
-    self.rootTabBarController = [[UITabBarController alloc] init];
-    [self.rootTabBarController setDelegate:self];
-    [self.rootTabBarController setViewControllers: vcArr];
-    [self.rootTabBarController setSelectedIndex: 0];
-
-    self.window.rootViewController = self.rootTabBarController;
+    self.window.rootViewController = self.viewDeckController;
 
     
     NSString *isFirstLaunch = [[NSUserDefaults standardUserDefaults] stringForKey:KEY_IsFirstLaunch];
@@ -95,6 +82,9 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
     
     
     //注册消息推送
+    
+    [BPush setupChannel:launchOptions];
+    [BPush setDelegate:self];
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                                            UIRemoteNotificationTypeSound |
                                                                            UIRemoteNotificationTypeAlert)];
@@ -176,13 +166,13 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
 {
 	NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    NSURL *storeURL = [NSPersistentStore MR_urlForStoreName:weightScaleStoreName];
+    NSURL *storeURL = [NSPersistentStore MR_urlForStoreName:lvbuStoreName];
     
 	// If the expected store doesn't exist, copy the default store.
 	if (![fileManager fileExistsAtPath:[storeURL path]])
     {
 
-		NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:[weightScaleStoreName stringByDeletingPathExtension] ofType:[weightScaleStoreName pathExtension]];
+		NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:[lvbuStoreName stringByDeletingPathExtension] ofType:[lvbuStoreName pathExtension]];
         
 		if (defaultStorePath)
         {
@@ -215,7 +205,11 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
 }
 
 
-#pragma mark BaseAppdelegate
+#pragma mark - private
+
+
+
+#pragma mark - BaseAppdelegate
 
 - (void)configApp
 {
@@ -254,8 +248,11 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
 #pragma mark - push message
 -(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-    NSString *newToken = [UIFactory getDeviceTokenFromData:deviceToken];
-    [self sendTokenToServer:newToken];
+//    NSString *newToken = [UIFactory getDeviceTokenFromData:deviceToken];
+//    [self sendTokenToServer:newToken];
+    
+    [BPush registerDeviceToken:deviceToken];
+    [BPush bindChannel];
 }
 
 
@@ -277,22 +274,42 @@ static NSString * const weightScaleStoreName = @"MyDatabase.sqlite";
                                               otherButtonTitles:@"处理",nil];
         [alert show];
     }
-}
-
-
-#pragma mark - UITabBarControllerDelegate
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
+    [application setApplicationIconBadgeNumber:0];
     
-    NSLog(@"hello");
+    [BPush handleNotification:userInfo];
 }
 
 
-#pragma mark - UITabBarDelegate
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+- (void)onMethod:(NSString *)method response:(NSDictionary *)data
 {
-    NSLog(@"world");
+
+    NSLog(@"On method:%@", method);
+    NSLog(@"data:%@", [data description]);
+    NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
+    if ([BPushRequestMethod_Bind isEqualToString:method]) {
+        NSString *appid     = [res valueForKey:BPushRequestAppIdKey];
+        NSString *userid    = [res valueForKey:BPushRequestUserIdKey];
+        NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
+        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
+        int returnCode      = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        
+        if (returnCode == BPushErrorCode_Success) {
+
+            // 在内存中备份，以便短时间内进入可以看到这些值，而不需要重新bind
+            self.appId = appid;
+            self.channelId = channelid;
+            self.userId = userid;
+        }
+    } else if ([BPushRequestMethod_Unbind isEqualToString:method]) {
+        
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        if (returnCode == BPushErrorCode_Success) {
+
+        }
+    }
+
 }
+
 
 @end
 

@@ -12,22 +12,29 @@
 #import "HttpConfig.h"
 #import "HttpRequest.h"
 
+#define KEY_GLOBAL_SESSIONCODE @"KeyGlobalSessionCode"
+#define UserName @"hello@mkm.com"
+#define Password @"hello@mkm.com"
+
 @implementation TestHttpRequest
 
 - (void)testRegister
 {
 
-    NSString *pwd = @"gogogo";
+    
+
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"zhouzhiqun@163.com" forKey:@"email"];
-    [bodyParams setValue:[pwd MD5Sum] forKey:@"password"];
+    [bodyParams setValue:UserName forKey:@"email"];
+    [bodyParams setValue:Password forKey:@"password"];
 
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_REGISTER];
     httpReq.bodyParams = bodyParams;
     
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
-        NSLog(@"result = %@", result);
+        NSLog(@"register.dic = %@", result);
+        NSLog(@"register.msg = %@", [result valueForKey:@"msg"]);
+        
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
@@ -37,17 +44,32 @@
 
 - (void)testModifyInfo
 {
+    
+    
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
-    [bodyParams setValue:@"zhouzhiqun"  forKey:@"nick_name"];
-    [bodyParams setValue:@"male"        forKey:@"sex"];
-    [bodyParams setValue:@"173"         forKey:@"height"];
-    [bodyParams setValue:@"70"          forKey:@"weight"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    
+    [bodyParams setValue:@"zhouzhiqun"  forKey:@"nike_name"];
+    [bodyParams setValue:@1        forKey:@"sex"];
+    [bodyParams setValue:@173         forKey:@"height"];
+    [bodyParams setValue:@700          forKey:@"weight"];
     [bodyParams setValue:@"19880810"    forKey:@"birth"];
-    [bodyParams setValue:@"xxx"         forKey:@"head_photo"];
-    [bodyParams setValue:@"zhouzhiqun@163.com"  forKey:@"relate_email"];
-    [bodyParams setValue:@"3215701008"          forKey:@"relate_qq"];
-    [bodyParams setValue:@"hellokitty@sina.com" forKey:@"relate_sina_weibo"];
+    [bodyParams setValue:@"xxx.jpg"         forKey:@"head_photo"];
+    
+//    [bodyParams setValue:@"zhouzhiqun@163.com"  forKey:@"relate_email"];
+//    [bodyParams setValue:@"315701008"          forKey:@"relate_qq"];
+//    [bodyParams setValue:@"hellokitty@sina.com" forKey:@"relate_sina_weibo"];
+    
+    
+//    [bodyParams setValue:@"zhouzhiqun"  forKey:@"u_nick_name"];
+//    [bodyParams setValue:@"male"        forKey:@"u_sex"];
+//    [bodyParams setValue:@"173"         forKey:@"u_height"];
+//    [bodyParams setValue:@"70"          forKey:@"u_weight"];
+//    [bodyParams setValue:@"19880810"    forKey:@"u_birth"];
+//    [bodyParams setValue:@"xxx"         forKey:@"u_head_photo"];
+//    [bodyParams setValue:@"zhouzhiqun@163.com"  forKey:@"bind_email"];
+//    [bodyParams setValue:@"315701008"          forKey:@"bind_qq"];
+//    [bodyParams setValue:@"hellokitty@sina.com" forKey:@"bind_sina_weibo"];
   
     
     HttpRequest *httpReq = [[HttpRequest alloc] init];
@@ -55,24 +77,80 @@
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
+        NSLog(@"ModifyInfo.msg = %@", [result valueForKey:@"msg"]);
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
 }
 
 
+
+- (void)testModifyInfoByGet
+{
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+
+    
+    [bodyParams setValue:@"zhouzhiqun"  forKey:@"nike_name"];
+    [bodyParams setValue:@1        forKey:@"sex"];
+    [bodyParams setValue:@173         forKey:@"height"];
+    [bodyParams setValue:@700          forKey:@"weight"];
+    [bodyParams setValue:@"19880810"    forKey:@"birth"];
+    [bodyParams setValue:@"xxx.jpg"         forKey:@"head_photo"];
+    
+//    [bodyParams setValue:@"zhouzhiqun"  forKey:@"u_nick_name"];
+//    [bodyParams setValue:@"male"        forKey:@"u_sex"];
+//    [bodyParams setValue:@"173"         forKey:@"u_height"];
+//    [bodyParams setValue:@"70"          forKey:@"u_weight"];
+//    [bodyParams setValue:@"19880810"    forKey:@"u_birth"];
+//    [bodyParams setValue:@"xxx"         forKey:@"u_head_photo"];
+//    [bodyParams setValue:@"zhouzhiqun@163.com"  forKey:@"bind_email"];
+//    [bodyParams setValue:@"315701008"          forKey:@"bind_qq"];
+//    [bodyParams setValue:@"hellokitty@sina.com" forKey:@"bind_sina_weibo"];
+    
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    NSMutableString *tempUrl = [NSMutableString stringWithFormat:@"%@%@?", BASE_URL, URL_MODIFYINFO];
+
+    NSArray *keys = [bodyParams allKeys];
+    for (int i = 0; i < [keys count] - 1; ++i) {
+        [tempUrl appendFormat:@"%@=%@&", [keys objectAtIndex:i], [bodyParams valueForKey:[keys objectAtIndex:i]] ];
+    }
+    [tempUrl appendFormat:@"%@=%@", [keys lastObject], [bodyParams valueForKey:[keys lastObject]] ];
+    
+    httpReq.url = tempUrl;
+    NSLog(@"httpReq.url = %@", tempUrl);
+    
+//    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+//        NSLog(@"result = %@", result);
+//        NSLog(@"ModifyInfo.msg = %@", [result valueForKey:@"msg"]);
+//    } Failure:^(NSError *err) {
+//        NSLog(@"error = %@", [err description]);
+//    }];
+//    
+    
+    [httpReq sendGetJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+        NSLog(@"ModifyInfo.msg = %@", [result valueForKey:@"msg"]);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+
+}
+
 - (void)testModifyPassword
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
-    [bodyParams setValue:@"zhou123" forKey:@"oldpass"];
-    [bodyParams setValue:@"zhou321" forKey:@"newpass"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    [bodyParams setValue:Password forKey:@"oldpass"];
+    [bodyParams setValue:@"zhou123" forKey:@"newpass"];
 
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_MODIFYPASSWORD];
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
+        NSLog(@"testModifyPassword.msg = %@", [result valueForKey:@"msg"]);
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
@@ -84,16 +162,21 @@
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     
-    
-    NSString *pwd = @"gogogo";
-    [bodyParams setValue:@"zhouzhiqun@sina.com" forKey:@"email"];
-    [bodyParams setValue:pwd forKey:@"password"];
+
+    [bodyParams setValue:UserName forKey:@"email"];
+    [bodyParams setValue:Password forKey:@"password"];
 
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_LOGIN];
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
-        NSLog(@"result = %@", result);
+        NSLog(@"login.dic = %@", result);
+        NSLog(@"login.msg = %@", [result valueForKey:@"msg"]);
+        
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        [userDefault setValue:[result valueForKey:@"scode"] forKey:KEY_GLOBAL_SESSIONCODE];
+        
+      
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
@@ -125,13 +208,14 @@
 - (void)testLogout
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
     
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_LOGOUT];
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
+        NSLog(@"testLogout.msg = %@", [result valueForKey:@"msg"]);
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
@@ -139,17 +223,47 @@
 }
 
 
+- (void)testLogoutByGet
+{
+
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    NSMutableString *tempUrl = [NSMutableString stringWithFormat:@"%@%@?", BASE_URL, URL_LOGOUT];
+    
+    NSArray *keys = [bodyParams allKeys];
+    [tempUrl appendFormat:@"%@=%@", [keys objectAtIndex:0], [bodyParams valueForKey:[keys objectAtIndex:0]] ];
+    
+    httpReq.url = tempUrl;
+    NSLog(@"httpReq.url = %@", tempUrl);
+    
+    [httpReq sendGetJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+        NSLog(@"testLogoutByGet.msg = %@", [result valueForKey:@"msg"]);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+
+    
+}
+
+
+
 - (void)testEye
 {
+    
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
-    [bodyParams setValue:@"100010" forKey:@"uid"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    [bodyParams setValue:@"79" forKey:@"uid"];
     
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_EYE];
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
+        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
@@ -158,10 +272,28 @@
 
 
 
+
+- (void)testCancelEye
+{
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    [bodyParams setValue:@"79" forKey:@"uid"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_CANCEL_EYE];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+        NSLog(@"testCancelEye.msg = %@", [result valueForKey:@"msg"]);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+}
+
 - (void)testGetFans
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
 
     
     HttpRequest *httpReq = [[HttpRequest alloc] init];
@@ -169,6 +301,7 @@
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
+        NSLog(@"testGetFans.msg = %@", [result valueForKey:@"msg"]);
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
@@ -180,7 +313,7 @@
 - (void)testSearchUser
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
     [bodyParams setValue:@"Hello" forKey:@"nick_name"];
     
     HttpRequest *httpReq = [[HttpRequest alloc] init];
@@ -198,7 +331,7 @@
 - (void)testInvite
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
     [bodyParams setValue:@"100011" forKey:@"uid"];
     
     HttpRequest *httpReq = [[HttpRequest alloc] init];

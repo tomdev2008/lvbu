@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseAppDelegate.h"
-#import "CustomNavigationController.h"
+
 
 #import "MainViewController.h"
 #import "MoreViewController.h"
 #import "PartnerViewController.h"
+#import "LeftViewController.h"
 
 
-@interface AppDelegate : BaseAppDelegate<UITabBarControllerDelegate, UITabBarDelegate>
+@interface AppDelegate : BaseAppDelegate
+<UITabBarControllerDelegate, BPushDelegate>
 {
     UIBackgroundTaskIdentifier backgroundTaskIdentifier;
     UIBackgroundTaskIdentifier oldBackgroundTaskIdentifier;
@@ -27,15 +29,16 @@
 @property (strong, nonatomic) UIWindow *window;
 
 
-@property (strong, nonatomic) MainViewController *mainVC;           //侣步
-@property (strong, nonatomic) MoreViewController *moreVC;           //更多
-@property (strong, nonatomic) PartnerViewController *parterVC;      //陪伴
+@property NSString *appId;
+@property NSString *channelId;
+@property NSString *userId;
 
-@property (strong, nonatomic) UINavigationController *mainNav;
-@property (strong, nonatomic) UINavigationController *moreNav;
-@property (strong, nonatomic) UINavigationController *parterNav;
-
-@property (strong, nonatomic) UITabBarController *rootTabBarController;
+@property (strong, nonatomic) MainViewController        *mainVC;            //侣步
+@property (strong, nonatomic) MoreViewController        *moreVC;            //更多
+@property (strong, nonatomic) PartnerViewController     *parterVC;          //陪伴
+@property (strong, nonatomic) LeftViewController        *leftVC;            //左侧栏
+@property (strong, nonatomic) UINavigationController    *rootNav;
+@property (strong, nonatomic) IIViewDeckController      *viewDeckController;
 
 
 @end

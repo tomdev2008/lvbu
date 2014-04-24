@@ -24,6 +24,12 @@
 #import "MMThread.h"
 #import "XTLib.h"
 #import "Base64Transcoder.h"
+#import "Base64.h"
+#import "Base64Defines.h"
+#import "GzipCompressor.h"
+#import "JSONKit.h"
+#import "OpenUDID.h"
+
 
 // Foundation
 #import "NSArray+SSToolkitAdditions.h"

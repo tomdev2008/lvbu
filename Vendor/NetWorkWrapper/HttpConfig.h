@@ -22,24 +22,28 @@
 
 
 //修改密码
-#define URL_MODIFYPASSWORD          @"v1/user/modpass"
+#define URL_MODIFYPASSWORD          @"/v1/user/modpass"
 
 
-//登录
-#define URL_LOGIN                   @"/v1/login/login1"
+
 
 
 //第三方登录
 #define URL_THIRDPARTLOGIN          @"/v1/user/login_threepart"
 
 
+//登录
+#define URL_LOGIN                   @"/v1/login/login1"
+
 //注销
-#define URL_LOGOUT                  @"/v1/user/logout"
+#define URL_LOGOUT                  @"/v1/login/logout"
 
 
 //关注
 #define URL_EYE                     @"/v1/fans/eyes_on"
 
+//取消关注
+#define URL_CANCEL_EYE              @"/v1/fans/eyes_off"
 
 //取好友列表
 #define URL_GETFANS                 @"/v1/fans/getfans"

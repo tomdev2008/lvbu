@@ -114,7 +114,7 @@
 
 
     //背景view
-    CGRect backViewFrame = [adapt getBackgroundViewFrameWithTabBar];
+    CGRect backViewFrame = [adapt getBackgroundViewFrame];
     
     //初始化地图
     self.mapView = [[MKMapView alloc] initWithFrame:backViewFrame];
@@ -213,7 +213,7 @@
         self.customNavigationBar.frame = navBarFrame;
         
         //重置地图的frame
-        CGRect backViewFrame = [adapt getBackgroundViewFrameWithTabBar];
+        CGRect backViewFrame = [adapt getBackgroundViewFrame];
         self.mapView.frame = backViewFrame;
         
         //重置数据视图
@@ -226,10 +226,6 @@
         self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
 
     });
-
-
-    [[[[[self tabBarController] tabBar] items] objectAtIndex:0] setBadgeValue:@"30"];
-    UITabBarItem *tabBarItem = (UITabBarItem *)[self.tabBarController.tabBar.items objectAtIndex:0];
  
 }
 
@@ -243,12 +239,17 @@
 
 - (void)onBleScan:(id)sender
 {
-    BleMatchViewController *bleMatchVC = [[BleMatchViewController alloc] init];
-    bleMatchVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:bleMatchVC animated:YES];
     
-
-
+    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
+    [testHttp testRegister];
+    
+    
+//    TestHttpRequest *testHttp2= [[TestHttpRequest alloc] init];
+//    [testHttp2 testLogin];
+    
+//    BleMatchViewController *bleMatchVC = [[BleMatchViewController alloc] init];
+//    bleMatchVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:bleMatchVC animated:YES];
 }
 
 
@@ -256,42 +257,55 @@
 {
     NSLog(@"show KM");
     
-    SportHistoryViewController *sportHistoryVC = [[SportHistoryViewController alloc] init];
-    sportHistoryVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:sportHistoryVC animated:YES];
+    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
+    [testHttp testLogin];
+    
+//    SportHistoryViewController *sportHistoryVC = [[SportHistoryViewController alloc] init];
+//    sportHistoryVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:sportHistoryVC animated:YES];
 }
 
 - (void)onShowCal:(id)sender
 {
     NSLog(@"show CAL");
+    
+    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
+    [testHttp testModifyInfo];
+    //[testHttp testModifyInfoByGet];
 
-    SportViewController *sportVC = [[SportViewController alloc] init];
-    sportVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:sportVC animated:YES];
+//    SportViewController *sportVC = [[SportViewController alloc] init];
+//    sportVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:sportVC animated:YES];
 
 }
 
 - (void)onShowStep:(id)sender
 {
     NSLog(@"show STEP");
+    
+    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
+    //[testHttp testModifyPassword];
+    //[testHttp testCancelEye];
+    //[testHttp testLogout];
+    [testHttp testLogoutByGet];
 }
 
 - (void)onFriend:(id)sender
 {
     NSLog(@"show Friend");
+    
+    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
+    [testHttp testEye];
 }
 
 - (void)onNearby:(id)sender
 {
     NSLog(@"show Nearby");
     
-    TestHttpRequest *testHttp1 = [[TestHttpRequest alloc] init];
-    [testHttp1 testRegister];
+    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
+    [testHttp testGetFans];
     
-    TestHttpRequest *testHttp2= [[TestHttpRequest alloc] init];
-    [testHttp2 testLogin];
-    
-    [self annotationAction];
+//   [self annotationAction];
     
 }
 

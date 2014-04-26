@@ -9,10 +9,10 @@
 #import "BaseViewController.h"
 
 @interface PartnerViewController : BaseViewController
-<UITableViewDataSource, PullTableViewDelegate>
-
+<UITableViewDataSource, PullTableViewDelegate, UIScrollViewDelegate, IIViewDeckControllerDelegate>
 
 @property(nonatomic, strong)UIImageView *customNavigationBar;
+@property(nonatomic, strong)UIButton    *menuButton;
 @property(nonatomic, strong)UIButton    *partnerButton;
 @property(nonatomic, strong)UIButton    *nearbyButton;
 @property(nonatomic, strong)UIButton    *addButton;

@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "AppCore.h"
+#import "AppDelegate.h"
 #import "ModelCollection.h"
 
 #import "TestHttpRequest.h"
@@ -22,6 +23,7 @@
 
 @property(nonatomic, strong)TestBLEAdapter *testBleAdapter;
 @property(nonatomic, strong)HttpRequest *testHttp;
+@property(nonatomic, strong)SportHistoryViewController *sportHistoryVC;
 
 - (void)onBleScan:(id)sender;
 - (void)onShowKm:(id)sender;
@@ -29,9 +31,8 @@
 - (void)onShowStep:(id)sender;
 - (void)onFriend:(id)sender;
 - (void)onNearby:(id)sender;
+- (void)onStart:(id)sender;
 
-- (void)onLeftSwipe;
-- (void)onRightSwipe;
 
 - (void)annotationAction;
 @end
@@ -101,7 +102,17 @@
     [self.view addSubview:self.customNavigationBar];
     
     
-    self.bleButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 60, 32)
+
+    self.menuButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 60, 32)
+                                              normal:@""
+                                           highlight:@""
+                                            selector:@selector(onMenu:)
+                                              target:self];
+    [self.menuButton setBackgroundColor:[UIColor redColor]];
+    [self.menuButton setTitle:@"菜单" forState:UIControlStateNormal];
+    [self.customNavigationBar addSubview:self.menuButton];
+    
+    self.bleButton = [UIFactory createButtonWithRect:CGRectMake(250, 6, 60, 32)
                                                normal:@""
                                             highlight:@""
                                              selector:@selector(onBleScan:)
@@ -128,9 +139,9 @@
     self.calDataView    = [ViewFactory createSportDataView];
     self.stepDataView   = [ViewFactory createSportDataView];
     
-    [self.kmDataView setBackgroundColor:[UIColor clearColor]];
-    [self.calDataView setBackgroundColor:[UIColor clearColor]];
-    [self.stepDataView setBackgroundColor:[UIColor clearColor]];
+    [self.kmDataView setBackgroundColor:[UIColor redColor]];
+    [self.calDataView setBackgroundColor:[UIColor grayColor]];
+    [self.stepDataView setBackgroundColor:[UIColor orangeColor]];
 
     
     self.kmDataView.frame   = CGRectMake(107*0, backViewFrame.origin.y, 107, 80);
@@ -145,24 +156,27 @@
     [self.kmDataView.selectButton addTarget:self
                                      action:@selector(onShowKm:)
                            forControlEvents:UIControlEventTouchUpInside];
+
     
     [self.calDataView.selectButton addTarget:self
                                      action:@selector(onShowCal:)
                            forControlEvents:UIControlEventTouchUpInside];
+
     
     [self.stepDataView.selectButton addTarget:self
                                      action:@selector(onShowStep:)
                            forControlEvents:UIControlEventTouchUpInside];
+
     
     //人数视图：好友，附近
     self.friendSportView = [ViewFactory createSporterView];
     self.nearbySportView = [ViewFactory createSporterView];
     
-    [self.friendSportView setBackgroundColor:[UIColor clearColor]];
-    [self.nearbySportView setBackgroundColor:[UIColor clearColor]];
+    [self.friendSportView setBackgroundColor:[UIColor blueColor]];
+    [self.nearbySportView setBackgroundColor:[UIColor grayColor]];
 
-    self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
-    self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
+    self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
+    self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
     
     [self.view addSubview:self.friendSportView];
     [self.view addSubview:self.nearbySportView];
@@ -174,24 +188,38 @@
     [self.nearbySportView.selectButton addTarget:self
                                        action:@selector(onNearby:)
                              forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    CGRect startFrame = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame)-40, 320, 40);
+    self.startButton = [UIFactory createButtonWithRect:startFrame
+                                                 title:@"开始运动"
+                                             titleFont:[UIFont systemFontOfSize:24]
+                                            titleColor:[UIColor blackColor]
+                                                normal:@""
+                                             highlight:@""
+                                              selected:@""
+                                              selector:@selector(onStart:)
+                                                target:self];
+    
+    [self.startButton setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:self.startButton];
 
     
-    //手势：左扫，右扫
-    UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(onLeftSwipe)];
-    leftSwipeGesture.numberOfTouchesRequired = 1;
-    leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:leftSwipeGesture];
-    
-    
-    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                            action:@selector(onRightSwipe)];
-    rightSwipeGesture.numberOfTouchesRequired = 1;
-    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:rightSwipeGesture];
+//    //手势：左扫，右扫
+//    UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+//                                                                                           action:@selector(onLeftSwipe)];
+//    leftSwipeGesture.numberOfTouchesRequired = 1;
+//    leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+//    [self.view addGestureRecognizer:leftSwipeGesture];
+//    
+//    
+//    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+//                                                                                            action:@selector(onRightSwipe)];
+//    rightSwipeGesture.numberOfTouchesRequired = 1;
+//    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+//    [self.view addGestureRecognizer:rightSwipeGesture];
     
 }
-
 
 
 
@@ -222,13 +250,12 @@
         self.stepDataView.frame = CGRectMake(107*2, backViewFrame.origin.y, 107, 60);
         
         //重置人数视图
-        self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
-        self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 60, 160, 60);
-
+        self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
+        self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
+        self.startButton.frame      = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame)-40, 320, 40);
     });
  
 }
-
 
 - (void)onAction
 {
@@ -237,86 +264,64 @@
 
 #pragma mark - private
 
+- (void)onMenu:(id)sender
+{
+    [self.viewDeckController toggleLeftViewAnimated:YES];
+}
+
 - (void)onBleScan:(id)sender
 {
     
-    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
-    [testHttp testRegister];
-    
-    
-//    TestHttpRequest *testHttp2= [[TestHttpRequest alloc] init];
-//    [testHttp2 testLogin];
-    
-//    BleMatchViewController *bleMatchVC = [[BleMatchViewController alloc] init];
-//    bleMatchVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:bleMatchVC animated:YES];
+    BleMatchViewController *bleMatchVC = [[BleMatchViewController alloc] init];
+    [self.navigationController pushViewController:bleMatchVC animated:YES];
 }
 
+
+- (SportHistoryViewController *)getHistoryViewController
+{
+    if (self.sportHistoryVC == nil) {
+        self.sportHistoryVC = [[SportHistoryViewController alloc] init];
+    }
+    return self.sportHistoryVC;
+}
 
 - (void)onShowKm:(id)sender
 {
     NSLog(@"show KM");
-    
-    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
-    [testHttp testLogin];
-    
-//    SportHistoryViewController *sportHistoryVC = [[SportHistoryViewController alloc] init];
-//    sportHistoryVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:sportHistoryVC animated:YES];
+    [self.navigationController pushViewController:[self getHistoryViewController] animated:YES];
 }
 
 - (void)onShowCal:(id)sender
 {
     NSLog(@"show CAL");
-    
-    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
-    [testHttp testModifyInfo];
-    //[testHttp testModifyInfoByGet];
-
-//    SportViewController *sportVC = [[SportViewController alloc] init];
-//    sportVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:sportVC animated:YES];
+    [self.navigationController pushViewController:[self getHistoryViewController] animated:YES];
 
 }
 
 - (void)onShowStep:(id)sender
 {
     NSLog(@"show STEP");
-    
-    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
-    //[testHttp testModifyPassword];
-    //[testHttp testCancelEye];
-    //[testHttp testLogout];
-    [testHttp testLogoutByGet];
+    [self.navigationController pushViewController:[self getHistoryViewController] animated:YES];
 }
 
 - (void)onFriend:(id)sender
 {
     NSLog(@"show Friend");
-    
-    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
-    [testHttp testEye];
+    [self.navigationController pushViewController:kAppDelegate.parterVC animated:YES];
 }
 
 - (void)onNearby:(id)sender
 {
     NSLog(@"show Nearby");
-    
-    TestHttpRequest *testHttp = [[TestHttpRequest alloc] init];
-    [testHttp testGetFans];
-    
-//   [self annotationAction];
+    [self.navigationController pushViewController:kAppDelegate.parterVC animated:YES];
     
 }
 
-- (void)onLeftSwipe
+- (void)onStart:(id)sender
 {
-    NSLog(@"leftSwipe");
-}
-
-- (void)onRightSwipe
-{
-    NSLog(@"rightSwipe");
+    //开始运动
+    SportViewController *sportVC = [[SportViewController alloc] init];
+    [self.navigationController pushViewController:sportVC animated:YES];
 }
 
 
@@ -357,9 +362,6 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(loc, 250, 250);
     [self.mapView setRegion:region animated:YES];
 }
-
-
-
 
 
 

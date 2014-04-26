@@ -90,9 +90,8 @@
 
 + (NSInteger)daysOnYear:(NSInteger)year month:(NSInteger)month;
 
-+ (NSDate *)initWithYear:(NSInteger)year Month:(NSInteger)month Day:(NSInteger)day
++ (NSDate *)dateWithYear:(NSInteger)year Month:(NSInteger)month Day:(NSInteger)day
                     Hour:(NSInteger)hour  Minute:(NSInteger)min Second:(NSInteger)sec;
-
 
 
 @end

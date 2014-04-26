@@ -122,7 +122,7 @@ static UIFactory* factory;
         textField.enablesReturnKeyAutomatically = YES;
         textField.contentVerticalAlignment      = UIControlContentVerticalAlignmentCenter;
         textField.clearButtonMode               = UITextFieldViewModeWhileEditing;
-        textField.borderStyle                   = UITextBorderStyleRoundedRect;
+        textField.borderStyle                   = UITextBorderStyleNone;
         textField.autocapitalizationType        = UITextAutocapitalizationTypeNone;
         textField.autocorrectionType            = UITextAutocorrectionTypeNo;
     }

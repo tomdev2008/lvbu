@@ -53,4 +53,13 @@
     return cell;
 }
 
+
++ (LeftViewCell *)createLeftViewCellWithIdentifier:(NSString *)identifier
+{
+    LeftViewCell *cell = [[LeftViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                             reuseIdentifier:identifier];
+    return cell;
+    
+}
+
 @end

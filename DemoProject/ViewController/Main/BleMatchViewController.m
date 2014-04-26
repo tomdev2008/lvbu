@@ -30,7 +30,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    
+    [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
     [self.navigationController setNavigationBarHidden:YES];
     
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
@@ -72,6 +72,7 @@
 
 - (void)onBack:(id)sender
 {
+    [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

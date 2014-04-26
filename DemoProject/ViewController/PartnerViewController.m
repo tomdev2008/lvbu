@@ -9,13 +9,20 @@
 #import "PartnerViewController.h"
 #import "SearchViewController.h"
 
+#import "TestHttpRequest.h"
+
 @interface PartnerViewController ()
 
 
 @property(nonatomic, retain)PullTableView *partTableView;
 @property(nonatomic, retain)PullTableView *nearbyTableView;
+@property(nonatomic, retain)NSMutableArray *nearbyArr;
+@property(nonatomic, retain)NSMutableArray *partnerArr;
 
 
+@property(nonatomic, assign)float contentOffsetX;
+@property(nonatomic, assign)float oldContentOffsetX;
+@property(nonatomic, assign)float newContentOffsetX;
 
 
 - (void)onPartner:(id)sender;
@@ -31,6 +38,28 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        self.partnerArr = [[NSMutableArray alloc] initWithCapacity:0];
+        self.nearbyArr = [[NSMutableArray alloc] initWithCapacity:0];
+        
+        
+        //获取泡友
+        NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+        [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE]
+                      forKey:@"scode"];
+        
+        
+        HttpRequest *httpReq = [[HttpRequest alloc] init];
+        httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
+        httpReq.bodyParams = bodyParams;
+        [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+            
+            NSLog(@"result = %@", result);
+            NSLog(@"testGetFans.msg = %@", [result valueForKey:@"msg"]);
+        } Failure:^(NSError *err) {
+            NSLog(@"error = %@", [err description]);
+        }];
+        
     }
     return self;
 }
@@ -40,6 +69,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.viewDeckController.delegate = self;
+    self.viewDeckController.panningMode = IIViewDeckNoPanning;
     [self.navigationController setNavigationBarHidden:YES];
     
     UIImageView *fullBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"MainView_background.png"]];
@@ -56,6 +87,17 @@
     [self.customNavigationBar setUserInteractionEnabled:YES];
     [self.customNavigationBar setBackgroundColor:[UIColor blueColor]];
     [self.view addSubview:self.customNavigationBar];
+    
+    
+    
+    self.menuButton = [UIFactory createButtonWithRect:CGRectMake(4, 5, 60, 34)
+                                                  normal:@""
+                                               highlight:@""
+                                                selector:@selector(onBack:)
+                                                  target:self];
+    [self.menuButton setBackgroundColor:[UIColor redColor]];
+    [self.menuButton setTitle:@"菜单" forState:UIControlStateNormal];
+    [self.customNavigationBar addSubview:self.menuButton];
 
     self.partnerButton = [UIFactory createButtonWithRect:CGRectMake(160 - 60, 5, 60, 34)
                                                normal:@""
@@ -92,9 +134,21 @@
 
     //背景view
     CGRect backViewFrame = [adapt getBackgroundViewFrame];
+    
     self.bodyScrollView = [[UIScrollView alloc] initWithFrame:backViewFrame];
     self.bodyScrollView.contentSize = CGSizeMake(320*2, CGRectGetHeight(backViewFrame));
+    self.bodyScrollView.delegate    = self;
+	[self.bodyScrollView setBackgroundColor:[UIColor clearColor]];
+	[self.bodyScrollView setCanCancelContentTouches:NO];
+	self.bodyScrollView.indicatorStyle  = UIScrollViewIndicatorStyleWhite;
+	self.bodyScrollView.scrollEnabled   = YES;
+    self.bodyScrollView.bounces         = NO;
+	self.bodyScrollView.pagingEnabled   = YES;
+    self.bodyScrollView.scrollsToTop    = NO;
+    self.bodyScrollView.showsHorizontalScrollIndicator  = NO;
+    self.bodyScrollView.showsVerticalScrollIndicator    = NO;
     [self.view addSubview:self.bodyScrollView];
+
     
     CGRect tableFrame = [self.bodyScrollView bounds];
     self.partTableView = [[PullTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
@@ -113,8 +167,7 @@
     self.nearbyTableView.pullBackgroundColor = [UIColor redColor];
     self.nearbyTableView.pullTextColor = [UIColor blackColor];
     
-    
-    
+
     [self.bodyScrollView addSubview:self.partTableView];
     [self.bodyScrollView addSubview:self.nearbyTableView];
     
@@ -137,14 +190,22 @@
 
 #pragma mark - private
 
+
+- (void)onBack:(id)sender
+{
+    self.bodyScrollView.scrollEnabled =NO;
+    self.viewDeckController.panningMode = IIViewDeckFullViewPanning;
+    [self.viewDeckController toggleLeftViewAnimated:YES];
+}
+
 - (void)onPartner:(id)sender
 {
-
+    [self.bodyScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 - (void)onNearby:(id)sender
 {
-
+    [self.bodyScrollView setContentOffset:CGPointMake(320, 0) animated:YES];
 }
 
 - (void)onAdd:(id)sender
@@ -152,6 +213,50 @@
     SearchViewController *searchVC = [[SearchViewController alloc] init];
     searchVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:searchVC animated:YES];
+}
+
+
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.contentOffsetX = self.bodyScrollView.contentOffset.x;
+    NSLog(@"self.contentOffsetX  = %f", self.contentOffsetX);
+}
+
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    
+    self.oldContentOffsetX = self.bodyScrollView.contentOffset.x;
+    if (self.contentOffsetX == 0 && self.oldContentOffsetX == 0) {
+        [self showLeftView];
+    }
+    NSLog(@"self.contentOffsetX = %f; self.oldContentOffsetX  = %f", self.contentOffsetX, self.oldContentOffsetX);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+//    CGFloat pageWidth = self.bodyScrollView.frame.size.width;
+//    int page = floor((self.bodyScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+//    [self.bodyScrollView setContentOffset:CGPointMake(320 * page, 0)];
+//    NSLog(@"self.contentOffsetX  = %f", self.contentOffsetX);
+}
+
+- (void)showLeftView
+{
+    self.bodyScrollView.scrollEnabled =NO;
+    [self.viewDeckController toggleLeftViewAnimated:YES];
+    self.viewDeckController.panningMode = IIViewDeckFullViewPanning;
+}
+
+
+#pragma mark IIViewDeckControllerDelegate
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController didCloseViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+    self.bodyScrollView.scrollEnabled =YES;
+    self.viewDeckController.panningMode = IIViewDeckNoPanning;
 }
 
 

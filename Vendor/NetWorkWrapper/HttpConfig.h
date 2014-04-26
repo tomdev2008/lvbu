@@ -11,7 +11,7 @@
 
 
 #define BASE_URL @"http://api.reallybe.com"
-
+//#define BASE_URL @"http://api.maipal.com"
 
 //注册
 #define URL_REGISTER                @"/v1/user/registe"
@@ -23,8 +23,6 @@
 
 //修改密码
 #define URL_MODIFYPASSWORD          @"/v1/user/modpass"
-
-
 
 
 

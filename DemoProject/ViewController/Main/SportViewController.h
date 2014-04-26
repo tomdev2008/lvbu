@@ -17,4 +17,8 @@
 @property(nonatomic, strong)UIButton *partnerButton;
 @property(nonatomic, strong)UIButton *groupButton;
 
+@property(nonatomic, strong)UIView *selfBodyView;
+@property(nonatomic, strong)UIView *partnerBodyView;
+@property(nonatomic, strong)UIView *groupBodyView;
+
 @end

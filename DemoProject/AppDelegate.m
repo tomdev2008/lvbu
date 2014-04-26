@@ -38,7 +38,6 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
     self.leftVC = [[LeftViewController alloc] init];
     
     self.rootNav = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
-    
     self.viewDeckController = [[IIViewDeckController alloc] initWithCenterViewController:self.rootNav
                                                                       leftViewController:self.leftVC];
     
@@ -224,9 +223,8 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
 - (void)firstLanch
 {
     //第一次启动
-//    LogoViewController *guideVC = [[LogoViewController alloc] init];
-//    [self.rootNav pushViewController:guideVC animated:YES];
-//    self.rootNav.navigationBarHidden = YES;
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    [self.rootNav pushViewController:loginVC animated:NO];
 }
 
 - (void)urlLanch

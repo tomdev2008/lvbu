@@ -23,6 +23,8 @@
 #define KEY_defaultBleScale         @"KeyDefaultBleScale"
 #define KEY_currentUserName         @"KeyCurrentUserName"
 
+#define KEY_GLOBAL_SESSIONCODE      @"KeyGlobalSessionCode"
+
 
 //通知
 #define ChangeLanguageNotify    @"ChangeLanguageNotify"         //切换语言
@@ -53,7 +55,7 @@
 //com.lanterscale.myWeight
 #define NavigationBarDefaultHeight      ((isIP5Screen) ? 50.0f : 44.0f)
 #define TabbarDefaultHeight             49.0f
-#define GlobalNavBarBgColor  [UIColor colorWithRed:237/255.0 green:76/255.0 blue:73/255.0 alpha:1]
+#define GlobalNavBarBgColor  [UIColor colorWithRed:2/255.0 green:82/255.0 blue:152/255.0 alpha:1]
 
 
 

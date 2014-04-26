@@ -12,7 +12,7 @@
 #import "HttpConfig.h"
 #import "HttpRequest.h"
 
-#define KEY_GLOBAL_SESSIONCODE @"KeyGlobalSessionCode"
+
 #define UserName @"hello@mkm.com"
 #define Password @"hello@mkm.com"
 
@@ -246,7 +246,6 @@
         NSLog(@"error = %@", [err description]);
     }];
 
-    
 }
 
 

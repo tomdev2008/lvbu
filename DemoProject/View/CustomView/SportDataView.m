@@ -61,9 +61,9 @@
     
     CGRect frame = [self bounds];
     self.selectButton.frame = frame;
-    self.todayLabel.frame   = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2);
-    self.totalLabel.frame   = CGRectMake(0, CGRectGetHeight(frame)/2,  CGRectGetWidth(frame), CGRectGetHeight(frame)/3);
-    self.descLabel.frame    = CGRectMake(0, CGRectGetHeight(frame)*5/6,  CGRectGetWidth(frame), CGRectGetHeight(frame)/6);
+    self.todayLabel.frame   = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/3);
+    self.totalLabel.frame   = CGRectMake(0, CGRectGetHeight(frame)/3,  CGRectGetWidth(frame), CGRectGetHeight(frame)/3);
+    self.descLabel.frame    = CGRectMake(0, CGRectGetHeight(frame)*2/3,  CGRectGetWidth(frame), CGRectGetHeight(frame)/3);
 }
 
 

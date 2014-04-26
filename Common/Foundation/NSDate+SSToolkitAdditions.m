@@ -286,6 +286,7 @@
 
 
 
+
 //新增
 - (NSInteger)daysOnCurrentMonth
 {
@@ -333,7 +334,7 @@
 
 
 
-+ (NSDate *)initWithYear:(NSInteger)year Month:(NSInteger)month Day:(NSInteger)day
++ (NSDate *)dateWithYear:(NSInteger)year Month:(NSInteger)month Day:(NSInteger)day
                     Hour:(NSInteger)hour  Minute:(NSInteger)min Second:(NSInteger)sec
 {
     NSDateComponents *comps = [[NSDateComponents alloc] init];
@@ -354,15 +355,35 @@
 
 - (NSDate *)firstDayOnCurrentWeek
 {
-    return [self dateBySubtractingDays: self.weekday -2];
+    /********************************************************
+     //从星期一到星期日 是一个星期
+     if (self.weekday == 1) {
+     return [self dateBySubtractingDays:6];
+     } else {
+     return [self dateBySubtractingDays: self.weekday -2];
+     }
+     ********************************************************/
+    
+    //从星期日到星期六 是一个星期
+    return [self dateBySubtractingDays: self.weekday -1];
 }
 
 
 - (NSDate *)lastDayOnCurrentWeek
 {
-   return [self dateByAddingDays: 8 - self.weekday];
+    /********************************************************
+     //从星期一到星期日 是一个星期
+     if (self.weekday == 1) {
+     return [self dateByAddingDays:0];
+     } else {
+     return [self dateByAddingDays: 8 - self.weekday];
+     }
+     ********************************************************/
+    
+    
+    //从星期日到星期六 是一个星期
+    return [self dateByAddingDays: 7 - self.weekday];
 }
-
 
 #pragma mark Decomposing Dates
 

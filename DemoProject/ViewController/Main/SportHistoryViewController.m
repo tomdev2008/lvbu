@@ -60,7 +60,13 @@
     [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.customNavigationBar addSubview:self.titleLabel];
     
-
+    
+    CGRect tabelFrame = [adapt getBackgroundViewFrame];
+    self.historyTableView = [[UITableView alloc] initWithFrame:tabelFrame];
+//    self.historyTableView.delegate = self;
+//    self.historyTableView.dataSource = self;
+    self.historyTableView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.historyTableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,11 +76,35 @@
 }
 
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([self.navigationController.viewControllers count] == 1) {
+        
+        //从侧边栏弹出的历史运动记录
+        [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
+    } else {
+        //从侣步弹出的历史运动记录
+        [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
+    }
+    
+}
+
 #pragma mark - private
 
 - (void)onBack:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    if ([self.navigationController.viewControllers count] == 1) {
+        
+        //从侧边栏弹出的历史运动记录
+        [self.viewDeckController toggleLeftViewAnimated:YES];
+    } else {
+        //从侣步弹出的历史运动记录
+        [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

@@ -2,17 +2,19 @@
 //  LeftViewController.h
 //  DemoProject
 //
-//  Created by Proint on 14-4-22.
+//  Created by Proint on 14-3-18.
 //  Copyright (c) 2014年 zzc. All rights reserved.
 //
 
 #import "BaseViewController.h"
 
-@interface LeftViewController : BaseViewController
 
-@property(nonatomic, retain)UIView   *backgroundView;
-@property(nonatomic, retain)UIButton *mainButton;
-@property(nonatomic, retain)UIButton *partnerButton;
-@property(nonatomic, retain)UIButton *moreButton;
+@interface LeftViewController : BaseViewController
+<UITableViewDelegate, UITableViewDataSource>
+
+
+@property(retain, nonatomic)UITableView *bodyTableView;
 
 @end
+
+

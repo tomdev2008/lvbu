@@ -1,32 +1,35 @@
 //
-//  CreateUserViewController.m
+//  UserInfoViewController.m
 //  DemoProject
 //
 //  Created by Proint on 14-4-8.
 //  Copyright (c) 2014年 zzc. All rights reserved.
 //
 
-#import "CreateUserViewController.h"
+#import "UserInfoViewController.h"
 #import "AppCore.h"
-#import "User.h"
 
+@interface UserInfoViewController ()
 
-@interface CreateUserViewController ()
-
-@property(nonatomic, assign)BOOL isFirstLanch;
+@property(nonatomic, retain)NSDateFormatter *dateFormatter;
 
 - (void)onBack;
 - (void)onEditAvatar;
-- (void)onFemale;
 - (void)onMale;
-- (void)onNext;
-
+- (void)onFemale;
+- (void)onBirthdayPickerChanged:(id)sender;
+- (void)saveHeadImg:(UIImage *)image toPath:(NSString *)path;
+- (void)onDone;
+- (void)onStart;
 - (void)onTap;
 - (void)hideKeyboard;
+- (id)findFirstResponder;
+- (NSString *)getAvatarFilePath;
+
 
 @end
 
-@implementation CreateUserViewController
+@implementation UserInfoViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,16 +37,8 @@
     if (self) {
         // Custom initialization
     
-        self.curUser = nil;
-        
-        //判断是否第一次启动
-        NSString *value = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_IsFirstLaunch];
-        if (value == nil  || ![value isEqualToString:@"NO"]) {
-            
-            self.isFirstLanch = YES;
-        } else {
-            self.isFirstLanch = NO;
-        }
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setDateFormat:@"yyyy-MM-dd"];
     }
     return self;
 }
@@ -59,7 +54,6 @@
     
     //背景色
     [self.view setBackgroundColor:GlobalNavBarBgColor];
-    
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
 
     
@@ -72,19 +66,19 @@
     
     
     //返回按钮
-    self.backButton = [UIFactory createButtonWithRect:CGRectMake(0, 0, 60, NavigationBarDefaultHeight)
-                                               normal:@""
-                                            highlight:@""
-                                             selector:@selector(onBack)
-                                               target:self];
-    [self.backButton setTitle:[UIFactory localized:@"Global_back"] forState:UIControlStateNormal];
-    [self.backButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [self.customNavigationBar addSubview:self.backButton];
+//    self.backButton = [UIFactory createButtonWithRect:CGRectMake(0, 0, 60, NavigationBarDefaultHeight)
+//                                               normal:@""
+//                                            highlight:@""
+//                                             selector:@selector(onBack)
+//                                               target:self];
+//    [self.backButton setTitle:@"返回" forState:UIControlStateNormal];
+//    [self.backButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+//    [self.customNavigationBar addSubview:self.backButton];
     
     
     //标题
     self.titleLabel = [UIFactory createLabelWith:CGRectMake(80, 0, 160, NavigationBarDefaultHeight)
-                                            text:[UIFactory localized:@"CreateUser_title_create"]
+                                            text:@"个人信息"
                                             font:[UIFont systemFontOfSize:18]
                                        textColor:[UIColor colorWithHex:@"0xffffff"]
                                  backgroundColor:[UIColor clearColor]];
@@ -104,9 +98,9 @@
     [self.backgroundView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.backgroundView];
     
-    
+
     //头像按钮
-    self.avatarButton = [UIFactory createButtonWithRect:CGRectMake(100, 30, 120, 120)
+    self.avatarButton = [UIFactory createButtonWithRect:CGRectMake(120, 24, 62, 62)
                                                  normal:DefaultHeadIconFileName
                                               highlight:DefaultHeadIconFileName
                                                selector:@selector(onEditAvatar)
@@ -114,133 +108,172 @@
     [self.backgroundView addSubview:self.avatarButton];
     
     
-
+    //性别
+    CGRect textFieldFrame = CGRectMake(40, 100, 238, 30);
+    UIImageView *sexBGImgView = [[UIImageView alloc] initWithFrame:textFieldFrame];
+    [sexBGImgView setBackgroundColor:[UIColor redColor]];
+    [sexBGImgView setImage:[UIImage imageNamedNoCache:@""]];
+ 
     
-    CGFloat offset = 152.0f;
-    CGFloat height = 55.0f;
-    
-    
-    
-    //昵称
-    UIImageView *nickBGImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"CreateUser_name_bg.png"]];
-    nickBGImgView.frame = CGRectMake(60, offset + height*0, 200, 19);
-
-    
-    self.nameTextField = [UIFactory createTextFieldWithRect:CGRectMake(110, offset - 10, 120, 30)
-                                               keyboardType:UIKeyboardTypeDefault
-                                                     secure:NO
-                                                placeholder:[UIFactory localized:@"CreateUser_defaultName"]
-                                                       font:[UIFont systemFontOfSize:18]
-                                                      color:[UIColor redColor]
-                                                   delegate:self];
-    [self.nameTextField setBackgroundColor:[UIColor clearColor]];
-    [self.nameTextField setTextAlignment:NSTextAlignmentCenter];
-    [self.nameTextField setBorderStyle:UITextBorderStyleNone];
-    
-    
-    
-    UIImageView *sexBGImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"CreateUser_sex_bg.png"]];
-    sexBGImgView.frame = CGRectMake(60, offset + height*1, 200, 19);
-    
-    
-    self.femaleButton = [UIFactory createButtonWithRect:CGRectMake(140, offset + height*1 - 10, 29, 29)
-                                                  title:nil
-                                              titleFont:nil
-                                             titleColor:nil
-                                                 normal:@"CreateUser_female_n.png"
+    self.maleButton = [UIFactory createButtonWithRect:CGRectMake(110, 100, 28, 28)
+                                                  title:@"男"
+                                              titleFont:[UIFont systemFontOfSize:18]
+                                             titleColor:[UIColor blueColor]
+                                                 normal:@"Regitster_male_n.png"
                                               highlight:nil
-                                               selected:@"CreateUser_female_c.png"
-                                               selector:@selector(onFemale)
-                                                 target:self];
-
-    
-    self.maleButton = [UIFactory createButtonWithRect:CGRectMake(200, offset + height*1 - 10, 30, 30)
-                                                  title:nil
-                                              titleFont:nil
-                                             titleColor:nil
-                                                 normal:@"CreateUser_male_n.png"
-                                              highlight:nil
-                                               selected:@"CreateUser_male_c.png"
+                                               selected:@"Regitster_male_c.png"
                                                selector:@selector(onMale)
                                                  target:self];
+
+    
+    self.femaleButton = [UIFactory createButtonWithRect:CGRectMake(176, 100, 28, 28)
+                                                  title:@"女"
+                                              titleFont:[UIFont systemFontOfSize:18]
+                                             titleColor:[UIColor blueColor]
+                                                 normal:@"Regitster_male_n.png"
+                                              highlight:nil
+                                               selected:@"Regitster_male_c.png"
+                                               selector:@selector(onFemale)
+                                                 target:self];
     
 
     
-    UIImageView *ageBGImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"CreateUser_age_bg.png"]];
-    ageBGImgView.frame = CGRectMake(60, offset + height*2, 200, 19);
+    //生日
+    textFieldFrame.origin.y += 52;
+    UIImageView *birthdayBGImgView = [[UIImageView alloc] initWithFrame:textFieldFrame];
+    [birthdayBGImgView setBackgroundColor:[UIColor redColor]];
+    [birthdayBGImgView setImage:[UIImage imageNamedNoCache:@""]];
     
-    self.ageTextField = [UIFactory createTextFieldWithRect:CGRectMake(110, offset + height*2 - 10, 120, 30)
+    self.birthdayTextField = [UIFactory createTextFieldWithRect:textFieldFrame
                                                keyboardType:UIKeyboardTypeDefault
                                                      secure:NO
-                                                placeholder:[UIFactory localized:@"CreateUser_defaultAge"]
+                                                placeholder:@"1990-08-08"
                                                        font:[UIFont systemFontOfSize:18]
-                                                      color:[UIColor redColor]
+                                                      color:[UIColor blueColor]
                                                    delegate:self];
-    [self.ageTextField setBackgroundColor:[UIColor clearColor]];
-    [self.ageTextField setTextAlignment:NSTextAlignmentCenter];
-    [self.ageTextField setBorderStyle:UITextBorderStyleNone];
+    [self.birthdayTextField setBackgroundColor:[UIColor clearColor]];
+    [self.birthdayTextField setTextAlignment:NSTextAlignmentCenter];
+    [self.birthdayTextField setBorderStyle:UITextBorderStyleNone];
     
-    self.agePicker = [[UIPickerView alloc] init];
-    self.agePicker.delegate = self;
-    self.agePicker.dataSource = self;
-    [self.ageTextField setInputView:self.agePicker];
+    
+    NSDate *defaultDate = [NSDate dateWithYear:1990
+                                         Month:8
+                                           Day:8
+                                          Hour:12
+                                        Minute:0
+                                        Second:0];
+
+    self.birthdayPicker = [[UIDatePicker alloc] init];
+    [self.birthdayPicker addTarget:self
+                            action:@selector(onBirthdayPickerChanged:)
+                  forControlEvents:UIControlEventValueChanged];
+    
+    self.birthdayPicker.datePickerMode = UIDatePickerModeDate;
+    [self.birthdayPicker setDate:defaultDate];
+    [self.birthdayTextField setInputView:self.birthdayPicker];
     
 
     
-
+    //身高
+    textFieldFrame.origin.y += 52;
+    UIImageView *heightBGImgView = [[UIImageView alloc] initWithFrame:textFieldFrame];
+    [heightBGImgView setBackgroundColor:[UIColor redColor]];
+    [heightBGImgView setImage:[UIImage imageNamedNoCache:@""]];
     
-    UIImageView *heightBGImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"CreateUser_height_bg.png"]];
-    heightBGImgView.frame = CGRectMake(60, offset + height*3, 200, 19);
-    
-    
-    self.heightTextField = [UIFactory createTextFieldWithRect:CGRectMake(110, offset + height*3 - 10, 120, 30)
+    self.heightTextField = [UIFactory createTextFieldWithRect:textFieldFrame
                                               keyboardType:UIKeyboardTypeDefault
                                                     secure:NO
-                                               placeholder:[UIFactory localized:@"CreateUser_defaultHeight"]
+                                               placeholder:nil
                                                       font:[UIFont systemFontOfSize:18]
-                                                     color:[UIColor redColor]
+                                                     color:[UIColor blueColor]
                                                   delegate:self];
     [self.heightTextField setBackgroundColor:[UIColor clearColor]];
     [self.heightTextField setTextAlignment:NSTextAlignmentCenter];
-    [self.heightTextField setBorderStyle:UITextBorderStyleNone];
+//    [self.heightTextField setBorderStyle:UITextBorderStyleNone];
     
     self.heightPicker = [[UIPickerView alloc] init];
     self.heightPicker.delegate = self;
     self.heightPicker.dataSource = self;
     [self.heightTextField setInputView:self.heightPicker];
     
+    
+    
+    
+    
+    //体重
+    textFieldFrame.origin.y += 52;
+    UIImageView *weightBGImgView = [[UIImageView alloc] initWithFrame:textFieldFrame];
+    [weightBGImgView setBackgroundColor:[UIColor redColor]];
+    [weightBGImgView setImage:[UIImage imageNamedNoCache:@""]];
+    
+    
+    self.weightTextField = [UIFactory createTextFieldWithRect:textFieldFrame
+                                                 keyboardType:UIKeyboardTypeDefault
+                                                       secure:NO
+                                                  placeholder:nil
+                                                         font:[UIFont systemFontOfSize:18]
+                                                        color:[UIColor blueColor]
+                                                     delegate:self];
+    [self.weightTextField setBackgroundColor:[UIColor clearColor]];
+    [self.weightTextField setTextAlignment:NSTextAlignmentCenter];
+    //    [self.heightTextField setBorderStyle:UITextBorderStyleNone];
+    
+    self.weightPicker = [[UIPickerView alloc] init];
+    self.weightPicker.delegate = self;
+    self.weightPicker.dataSource = self;
+    [self.weightTextField setInputView:self.weightPicker];
 
     
-    //下一步
-    self.nextButton = [UIFactory createButtonWithRect:CGRectMake(80, CGRectGetHeight(backViewFrame) - 98, 160, 38)
-                                                title:[UIFactory localized:@"CreateUser_next"]
+    textFieldFrame.origin.y += 40;
+    UIImageView *tipImgView = [[UIImageView alloc] initWithFrame:textFieldFrame];
+    [tipImgView setBackgroundColor:[UIColor redColor]];
+    [tipImgView setImage:[UIImage imageNamedNoCache:@""]];
+    
+    //完成
+    self.doneButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 127, 246, 40)
+                                                title:@"完成"
                                             titleFont:[UIFont systemFontOfSize:18]
                                            titleColor:[UIColor whiteColor]
-                                               normal:@"CreateUser_next_n.png"
-                                            highlight:@"CreateUser_next_c.png"
+                                               normal:@""
+                                            highlight:@""
                                              selected:nil
-                                             selector:@selector(onNext)
+                                             selector:@selector(onDone)
                                                target:self];
+    [self.doneButton setBackgroundColor:[UIColor blueColor]];
     
+    //开始体验
+    self.startButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 75, 246, 38)
+                                                title:@"开始体验"
+                                            titleFont:[UIFont systemFontOfSize:18]
+                                           titleColor:[UIColor whiteColor]
+                                               normal:@""
+                                            highlight:@""
+                                             selected:nil
+                                             selector:@selector(onStart)
+                                               target:self];
+    [self.startButton setBackgroundColor:[UIColor blueColor]];
     
-    [self.backgroundView addSubview:nickBGImgView];
-    [self.backgroundView addSubview:sexBGImgView];
-    [self.backgroundView addSubview:ageBGImgView];
-    [self.backgroundView addSubview:heightBGImgView];
     
     
     //去掉叉叉按钮
-    [self.nameTextField setClearButtonMode:UITextFieldViewModeNever];
-    [self.ageTextField setClearButtonMode:UITextFieldViewModeNever];
+    [self.birthdayTextField setClearButtonMode:UITextFieldViewModeNever];
     [self.heightTextField setClearButtonMode:UITextFieldViewModeNever];
-
-
-    [self.backgroundView addSubview:self.nameTextField];
+    [self.weightTextField setClearButtonMode:UITextFieldViewModeNever];
+    
+    [self.backgroundView addSubview:birthdayBGImgView];
+    [self.backgroundView addSubview:sexBGImgView];
+    [self.backgroundView addSubview:heightBGImgView];
+    [self.backgroundView addSubview:weightBGImgView];
+    [self.backgroundView addSubview:tipImgView];
+    
     [self.backgroundView addSubview:self.femaleButton];
     [self.backgroundView addSubview:self.maleButton];
-    [self.backgroundView addSubview:self.ageTextField];
+    [self.backgroundView addSubview:self.birthdayTextField];
     [self.backgroundView addSubview:self.heightTextField];
-    [self.backgroundView addSubview:self.nextButton];
+    [self.backgroundView addSubview:self.weightTextField];
+    
+    [self.backgroundView addSubview:self.doneButton];
+    [self.backgroundView addSubview:self.startButton];
     
     
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -249,7 +282,6 @@
     [self.tapGestureRecognizer setNumberOfTapsRequired:1];
     [self.tapGestureRecognizer setNumberOfTouchesRequired:1];
     [self.backgroundView addGestureRecognizer:self.tapGestureRecognizer];
-    
     
     [self registerKeyboardNotify];
 
@@ -260,8 +292,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self setupView];
     
 }
 
@@ -280,91 +310,34 @@
 
 #pragma mark - private
 
-- (void)setupView
-{
-    
-
-    if (self.isFirstLanch) {
-        
-        //第一次启动，隐藏返回按钮, 
-        [self.backButton setHidden:YES];
-        [self.nextButton setTitle:[UIFactory localized:@"CreateUser_next"] forState:UIControlStateNormal];
-        [self.titleLabel setText:[UIFactory localized:@"CreateUser_title_create"]];
-    } else {
-        
-        
-        [self.backButton setHidden:NO];
-        [self.nextButton setTitle:[UIFactory localized:@"CreateUser_done"] forState:UIControlStateNormal];
-        
-        if (self.curUser != nil) {
-            //编辑用户
-            [self.titleLabel setText:[UIFactory localized:@"CreateUser_title_edit"]];
-        } else {
-            //创建新用户
-            [self.titleLabel setText:[UIFactory localized:@"CreateUser_title_create"]];
-        }
-
-    }
-    
-    
-    //设置初始值
-    if (self.curUser != nil) {
-        
-        //修改用户
-        //填充数据
-        if (self.curUser.avatarFileName != nil  && [self.curUser.avatarFileName length] > 0) {
-            [self.avatarButton setImage:[[UIImage alloc] initWithContentsOfFile:self.curUser.avatarFileName] forState:UIControlStateNormal];
-        }
-   
-        [self.nameTextField setText:self.curUser.name];
-        [self.ageTextField setText:[NSString stringWithFormat:@"%d", [self.curUser.age integerValue]]];
-        [self.heightTextField setText:[NSString stringWithFormat:@"%d", [self.curUser.height integerValue]]];
-        
-        if ([self.curUser.isMale boolValue]) {
-            //男
-            [self.maleButton setSelected:YES];
-            [self.femaleButton setSelected:NO];
-        } else {
-            
-            //女
-            [self.maleButton setSelected:NO];
-            [self.femaleButton setSelected:YES];
-        }
-    
-    } else {
-        
-        //创建新用户
-        //设置默认值
-        [self.nameTextField setText:@"zhouzhiqun"];
-        [self.ageTextField setText:@"25"];
-        [self.heightTextField setText:@"170"];
-        
-        //默认为女性
-        [self.maleButton setSelected:NO];
-        [self.femaleButton setSelected:YES];
-    }
-}
 
 
 - (void)onBack
 {
-    [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (void)onEditAvatar
 {
     
+    //头像
     [self hideKeyboard];
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:[UIFactory localized:@"Modify_select"]
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"选择"
                                                             delegate:self
-                                                   cancelButtonTitle:[UIFactory localized:@"Modify_cancel"]
-                                              destructiveButtonTitle:[UIFactory localized:@"Modify_takePicture"]
-                                                   otherButtonTitles:[UIFactory localized:@"Modify_selectFromPhotoAlbum"], nil];
+                                                   cancelButtonTitle:@"取消"
+                                              destructiveButtonTitle:@"拍照"
+                                                   otherButtonTitles:@"从相册中选择", nil];
     
     [actionSheet showInView:self.view];
+}
+
+
+
+- (void)onMale
+{
+    self.femaleButton.selected = NO;
+    self.maleButton.selected = YES;
 }
 
 - (void)onFemale
@@ -373,13 +346,12 @@
     self.maleButton.selected = NO;
 }
 
-- (void)onMale
+
+- (void)onBirthdayPickerChanged:(id)sender
 {
-    self.femaleButton.selected = NO;
-    self.maleButton.selected = YES;
+    NSString *date = [self.dateFormatter stringFromDate:[self.birthdayPicker date]];
+    [self.birthdayTextField setText:date];
 }
-
-
 
 - (void)saveHeadImg:(UIImage *)image toPath:(NSString *)path
 {
@@ -389,104 +361,44 @@
 }
 
 
-- (NSString *)getHeadIconFilePathByUserId:(NSNumber *)userid
+- (NSString *)getAvatarFilePath
 {
-    NSString *headIconFileName = [NSString stringWithFormat:@"%d_headicon.png", [userid integerValue]];
+    NSString *avatarFileName = [NSString stringWithFormat:@"userAvatar.png"];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory,
                                                          NSUserDomainMask,
                                                          YES);
-    return [[paths objectAtIndex:0] stringByAppendingPathComponent:headIconFileName];
+    return [[paths objectAtIndex:0] stringByAppendingPathComponent:avatarFileName];
 }
 
 
 
-- (void)onNext
+- (void)onDone
 {
-    
+    //性别,生日，身高，体重
+    BOOL ismale = (self.maleButton.selected) ? YES: NO;
+    NSString *birthday = [self.birthdayTextField.text trim];
+    NSString *height = [self.heightTextField.text trim];
+    NSString *weight = [self.weightTextField.text trim];
 
-    if (self.curUser != nil) {
-        //编辑用户
-        //姓名
-        self.curUser.name = [self.nameTextField.text trim];
-        
-        //年龄
-        self.curUser.age = [NSNumber numberWithInt:[self.ageTextField.text integerValue]];
-        
-        //性别
-        BOOL ismale = (self.maleButton.selected) ? YES: NO;
-        self.curUser.isMale = [NSNumber numberWithBool:ismale];
-        
-        //身高
-        self.curUser.height = [NSNumber numberWithFloat:[[self.heightTextField.text trim] floatValue]];
-        
-        
-        if (self.headImage != nil &&  self.curUser.avatarFileName == nil) {
-            //保存头像
-            self.curUser.avatarFileName = [self getHeadIconFilePathByUserId:self.curUser.userid];
-        }
-        
-
-        //持久存储
-        [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
-        
-        if (self.headImage != nil) {
-            //保存头像
-            [self saveHeadImg:self.headImage toPath:self.curUser.avatarFileName];
-        }
-        
-        //保存当前用户
-        [self saveCurrentUser:self.curUser];
-        
-        
-    } else {
-        //新建用户
-        User *tempUser  = [User createEntity];
-        
-        //用户ID
-        //tempUser.userid = [NSmu]
-        
-        //姓名
-        tempUser.name = [self.nameTextField.text trim];
-        
-        //年龄
-        tempUser.age = [NSNumber numberWithInt:[self.ageTextField.text integerValue]];
-        
-        //性别
-        BOOL ismale = (self.maleButton.selected) ? YES: NO;
-        tempUser.isMale = [NSNumber numberWithBool:ismale];
-        
-        //身高
-        tempUser.height = [NSNumber numberWithFloat:[[self.heightTextField.text trim] floatValue]];
-        
-        if (self.headImage) {
-            tempUser.avatarFileName = [self getHeadIconFilePathByUserId:tempUser.userid];
-        } else {
-            //使用默认头像
-            tempUser.avatarFileName = nil;
-        }
- 
-        //持久存储
-        [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
-
-        
-        //保存头像
-        if (self.headImage) {
-
-            [self saveHeadImg:self.headImage toPath:tempUser.avatarFileName];
-        }
-        
-        [self saveCurrentUser:tempUser];
+    //头像
+    if (self.headImage) {
+        [self saveHeadImg:self.headImage toPath:[self getAvatarFilePath]];
     }
     
-
     
-    //判断是否第一次启动，如果第一次启动，则跳转到设备管理界面
-    if (self.isFirstLanch) {
-
-    } else {
-        [self onBack];
-    }
+    
+    [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
 }
+
+
+- (void)onStart
+{
+    [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 
 
 - (void)onTap
@@ -496,21 +408,21 @@
 
 - (void)hideKeyboard
 {
-    [self.nameTextField resignFirstResponder];
-    [self.ageTextField resignFirstResponder];
+    [self.birthdayTextField resignFirstResponder];
     [self.heightTextField resignFirstResponder];
+    [self.weightTextField resignFirstResponder];
 }
 
 
 - (id)findFirstResponder
 {
     id firstResponder = nil;
-    if ([self.nameTextField isFirstResponder]) {
-        firstResponder = self.nameTextField;
-    } else if ([self.ageTextField isFirstResponder]) {
-        firstResponder = self.ageTextField;
+    if ([self.birthdayTextField isFirstResponder]) {
+        firstResponder = self.birthdayTextField;
     } else if ([self.heightTextField isFirstResponder]) {
         firstResponder = self.heightTextField;
+    } else if ([self.weightTextField isFirstResponder]) {
+        firstResponder = self.weightTextField;
     }
     return firstResponder;
 }
@@ -596,9 +508,9 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     NSInteger row = 0;
-    if (pickerView == self.agePicker) {
+    if (pickerView == self.heightPicker) {
         row = 120;
-    } else if (pickerView == self.heightPicker) {
+    } else if (pickerView == self.weightPicker) {
         row = 200;
     }
     return row;
@@ -613,17 +525,23 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%d", row];
+    NSString *item = @"0";
+    if (pickerView == self.heightPicker) {
+        item = [NSString stringWithFormat:@"%d CM", row];
+    } else if (pickerView == self.weightPicker) {
+        item = [NSString stringWithFormat:@"%d KG", row];
+    }
+    return item;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     
     NSLog(@"row = %d", row);
-    if (pickerView == self.agePicker) {
-        [self.ageTextField setText:[NSString stringWithFormat:@"%d", row]];
-    } else if (pickerView == self.heightPicker) {
-        [self.heightTextField setText:[NSString stringWithFormat:@"%d", row]];
+    if (pickerView == self.heightPicker) {
+        [self.heightTextField setText:[NSString stringWithFormat:@"%d CM", row]];
+    } else if (pickerView == self.weightPicker) {
+        [self.weightTextField setText:[NSString stringWithFormat:@"%d KG", row]];
     }
 }
 
@@ -633,22 +551,12 @@
 - (void)keyboardWillShowNotification:(NSNotification *)notification
 {
     id firstResponder = [self findFirstResponder];
-    if (firstResponder == self.ageTextField ||
-        firstResponder == self.heightTextField) {
+    if (firstResponder == self.heightTextField ||
+        firstResponder == self.weightTextField) {
        
         if (self.moveDelta == 0) {
+            
             self.moveDelta = 100;
-            
-//            [UIView animateWithDuration:0.3
-//                             animations:^{
-//                                 CGRect frame = self.backgroundView.frame;
-//                                 frame.origin.y -= self.moveDelta;
-//                                 self.backgroundView.frame = frame;
-//                             } completion:^(BOOL finished) {
-//                                 
-//                             }];
-            
-            
             [self.backgroundView setContentOffset:CGPointMake(0, self.moveDelta) animated:YES];
         }
     }
@@ -658,14 +566,6 @@
 {
     
     if (self.moveDelta > 0) {
-//        [UIView animateWithDuration:0.3
-//                         animations:^{
-//                             CGRect frame = self.backgroundView.frame;
-//                             frame.origin.y += self.moveDelta;
-//                             self.backgroundView.frame = frame;
-//                         } completion:^(BOOL finished) {
-//                             
-//                         }];
         
         [self.backgroundView setContentOffset:CGPointMake(0, 0) animated:YES];
         self.moveDelta = 0.0f;
@@ -673,9 +573,7 @@
 }
 
 
-
-
-
+#pragma
 
 /**************************
  返回值:修正后的UIImage，

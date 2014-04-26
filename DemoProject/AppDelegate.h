@@ -14,6 +14,7 @@
 #import "MoreViewController.h"
 #import "PartnerViewController.h"
 #import "LeftViewController.h"
+#import "LoginViewController.h"
 
 
 @interface AppDelegate : BaseAppDelegate

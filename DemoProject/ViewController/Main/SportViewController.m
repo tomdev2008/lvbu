@@ -38,9 +38,8 @@ enum SPORTTYPE {
 	// Do any additional setup after loading the view.
     
     
-    
+    [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
     [self.navigationController setNavigationBarHidden:YES];
-    
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
     
     //自定义导航栏
@@ -93,7 +92,22 @@ enum SPORTTYPE {
     
     
     
+    CGRect backgroundFrame = [adapt getBackgroundViewFrame];
+    self.selfBodyView       = [[UIView alloc] initWithFrame:backgroundFrame];
+    self.partnerBodyView    = [[UIView alloc] initWithFrame:backgroundFrame];
+    self.groupBodyView      = [[UIView alloc] initWithFrame:backgroundFrame];
     
+    [self.selfBodyView setBackgroundColor:[UIColor whiteColor]];
+    [self.partnerBodyView setBackgroundColor:[UIColor greenColor]];
+    [self.groupBodyView setBackgroundColor:[UIColor blueColor]];
+    
+    [self.view addSubview:self.selfBodyView];
+    [self.view addSubview:self.partnerBodyView];
+    [self.view addSubview:self.groupBodyView];
+
+    //默认显示自己
+    [self hideAllBodyView];
+    [self.selfBodyView setHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,10 +118,21 @@ enum SPORTTYPE {
 
 #pragma mark - private
 
+- (void)hideAllBodyView
+{
+    //隐藏所有
+    [self.selfBodyView setHidden:YES];
+    [self.partnerBodyView setHidden:YES];
+    [self.groupBodyView setHidden:YES];
+}
+
+
 - (void)onBack:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+    [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
 }
+
 
 - (void)onRunAction:(id)sender
 {
@@ -117,16 +142,22 @@ enum SPORTTYPE {
         case SPORTTYPE_SELF:
         {
             NSLog(@"RUN self");
+            [self hideAllBodyView];
+            [self.selfBodyView setHidden:NO];
             break;
         }
         case SPORTTYPE_PARTNER:
         {
             NSLog(@"RUN partner");
+            [self hideAllBodyView];
+            [self.partnerBodyView setHidden:NO];
             break;
         }
         case SPORTTYPE_GROUP:
         {
             NSLog(@"RUN group");
+            [self hideAllBodyView];
+            [self.groupBodyView setHidden:NO];
             break;
         }
 

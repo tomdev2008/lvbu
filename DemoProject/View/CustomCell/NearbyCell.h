@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImgView;        //头像
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;                //昵称
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;            //距离
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;                //描述
+
 
 //邀跑
 - (IBAction)onInvate:(id)sender;

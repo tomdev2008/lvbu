@@ -9,10 +9,12 @@
 #import "BaseViewController.h"
 
 @interface SportHistoryViewController : BaseViewController
+<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong)UIImageView *customNavigationBar;
 @property(nonatomic, strong)UIButton *backButton;
 @property(nonatomic, strong)UILabel *titleLabel;
 
+@property(nonatomic, strong)UITableView *historyTableView;
 
 @end

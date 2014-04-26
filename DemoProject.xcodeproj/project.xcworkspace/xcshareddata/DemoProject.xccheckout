@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>5D162336-736D-408D-9218-6E2251E15C2F</string>
+	<string>76DD4760-154C-440E-9114-51041C562077</string>
 	<key>IDESourceControlProjectName</key>
 	<string>DemoProject</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</key>
-		<string>https://github.com/zhouzhiqun/--.git</string>
+		<key>E0AE63FE-EC23-4D3E-B6DF-A4C9285182DA</key>
+		<string>https://github.com/zhouzhiqun/lvbu.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>DemoProject.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</key>
+		<key>E0AE63FE-EC23-4D3E-B6DF-A4C9285182DA</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/zhouzhiqun/--.git</string>
+	<string>https://github.com/zhouzhiqun/lvbu.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</string>
+	<string>E0AE63FE-EC23-4D3E-B6DF-A4C9285182DA</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>BDD1C94C-A0A9-4D8E-BAFC-81C44907BD61</string>
+			<string>E0AE63FE-EC23-4D3E-B6DF-A4C9285182DA</string>
 			<key>IDESourceControlWCCName</key>
 			<string>lvbu</string>
 		</dict>

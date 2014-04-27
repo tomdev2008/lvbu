@@ -239,8 +239,23 @@
     [tipLabel setTextAlignment:NSTextAlignmentCenter];
     
     
+
+    
+    //开始体验
+    self.modifyPwdButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 127, 246, 38)
+                                                title:@"修改密码"
+                                            titleFont:[UIFont systemFontOfSize:18]
+                                           titleColor:[UIColor whiteColor]
+                                               normal:@""
+                                            highlight:@""
+                                             selected:nil
+                                             selector:@selector(onModifyPwd)
+                                               target:self];
+    [self.modifyPwdButton setBackgroundColor:[UIColor blueColor]];
+    
+    
     //完成
-    self.doneButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 127, 246, 40)
+    self.doneButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 75, 246, 40)
                                                 title:@"完成"
                                             titleFont:[UIFont systemFontOfSize:18]
                                            titleColor:[UIColor whiteColor]
@@ -250,18 +265,6 @@
                                              selector:@selector(onDone)
                                                target:self];
     [self.doneButton setBackgroundColor:[UIColor blueColor]];
-    
-//    //开始体验
-//    self.startButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 75, 246, 38)
-//                                                title:@"开始体验"
-//                                            titleFont:[UIFont systemFontOfSize:18]
-//                                           titleColor:[UIColor whiteColor]
-//                                               normal:@""
-//                                            highlight:@""
-//                                             selected:nil
-//                                             selector:@selector(onStart)
-//                                               target:self];
-//    [self.startButton setBackgroundColor:[UIColor blueColor]];
     
     
     
@@ -282,9 +285,9 @@
     [self.backgroundView addSubview:self.birthdayTextField];
     [self.backgroundView addSubview:self.heightTextField];
     [self.backgroundView addSubview:self.weightTextField];
-    
+    [self.backgroundView addSubview:self.modifyPwdButton];
     [self.backgroundView addSubview:self.doneButton];
-    [self.backgroundView addSubview:self.startButton];
+
     
     
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -377,8 +380,11 @@
     [stroreImageData writeToFile:path atomically:YES];
 }
 
-
-
+- (void)onModifyPwd
+{
+    ModifyPwdViewController *modifyPwdVC = [[ModifyPwdViewController alloc] init];
+    [self.navigationController pushViewController:modifyPwdVC animated:YES];
+}
 
 
 - (void)onDone
@@ -419,13 +425,6 @@
         
     }];
     
-}
-
-
-- (void)onStart
-{
-    [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

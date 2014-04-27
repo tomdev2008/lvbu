@@ -242,7 +242,8 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 - (void)onModify
 {
     ModifyUserInfoViewController *modifyUserInfoVC = [[ModifyUserInfoViewController alloc] init];
-    [self presentViewController:modifyUserInfoVC
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:modifyUserInfoVC];
+    [self presentViewController:navigation
                        animated:YES
                      completion:^{
                          

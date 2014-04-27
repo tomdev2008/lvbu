@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#import "User.h"
+#import "ModifyPwdViewController.h"
 
 @interface ModifyUserInfoViewController : BaseViewController
 <UIImagePickerControllerDelegate,UINavigationControllerDelegate, UIGestureRecognizerDelegate,
@@ -31,7 +31,7 @@ UIActionSheetDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 @property(retain, nonatomic)UITextField *weightTextField;       //身高输入框
 
 @property(retain, nonatomic)UIButton *doneButton;
-@property(retain, nonatomic)UIButton *startButton;
+@property(retain, nonatomic)UIButton *modifyPwdButton;
 
 
 @property(nonatomic, retain)UIPickerView *heightPicker;

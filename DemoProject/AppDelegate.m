@@ -48,15 +48,14 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
     [self.rootNav setNavigationBarHidden:YES];
 
 
-    self.mainVC.title      = @"侣步";
-    self.parterVC.title    = @"陪伴";
-    self.moreVC.title      = @"更多";
+//    self.mainVC.title      = @"侣步";
+//    self.parterVC.title    = @"陪伴";
+//    self.moreVC.title      = @"更多";
 
     self.window.rootViewController = self.viewDeckController;
 
-    
     NSString *isFirstLaunch = [[NSUserDefaults standardUserDefaults] stringForKey:KEY_IsFirstLaunch];
-    if (isFirstLaunch == nil) {
+    if (isFirstLaunch == nil /*|| ![isFirstLaunch isEqualToString:@"NO"]*/) {
         
         //第一次启动
         [self firstLanch];
@@ -236,8 +235,8 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
 {
     //正常启动
     SplashViewController *splashVC = [[SplashViewController alloc] init];
-//    [self.rootNav pushViewController:splashVC animated:YES];
-//    self.rootNav.navigationBarHidden = YES;
+    [self.rootNav pushViewController:splashVC animated:YES];
+    self.rootNav.navigationBarHidden = YES;
 
 }
 

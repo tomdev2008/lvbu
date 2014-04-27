@@ -60,12 +60,12 @@
 
 - (void)configApp
 {
-    //判断是否第一次启动
-    NSString *isFirstLaunch = [[NSUserDefaults standardUserDefaults] stringForKey:KEY_IsFirstLaunch];
-    if (isFirstLaunch == nil) {
-        
-        //第一次启动,应用初始化处理
-    }
+//    //判断是否第一次启动
+//    NSString *isFirstLaunch = [[NSUserDefaults standardUserDefaults] stringForKey:KEY_IsFirstLaunch];
+//    if (isFirstLaunch == nil || ![isFirstLaunch isEqualToString:@"NO"]) {
+//        
+//        //第一次启动,应用初始化处理
+//    }
 }
 
 

@@ -32,7 +32,7 @@
     
     [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
     [self.navigationController setNavigationBarHidden:YES];
-    
+    [self.view setBackgroundColor:GlobalNavBarBgColor];
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
     
     //自定义导航栏
@@ -40,7 +40,7 @@
     self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame
                                                             image:nil];
     [self.customNavigationBar setUserInteractionEnabled:YES];
-    [self.customNavigationBar setBackgroundColor:[UIColor blueColor]];
+    [self.customNavigationBar setBackgroundColor:GlobalNavBarBgColor];
     [self.view addSubview:self.customNavigationBar];
     
     self.backButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 60, 32)

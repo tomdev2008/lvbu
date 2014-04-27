@@ -12,26 +12,20 @@
 #define KEY_DefaultLanguage             @"kDefaultLanguage"
 #define Language_English                @"English"
 #define Language_Chinese                @"chinese"
+#define DefaultHeadIconFileName         @"DefaultHeadIcon.png"
 
-//称重单位
-#define unit_kg @"unit_kg"
-#define unit_lb @"unit_lb"
 
 //NSUserDefault键值
 #define KEY_IsFirstLaunch           @"keyIsFirstLaunch"
-#define KEY_defaultScaleUnit        @"KeyDefaultScaleUnit"
-#define KEY_defaultBleScale         @"KeyDefaultBleScale"
-#define KEY_currentUserName         @"KeyCurrentUserName"
+#define KEY_CurrentUserName         @"KeyCurrentUserName"
+#define KEY_CurrentPassword         @"KeyCurrentPassword"
 
 #define KEY_GLOBAL_SESSIONCODE      @"KeyGlobalSessionCode"
 
 
 //通知
-#define ChangeLanguageNotify    @"ChangeLanguageNotify"         //切换语言
+#define ChangeLanguageNotify        @"ChangeLanguageNotify"         //切换语言
 
-
-
-#define DefaultHeadIconFileName         @"DefaultHeadIcon.png"
 
 
 
@@ -49,10 +43,6 @@
 #define MAX_LOGIN_EMAIL_LENGTH          64
 
 
-
-
-
-//com.lanterscale.myWeight
 #define NavigationBarDefaultHeight      ((isIP5Screen) ? 50.0f : 44.0f)
 #define TabbarDefaultHeight             49.0f
 #define GlobalNavBarBgColor  [UIColor colorWithRed:2/255.0 green:82/255.0 blue:152/255.0 alpha:1]

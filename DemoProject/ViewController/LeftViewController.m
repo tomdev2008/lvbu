@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CellFactory.h"
 #import "LeftViewController.h"
+#import "ModifyUserInfoViewController.h"
 #import "SportHistoryViewController.h"
 
 typedef enum {
@@ -24,10 +25,8 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 
 @interface LeftViewController ()
 
-
-
 //table headview
-@property(nonatomic, strong)UIView *headerView;
+@property(nonatomic, strong)UIButton *headerView;
 @property(nonatomic, strong)UIImageView *avatarImgView;
 @property(nonatomic, strong)UILabel *nicknameLabel;
 
@@ -72,9 +71,7 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
     
     
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
-    
-    UIColor *bgColor = [UIColor colorWithRed:222/255.0 green:199/255.0 blue:187/255.0 alpha:1];
-    [self.view setBackgroundColor:bgColor];
+    [self.view setBackgroundColor:GlobalNavBarBgColor];
     
     
     //bodyTableView
@@ -86,8 +83,11 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
     
     
     //表头
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 130)];
+    self.headerView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 130)];
     [self.headerView setBackgroundColor:[UIColor clearColor]];
+    [self.headerView addTarget:self
+                        action:@selector(onModify)
+              forControlEvents:UIControlEventTouchUpInside];
     
     self.avatarImgView = [[UIImageView alloc] initWithFrame:CGRectMake(16, 30, 80, 80)];
     [self.avatarImgView setImage:[UIImage imageNamed:DefaultHeadIconFileName]];
@@ -124,14 +124,18 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
     
     static dispatch_once_t once;
     dispatch_once( &once, ^{
-        
-        
+
         //显示状态栏以及导航栏，重置bodyTableView的frame
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
         AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
         CGRect backViewFrame = [adapt getBackgroundViewFrameWithoutNavigationBar];
         self.bodyTableView.frame = backViewFrame;
     });
+    
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    [self.nicknameLabel setText:[userDefault valueForKey:KEY_CurrentUserName]];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -234,6 +238,16 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 
 
 #pragma mark - private
+
+- (void)onModify
+{
+    ModifyUserInfoViewController *modifyUserInfoVC = [[ModifyUserInfoViewController alloc] init];
+    [self presentViewController:modifyUserInfoVC
+                       animated:YES
+                     completion:^{
+                         
+                     }];
+}
 
 - (void)onLvBu
 {

@@ -214,9 +214,9 @@
 - (void)onDone
 {
     
-    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
-    [self.navigationController pushViewController:userInfoVC animated:YES];
-    return;
+//    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+//    [self.navigationController pushViewController:userInfoVC animated:YES];
+//    return;
 
     
     [self hideKeyboard];
@@ -263,17 +263,57 @@
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         
-        NSLog(@"login.dic = %@", result);
+        NSLog(@"Register.dic = %@", result);
         NSInteger ret = [[result valueForKey:@"ret"] integerValue];
         if (ret == 0) {
-            //注册成功
-            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-            [userDefault setValue:[result valueForKey:@"scode"] forKey:KEY_GLOBAL_SESSIONCODE];
             
-            //跳转到用户信息界面
-            UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
-            [self.navigationController pushViewController:userInfoVC animated:YES];
+            //注册成功,登陆请求
+            NSMutableDictionary *loginBodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+            [loginBodyParams setValue:userName forKey:@"email"];
+            [loginBodyParams setValue:[password MD5Sum] forKey:@"password"];
             
+            HttpRequest *httpReq = [[HttpRequest alloc] init];
+            httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_LOGIN];
+            httpReq.bodyParams = loginBodyParams;
+            [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+                
+                
+                NSLog(@"login.dic = %@", result);
+                NSInteger ret = [[result valueForKey:@"ret"] integerValue];
+                if (ret == 0) {
+                    //登陆成功, 保存用户信息
+                    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+                    NSString *isFirstLaunch = [userDefault valueForKey:KEY_IsFirstLaunch];
+                    if (isFirstLaunch == nil /*|| ![isFirstLaunch isEqualToString:@"NO"]*/) {
+                        [userDefault setValue:@"NO" forKey:KEY_IsFirstLaunch];
+                    }
+                    
+                    [userDefault setValue:userName forKey:KEY_CurrentUserName];
+                    [userDefault setValue:password forKey:KEY_CurrentPassword];
+                    [userDefault setValue:[result valueForKey:@"scode"] forKey:KEY_GLOBAL_SESSIONCODE];
+                    [userDefault synchronize];
+
+                    //跳转到用户信息界面
+                    UserInfoViewController *userInfoVC = [[UserInfoViewController alloc] init];
+                    [self.navigationController pushViewController:userInfoVC animated:YES];
+                } else {
+                    
+                    //登陆失败
+                    NSString *msg = [result valueForKey:@"msg"];
+                    [PRPAlertView showWithTitle:msg
+                                        message:nil
+                                    buttonTitle:@"确定"];
+
+                }
+
+                
+            } Failure:^(NSError *err) {
+
+                //网络错误
+                NSLog(@"error = %@", [err description]);
+                [self reportNetworkError:err];
+            }];
+    
         } else {
             
             //注册失败
@@ -291,6 +331,5 @@
     }];
     
 }
-
 
 @end

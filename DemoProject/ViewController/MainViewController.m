@@ -89,16 +89,15 @@
     // Do any additional setup after loading the view from its nib.
 
     [self.navigationController setNavigationBarHidden:YES];
+    [self.view setBackgroundColor:GlobalNavBarBgColor];
 
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
     
     //自定义导航栏
     CGRect navBarFrame = [adapt getCustomNavigationBarFrame];
-    NSLog(@"navBarFrame = %@", NSStringFromCGRect(navBarFrame));
-    
     self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame image:nil];
     [self.customNavigationBar setUserInteractionEnabled:YES];
-    [self.customNavigationBar setBackgroundColor:[UIColor blueColor]];
+    [self.customNavigationBar setBackgroundColor:GlobalNavBarBgColor];
     [self.view addSubview:self.customNavigationBar];
     
     

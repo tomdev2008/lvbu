@@ -136,6 +136,10 @@
 + (NSData *)useAES256Encrypt:(NSString *)plainText;             //加密
 + (NSString *)useAES256Decrypt:(NSData *)cipherData;            //解密
 
+
++ (NSString *)getAvatarFilePath;
+
+
 @end
 
 

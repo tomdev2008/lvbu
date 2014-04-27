@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import "User.h"
 
-@interface UserInfoViewController : BaseViewController
+@interface ModifyUserInfoViewController : BaseViewController
 <UIImagePickerControllerDelegate,UINavigationControllerDelegate, UIGestureRecognizerDelegate,
 UIActionSheetDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 {
@@ -19,7 +19,7 @@ UIActionSheetDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property(retain, nonatomic) UIScrollView *backgroundView;                  //背景
 @property(retain, nonatomic) UIView *customNavigationBar;                   //导航栏背景
-//@property(retain, nonatomic) UIButton *backButton;                          //返回按钮
+@property(retain, nonatomic) UIButton *cancelButton;                        //取消按钮
 @property(retain, nonatomic) UILabel *titleLabel;                           //标题栏
 
 @property(retain, nonatomic)UIButton *avatarButton;             //头像

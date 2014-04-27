@@ -232,6 +232,8 @@
             default:
                 break;
         }
+    } else {
+        [UIFactory showAlert:[UIFactory localized:@"Request_ServerError"]];
     }
 }
 
@@ -241,7 +243,7 @@
 {
     CommonVariable *commVars = [CommonVariable shareCommonVariable];
     commVars.curUser = user;
-    [[NSUserDefaults standardUserDefaults] setValue:commVars.curUser.name forKey:KEY_currentUserName];
+    [[NSUserDefaults standardUserDefaults] setValue:commVars.curUser.name forKey:KEY_CurrentUserName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -251,7 +253,7 @@
 
     CommonVariable *commVars = [CommonVariable shareCommonVariable];
     if (commVars.curUser == nil) {
-        NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_currentUserName];
+        NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_CurrentUserName];
         NSArray *userArr = [User findByAttribute:@"name" withValue:username];
         if ([userArr count] > 0) {
             commVars.curUser =  [userArr objectAtIndex:0];

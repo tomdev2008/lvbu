@@ -10,8 +10,10 @@
 #define HttpConfig_h
 
 
-#define BASE_URL @"http://api.reallybe.com"
+//#define BASE_URL @"http://api.reallybe.com"
 //#define BASE_URL @"http://api.maipal.com"
+#define BASE_URL @"http://114.215.191.238"
+
 
 //注册
 #define URL_REGISTER                @"/v1/user/registe"

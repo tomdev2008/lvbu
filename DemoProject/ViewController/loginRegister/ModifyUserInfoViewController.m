@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 zzc. All rights reserved.
 //
 
-#import "UserInfoViewController.h"
+#import "ModifyUserInfoViewController.h"
 #import "AppCore.h"
 
-@interface UserInfoViewController ()
+@interface ModifyUserInfoViewController ()
 
 @property(nonatomic, retain)NSDateFormatter *dateFormatter;
 
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation UserInfoViewController
+@implementation ModifyUserInfoViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,19 +66,19 @@
     
     
     //返回按钮
-//    self.backButton = [UIFactory createButtonWithRect:CGRectMake(0, 0, 60, NavigationBarDefaultHeight)
-//                                               normal:@""
-//                                            highlight:@""
-//                                             selector:@selector(onBack)
-//                                               target:self];
-//    [self.backButton setTitle:@"返回" forState:UIControlStateNormal];
-//    [self.backButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-//    [self.customNavigationBar addSubview:self.backButton];
+    self.cancelButton = [UIFactory createButtonWithRect:CGRectMake(0, 0, 60, NavigationBarDefaultHeight)
+                                               normal:@""
+                                            highlight:@""
+                                             selector:@selector(onBack)
+                                               target:self];
+    [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    [self.cancelButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.customNavigationBar addSubview:self.cancelButton];
     
     
     //标题
     self.titleLabel = [UIFactory createLabelWith:CGRectMake(80, 0, 160, NavigationBarDefaultHeight)
-                                            text:@"个人信息"
+                                            text:@"修改个人信息"
                                             font:[UIFont systemFontOfSize:18]
                                        textColor:[UIColor colorWithHex:@"0xffffff"]
                                  backgroundColor:[UIColor clearColor]];
@@ -251,17 +251,17 @@
                                                target:self];
     [self.doneButton setBackgroundColor:[UIColor blueColor]];
     
-    //开始体验
-    self.startButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 75, 246, 38)
-                                                title:@"开始体验"
-                                            titleFont:[UIFont systemFontOfSize:18]
-                                           titleColor:[UIColor whiteColor]
-                                               normal:@""
-                                            highlight:@""
-                                             selected:nil
-                                             selector:@selector(onStart)
-                                               target:self];
-    [self.startButton setBackgroundColor:[UIColor blueColor]];
+//    //开始体验
+//    self.startButton = [UIFactory createButtonWithRect:CGRectMake((320 - 246)/2, CGRectGetHeight(backViewFrame) - 75, 246, 38)
+//                                                title:@"开始体验"
+//                                            titleFont:[UIFont systemFontOfSize:18]
+//                                           titleColor:[UIColor whiteColor]
+//                                               normal:@""
+//                                            highlight:@""
+//                                             selected:nil
+//                                             selector:@selector(onStart)
+//                                               target:self];
+//    [self.startButton setBackgroundColor:[UIColor blueColor]];
     
     
     
@@ -321,11 +321,11 @@
 
 #pragma mark - private
 
-
-
 - (void)onBack
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 
@@ -413,8 +413,11 @@
         NSLog(@"error = %@", [err description]);
     }];
     
+    
     [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
     
 }
 
@@ -481,8 +484,7 @@
         default:
             break;
     }
-    
-    
+
 }
 
 

@@ -32,15 +32,16 @@
 	// Do any additional setup after loading the view.
 
     [self.navigationController setNavigationBarHidden:YES];
-    
+    [self.view setBackgroundColor:GlobalNavBarBgColor];
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
+
     
     //自定义导航栏
     CGRect navBarFrame = [adapt getCustomNavigationBarFrame];
     self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame
                                                             image:nil];
     [self.customNavigationBar setUserInteractionEnabled:YES];
-    [self.customNavigationBar setBackgroundColor:[UIColor blueColor]];
+    [self.customNavigationBar setBackgroundColor:GlobalNavBarBgColor];
     [self.view addSubview:self.customNavigationBar];
     
     self.backButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 60, 32)
@@ -52,7 +53,7 @@
     [self.backButton setTitle:@"返回" forState:UIControlStateNormal];
     [self.customNavigationBar addSubview:self.backButton];
     
-    self.titleLabel = [UIFactory createLabelWith:CGRectMake(160 - 40, 0, 80, NavigationBarDefaultHeight)
+    self.titleLabel = [UIFactory createLabelWith:CGRectMake(80, 0, 160, NavigationBarDefaultHeight)
                                             text:@"运动历史记录"
                                             font:[UIFont systemFontOfSize:18]
                                        textColor:[UIColor redColor]

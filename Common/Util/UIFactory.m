@@ -559,4 +559,16 @@ static UIFactory* factory;
     return res;
 }
 
+
+
++ (NSString *)getAvatarFilePath
+{
+    NSString *avatarFileName = [NSString stringWithFormat:@"userAvatar.png"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory,
+                                                         NSUserDomainMask,
+                                                         YES);
+    return [[paths objectAtIndex:0] stringByAppendingPathComponent:avatarFileName];
+}
+
+
 @end

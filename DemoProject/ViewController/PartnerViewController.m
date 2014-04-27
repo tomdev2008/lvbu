@@ -41,24 +41,7 @@
         
         self.partnerArr = [[NSMutableArray alloc] initWithCapacity:0];
         self.nearbyArr = [[NSMutableArray alloc] initWithCapacity:0];
-        
-        
-        //获取泡友
-        NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-        [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE]
-                      forKey:@"scode"];
-        
-        
-        HttpRequest *httpReq = [[HttpRequest alloc] init];
-        httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
-        httpReq.bodyParams = bodyParams;
-        [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
-            
-            NSLog(@"result = %@", result);
-            NSLog(@"testGetFans.msg = %@", [result valueForKey:@"msg"]);
-        } Failure:^(NSError *err) {
-            NSLog(@"error = %@", [err description]);
-        }];
+
         
     }
     return self;
@@ -72,10 +55,11 @@
     self.viewDeckController.delegate = self;
     self.viewDeckController.panningMode = IIViewDeckNoPanning;
     [self.navigationController setNavigationBarHidden:YES];
+    [self.view setBackgroundColor:GlobalNavBarBgColor];
     
-    UIImageView *fullBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"MainView_background.png"]];
-    fullBackgroundImageView.frame = [[UIScreen mainScreen] bounds];
-    [self.view addSubview:fullBackgroundImageView];
+//    UIImageView *fullBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"MainView_background.png"]];
+//    fullBackgroundImageView.frame = [[UIScreen mainScreen] bounds];
+//    [self.view addSubview:fullBackgroundImageView];
     
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
     
@@ -85,7 +69,7 @@
     self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame
                                                             image:nil];
     [self.customNavigationBar setUserInteractionEnabled:YES];
-    [self.customNavigationBar setBackgroundColor:[UIColor blueColor]];
+    [self.customNavigationBar setBackgroundColor:GlobalNavBarBgColor];
     [self.view addSubview:self.customNavigationBar];
     
     
@@ -170,6 +154,28 @@
 
     [self.bodyScrollView addSubview:self.partTableView];
     [self.bodyScrollView addSubview:self.nearbyTableView];
+    
+    
+    
+    
+    
+    
+    //获取泡友
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE]
+                  forKey:@"scode"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        
+        NSLog(@"result = %@", result);
+        NSLog(@"testGetFans.msg = %@", [result valueForKey:@"msg"]);
+        
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
     
 
 }
@@ -282,7 +288,6 @@
      Code to actually load more data goes here.
      
      */
-
     pullTableView.pullTableIsLoadingMore = NO;
 }
 
@@ -290,12 +295,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 1;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    NSInteger row = 0;
+    if (tableView == self.partTableView) {
+        row = [self.partnerArr count];
+    } else {
+        row = [self.nearbyArr count];
+    }
+    return row;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -306,53 +317,39 @@
     UITableViewCell *cell = nil;
     if (tableView == self.partTableView) {
         
-        
+        //跑友
         cell = [tableView dequeueReusableCellWithIdentifier:partCellIdentifier];
         if(!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:partCellIdentifier];
         }
-        cell.textLabel.text = [NSString stringWithFormat:@"Row %i", indexPath.row];
+        cell.textLabel.text = @"partner";
     } else {
+        
+        //附近的人
         cell = [tableView dequeueReusableCellWithIdentifier:nearbyCellIdentifier];
         if(!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nearbyCellIdentifier];
         }
-        cell.textLabel.text = [NSString stringWithFormat:@"Row %i", indexPath.row];
+        cell.textLabel.text = @"nearby";
     }
 
     return cell;
 }
 
-- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (tableView == self.partTableView) {
-        return [NSString stringWithFormat:@"parterTable Section %i  here!", section];
-    } else {
-        return [NSString stringWithFormat:@"nearbyTable Section %i  here!", section];
-    }
-    
-
-}
-
-//- (NSString *) tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-//{
-//    return [NSString stringWithFormat:@"Section %i ends here!", section];
-//    
-//}
 
 #pragma mark - PullTableViewDelegate
 
 - (void)pullTableViewDidTriggerRefresh:(PullTableView *)pullTableView
 {
     
-    [self performSelector:@selector(refreshTable:) withObject:pullTableView afterDelay:3.0f];
+    [self performSelector:@selector(refreshTable:) withObject:pullTableView afterDelay:2.0f];
 
 }
 
 - (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
 {
 
-    [self performSelector:@selector(loadMoreDataToTable:) withObject:pullTableView afterDelay:1.0f];
+    [self performSelector:@selector(loadMoreDataToTable:) withObject:pullTableView afterDelay:2.0f];
 }
 
 @end

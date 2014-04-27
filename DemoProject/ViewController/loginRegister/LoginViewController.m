@@ -208,8 +208,8 @@
 - (void)onLogin
 {
     [self hideKeyboard];
-    NSString *userName = self.userNameTextField.text;
-    NSString *password = self.passwordTextField.text;
+    NSString *userName = [self.userNameTextField.text trim];
+    NSString *password = [self.passwordTextField.text trim];
     
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:userName forKey:@"email"];
@@ -223,9 +223,21 @@
         NSLog(@"login.dic = %@", result);
         NSInteger ret = [[result valueForKey:@"ret"] integerValue];
         if (ret == 0) {
-            //登陆成功
+            
+            //登陆成功, 保存用户信息
             NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+            NSString *isFirstLaunch = [userDefault valueForKey:KEY_IsFirstLaunch];
+            if (isFirstLaunch == nil /*|| ![isFirstLaunch isEqualToString:@"NO"]*/) {
+                [userDefault setValue:@"NO" forKey:KEY_IsFirstLaunch];
+            }
+            
+            [userDefault setValue:userName forKey:KEY_CurrentUserName];
+            [userDefault setValue:password forKey:KEY_CurrentPassword];
             [userDefault setValue:[result valueForKey:@"scode"] forKey:KEY_GLOBAL_SESSIONCODE];
+            [userDefault synchronize];
+            
+            [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
+            [self.navigationController popToRootViewControllerAnimated:YES];
             
         } else {
             

@@ -34,11 +34,11 @@
     
     [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
     [self.navigationController setNavigationBarHidden:YES];
- 
+    [self.view setBackgroundColor:GlobalNavBarBgColor];
     
-    UIImageView *fullBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"MainView_background.png"]];
-    fullBackgroundImageView.frame = [[UIScreen mainScreen] bounds];
-    [self.view addSubview:fullBackgroundImageView];
+//    UIImageView *fullBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"MainView_background.png"]];
+//    fullBackgroundImageView.frame = [[UIScreen mainScreen] bounds];
+//    [self.view addSubview:fullBackgroundImageView];
     
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
     
@@ -48,7 +48,7 @@
     self.customNavigationBar = [UIFactory createImageViewWithRect:navBarFrame
                                                             image:nil];
     [self.customNavigationBar setUserInteractionEnabled:YES];
-    [self.customNavigationBar setBackgroundColor:[UIColor clearColor]];
+    [self.customNavigationBar setBackgroundColor:GlobalNavBarBgColor];
     [self.view addSubview:self.customNavigationBar];
     
     self.backButton = [UIFactory createButtonWithRect:CGRectMake(16, 5, 60, 34)
@@ -64,6 +64,7 @@
     
     CGRect backgroundFrame = [adapt getBackgroundViewFrame];
     self.backgroundView = [[UIView alloc] initWithFrame:backgroundFrame];
+    [self.backgroundView setBackgroundColor:[UIColor whiteColor]];
     [self.backgroundView setUserInteractionEnabled:YES];
     [self.view addSubview:self.backgroundView];
     
@@ -74,7 +75,7 @@
                                                         font:[UIFont systemFontOfSize:18]
                                                        color:[UIColor redColor]
                                                     delegate:self];
-    
+    self.inputTextfiled.borderStyle = UITextBorderStyleNone;
     [self.backgroundView addSubview:self.inputTextfiled];
     
     
@@ -90,7 +91,6 @@
     
     [self.backgroundView addSubview:self.searchButton];
     
-
 }
 
 - (void)didReceiveMemoryWarning

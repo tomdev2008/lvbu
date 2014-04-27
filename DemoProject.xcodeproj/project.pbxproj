@@ -105,6 +105,7 @@
 		6ADC12D2186C8E65001EC9C5 /* JoyMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC12C8186C8E65001EC9C5 /* JoyMsg.m */; };
 		6ADC12D4186C8E65001EC9C5 /* MsgContentCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC12CC186C8E65001EC9C5 /* MsgContentCodec.m */; };
 		6ADC12D5186C8E65001EC9C5 /* MsgMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC12CE186C8E65001EC9C5 /* MsgMgr.m */; };
+		6ADF1EB6190CB55D00698296 /* ModifyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF1EB5190CB55D00698296 /* ModifyUserInfoViewController.m */; };
 		6AEB5BD5186D5AEB00F82AAA /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB5BD4186D5AEB00F82AAA /* HttpRequest.m */; };
 		6AF27E5B190B9604000F0C80 /* UserMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF27E5A190B9604000F0C80 /* UserMsg.m */; };
 		6AF4EB7E190B416300281ED5 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF4EB7D190B416300281ED5 /* LeftViewController.m */; };
@@ -388,6 +389,8 @@
 		6ADC12CD186C8E65001EC9C5 /* MsgMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgMgr.h; sourceTree = "<group>"; };
 		6ADC12CE186C8E65001EC9C5 /* MsgMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MsgMgr.m; sourceTree = "<group>"; };
 		6ADC12D1186C8E65001EC9C5 /* MsgTypeDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgTypeDefine.h; sourceTree = "<group>"; };
+		6ADF1EB4190CB55D00698296 /* ModifyUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyUserInfoViewController.h; sourceTree = "<group>"; };
+		6ADF1EB5190CB55D00698296 /* ModifyUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyUserInfoViewController.m; sourceTree = "<group>"; };
 		6AEB5BD3186D5AEB00F82AAA /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
 		6AEB5BD4186D5AEB00F82AAA /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		6AEB5BD6186D6A5D00F82AAA /* HttpConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpConfig.h; sourceTree = "<group>"; };
@@ -724,6 +727,8 @@
 				6A2342EA190C184D00BB268E /* RegisterViewController.m */,
 				6A2342E6190BEFB800BB268E /* UserInfoViewController.h */,
 				6A2342E7190BEFB800BB268E /* UserInfoViewController.m */,
+				6ADF1EB4190CB55D00698296 /* ModifyUserInfoViewController.h */,
+				6ADF1EB5190CB55D00698296 /* ModifyUserInfoViewController.m */,
 			);
 			path = loginRegister;
 			sourceTree = "<group>";
@@ -846,11 +851,6 @@
 		6AAF7567186C6DBD0026252F /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				6A2342E2190BDC9F00BB268E /* loginRegister */,
-				E71296351900057C0094B614 /* Main */,
-				E71296361900057C0094B614 /* More */,
-				E71296371900057C0094B614 /* Partner */,
-				E70F5EC218F3EFC60007A598 /* Guide */,
 				E7E7FE3718D7E1DD002B8FF3 /* MainViewController.h */,
 				E7E7FE3818D7E1DD002B8FF3 /* MainViewController.m */,
 				E712962C18FFF79C0094B614 /* MoreViewController.h */,
@@ -861,6 +861,11 @@
 				6AF4EB7D190B416300281ED5 /* LeftViewController.m */,
 				E7F5972219068DE8008AC40A /* LeftViewController.h.bak */,
 				E7F5972319068DE8008AC40A /* LeftViewController.m.bak */,
+				6A2342E2190BDC9F00BB268E /* loginRegister */,
+				E71296351900057C0094B614 /* Main */,
+				E71296361900057C0094B614 /* More */,
+				E71296371900057C0094B614 /* Partner */,
+				E70F5EC218F3EFC60007A598 /* Guide */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1766,6 +1771,7 @@
 				6AFF8928186C65DC004032C3 /* NSFileManager+SSToolkitAdditions.m in Sources */,
 				6AFF8939186C65DC004032C3 /* Reachability.m in Sources */,
 				6AAF75CD186C72D80026252F /* AFXMLRequestOperation.m in Sources */,
+				6ADF1EB6190CB55D00698296 /* ModifyUserInfoViewController.m in Sources */,
 				E712963018FFF79C0094B614 /* MoreViewController.m in Sources */,
 				E705B41319023A360067C30E /* ViewFactory.m in Sources */,
 				6AFF892E186C65DC004032C3 /* UIColor+SSToolkitAdditions.m in Sources */,

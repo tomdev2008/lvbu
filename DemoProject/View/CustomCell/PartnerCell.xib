@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="9tO-fg-BVq" customClass="PartnerCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PartnerCell" rowHeight="60" id="9tO-fg-BVq" customClass="PartnerCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9tO-fg-BVq" id="Yej-Dd-w19">
@@ -43,9 +43,6 @@
                         <state key="normal" title="邀跑">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <connections>
-                            <action selector="onInvate:" destination="9tO-fg-BVq" eventType="touchUpInside" id="jnN-TN-ExS"/>
-                        </connections>
                     </button>
                 </subviews>
             </tableViewCellContentView>
@@ -53,6 +50,7 @@
                 <outlet property="avatarImgView" destination="J1h-hs-u0q" id="5Qh-ez-hAr"/>
                 <outlet property="descLabel" destination="orS-DC-tnU" id="hlM-OK-PMz"/>
                 <outlet property="distanceLabel" destination="m7X-6s-iLN" id="fuk-G9-TSR"/>
+                <outlet property="inviteButton" destination="90K-CQ-bdk" id="DPV-q7-rKw"/>
                 <outlet property="nameLabel" destination="vwV-Eb-BGK" id="yl9-Zy-njX"/>
             </connections>
         </tableViewCell>

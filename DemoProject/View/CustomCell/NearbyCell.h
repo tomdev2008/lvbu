@@ -16,9 +16,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;                //昵称
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;            //距离
 
+@property (weak, nonatomic) IBOutlet UIButton *inviteButton;
 
-//邀跑
-- (IBAction)onInvate:(id)sender;
-- (IBAction)onAdd:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
+
+
 
 @end

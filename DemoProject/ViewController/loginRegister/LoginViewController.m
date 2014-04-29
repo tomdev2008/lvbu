@@ -85,7 +85,7 @@
                                                            font:[UIFont systemFontOfSize:20]
                                                           color:[UIColor blueColor]
                                                        delegate:self];
-    [self.userNameTextField setText:@"hello@mkm.com"];
+    [self.userNameTextField setText:@"hello123@mkm.com"];
     [self.backgroundView addSubview:self.userNameTextField];
     
     
@@ -103,7 +103,7 @@
                                                            font:[UIFont systemFontOfSize:20]
                                                           color:[UIColor blueColor]
                                                        delegate:self];
-    [self.passwordTextField setText:@"hello@mkm.com"];
+    [self.passwordTextField setText:@"hello123@mkm.com"];
     [self.backgroundView addSubview:self.passwordTextField];
     
     

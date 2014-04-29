@@ -7,9 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "CellFactory.h"
 
 @interface PartnerViewController : BaseViewController
-<UITableViewDataSource, PullTableViewDelegate, UIScrollViewDelegate, IIViewDeckControllerDelegate>
+<UITableViewDataSource, UITableViewDelegate, PullTableViewDelegate, UIScrollViewDelegate, IIViewDeckControllerDelegate>
 
 @property(nonatomic, strong)UIImageView *customNavigationBar;
 @property(nonatomic, strong)UIButton    *menuButton;

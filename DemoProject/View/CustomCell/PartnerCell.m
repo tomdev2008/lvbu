@@ -26,6 +26,5 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)onInvate:(id)sender {
-}
+
 @end

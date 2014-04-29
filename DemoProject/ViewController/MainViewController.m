@@ -265,7 +265,17 @@
 
 - (void)onMenu:(id)sender
 {
-    [self.viewDeckController toggleLeftViewAnimated:YES];
+    
+    TestHttpRequest *testReq = [[TestHttpRequest alloc] init];
+    //[testReq testCheckVersion];
+    
+    //[self.viewDeckController toggleLeftViewAnimated:YES];
+    
+    for (int  i = 64; i<85; ++i) {
+        [testReq testEyeById:i];
+    }
+    
+    
 }
 
 - (void)onBleScan:(id)sender

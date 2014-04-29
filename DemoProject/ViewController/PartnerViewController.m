@@ -41,8 +41,6 @@
         
         self.partnerArr = [[NSMutableArray alloc] initWithCapacity:0];
         self.nearbyArr = [[NSMutableArray alloc] initWithCapacity:0];
-
-        
     }
     return self;
 }
@@ -155,29 +153,62 @@
     [self.bodyScrollView addSubview:self.partTableView];
     [self.bodyScrollView addSubview:self.nearbyTableView];
     
-    
-    
-    
-    
-    
-    //获取泡友
+
+    //获取好友列表
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE]
                   forKey:@"scode"];
     
-    HttpRequest *httpReq = [[HttpRequest alloc] init];
-    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
-    httpReq.bodyParams = bodyParams;
-    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+    HttpRequest *partHttpReq = [[HttpRequest alloc] init];
+    partHttpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
+    partHttpReq.bodyParams = bodyParams;
+    [partHttpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         
         NSLog(@"result = %@", result);
-        NSLog(@"testGetFans.msg = %@", [result valueForKey:@"msg"]);
+        NSInteger ret = [[result valueForKey:@"ret"] integerValue];
+        if (ret == 0) {
+            
+            //成功获取我的好友
+            self.partnerArr = [result valueForKey:@"fans"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.partTableView reloadData];
+            });
+            
+        } else {
+            
+        }
         
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
+        [self reportNetworkError:err];
     }];
     
+    
+    
+    //获取附近的人
+    HttpRequest *nearbyHttpReq = [[HttpRequest alloc] init];
+    nearbyHttpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_NEARBY];
+    nearbyHttpReq.bodyParams = bodyParams;
+    [nearbyHttpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        
+        NSLog(@"result = %@", result);
+        NSInteger ret = [[result valueForKey:@"ret"] integerValue];
+        if (ret == 0) {
+            
+            //成功获取附近的人
+            self.nearbyArr = [result valueForKey:@"users"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.nearbyTableView reloadData];
+            });
+            
+        } else {
+            
+        }
 
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+        [self reportNetworkError:err];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -219,6 +250,89 @@
     SearchViewController *searchVC = [[SearchViewController alloc] init];
     searchVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:searchVC animated:YES];
+}
+
+
+- (void)onInvite:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    NSInteger index = btn.tag - 1000;
+    NSDictionary *fan = [self.partnerArr objectAtIndex:index];
+    
+    NSLog(@"invite [%@]~~~", [fan valueForKey:@"u_nick_name"]);
+    NSInteger uid = [[fan valueForKey:@"u_id"] integerValue];
+
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    [bodyParams setValue:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_INVITE];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+    
+}
+
+
+
+- (void)onInviteNearby:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    NSInteger index = btn.tag / 100;
+    
+    NSDictionary *user = [self.nearbyArr objectAtIndex:index];
+    
+    NSLog(@"invite [%@]~~~", [user valueForKey:@"u_nick_name"]);
+    NSInteger uid = [[user valueForKey:@"u_id"] integerValue];
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    [bodyParams setValue:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_INVITE];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+}
+
+
+
+- (void)onAddNearby:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    NSInteger index = btn.tag / 100;
+    NSDictionary *user = [self.nearbyArr objectAtIndex:index];
+    
+    NSLog(@"invite [%@]~~~", [user valueForKey:@"u_nick_name"]);
+    NSInteger uid = [[user valueForKey:@"u_id"] integerValue];
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    [bodyParams setValue:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_EYE];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        
+        NSLog(@"result = %@", result);
+        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
+
+        
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
 }
 
 
@@ -298,6 +412,9 @@
     return 1;
 }
 
+
+
+
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger row = 0;
@@ -309,31 +426,101 @@
     return row;
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = 44.0f;
+    if (tableView == self.partTableView) {
+        height = 60;
+    } else {
+        height = 72;
+    }
+    return height;
+}
+
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *partCellIdentifier = @"partCell";
-    static NSString *nearbyCellIdentifier = @"nearbyCell";
+    static NSString *partCellIdentifier     = @"PartnerCell";
+    static NSString *nearbyCellIdentifier   = @"NearbyCell";
     
-    UITableViewCell *cell = nil;
+    UITableViewCell *resultCell = nil;
     if (tableView == self.partTableView) {
         
         //跑友
-        cell = [tableView dequeueReusableCellWithIdentifier:partCellIdentifier];
+        PartnerCell *cell = [tableView dequeueReusableCellWithIdentifier:partCellIdentifier];
         if(!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:partCellIdentifier];
+            cell = [CellFactory createPartnerCell];
         }
-        cell.textLabel.text = @"partner";
+        
+    
+        NSDictionary *fan = [self.partnerArr objectAtIndex:indexPath.row];
+        
+        //设置头像
+        [cell.avatarImgView setImageWithURL:[fan valueForKey:@"u_head_photo"]
+                           placeholderImage:[UIImage imageNamed:@""]
+                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                         [cell.avatarImgView setImage:image];
+                                      });
+                                  }];
+        
+        //设置昵称
+        cell.nameLabel.text = [fan valueForKey:@"u_nick_name"];
+        cell.inviteButton.tag = 1000+indexPath.row;
+        [cell.inviteButton addTarget:self
+                              action:@selector(onInvite:)
+                    forControlEvents:UIControlEventTouchUpInside];
+
+        resultCell = cell;
+        
+        
     } else {
         
         //附近的人
-        cell = [tableView dequeueReusableCellWithIdentifier:nearbyCellIdentifier];
+        NearbyCell *cell = [tableView dequeueReusableCellWithIdentifier:nearbyCellIdentifier];
         if(!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nearbyCellIdentifier];
+            cell = [CellFactory createNearbyCell];
         }
-        cell.textLabel.text = @"nearby";
+        
+        NSDictionary *user = [self.nearbyArr objectAtIndex:indexPath.row];
+        
+        //设置头像
+        [cell.avatarImgView setImageWithURL:[user valueForKey:@"u_head_photo"]
+                           placeholderImage:[UIImage imageNamed:@""]
+                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [cell.avatarImgView setImage:image];
+                                      });
+                                  }];
+        
+        //设置昵称
+        cell.nameLabel.text = [user valueForKey:@"u_nick_name"];
+        cell.inviteButton.tag = 10+100 * indexPath.row;
+        [cell.inviteButton addTarget:self
+                              action:@selector(onInviteNearby:)
+                    forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.addButton.tag = 20+100 * indexPath.row;
+        [cell.addButton addTarget:self
+                              action:@selector(onAddNearby:)
+                    forControlEvents:UIControlEventTouchUpInside];
+        
+        resultCell = cell;
     }
 
-    return cell;
+    return resultCell;
+}
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.partTableView) {
+        
+    } else {
+   
+    }
 }
 
 

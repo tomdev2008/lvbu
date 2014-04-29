@@ -17,7 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;            //距离
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;                //描述
 
-//邀跑
-- (IBAction)onInvate:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *inviteButton;
+
 
 @end

@@ -14,6 +14,7 @@
 
 - (void)testRegister;
 
+- (void)testCheckVersion;
 
 - (void)testModifyInfo;
 
@@ -32,6 +33,7 @@
 - (void)testLogoutByGet;
 
 - (void)testEye;
+- (void)testEyeById:(NSInteger)uid;
 
 - (void)testCancelEye;
 

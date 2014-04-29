@@ -1945,7 +1945,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: SHIJIE GUAN (CHCNTSPDWP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ShiChao Lin (PD9LK97T3M)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SHIJIE GUAN (CHCNTSPDWP)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoProject/DemoProject-Prefix.pch";
@@ -1966,7 +1966,7 @@
 					"-lxml2",
 				);
 				PRODUCT_NAME = "侣步";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C941B4C6-4E82-4294-AB24-3AA6F74B059E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2 \"${PROJECT_DIR}/Vendor/CorePlot/**";
@@ -1979,7 +1979,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoProject/DemoProject-Prefix.pch";
@@ -2000,7 +2000,7 @@
 					"-lxml2",
 				);
 				PRODUCT_NAME = "侣步";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C941B4C6-4E82-4294-AB24-3AA6F74B059E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2 \"${PROJECT_DIR}/Vendor/CorePlot/**";

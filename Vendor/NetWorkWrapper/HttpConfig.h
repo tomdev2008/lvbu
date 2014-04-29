@@ -48,6 +48,9 @@
 //取好友列表
 #define URL_GETFANS                 @"/v1/fans/getfans"
 
+//附近的人
+#define URL_NEARBY                  @"/v1/around/near"
+
 //查找用户列表
 #define URL_SEARCHUSER              @"/v1/fans/getusers"
 

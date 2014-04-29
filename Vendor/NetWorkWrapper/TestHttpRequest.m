@@ -13,8 +13,8 @@
 #import "HttpRequest.h"
 
 
-#define UserName @"hello@mkm.com"
-#define Password @"hello@mkm.com"
+#define UserName @"hello123@mkm.com"
+#define Password @"hello123@mkm.com"
 
 @implementation TestHttpRequest
 
@@ -41,6 +41,20 @@
 }
 
 
+
+- (void)testCheckVersion
+{
+    
+
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = @"http://itunes.apple.com/lookup?id=535715926";
+    
+    [httpReq sendGetJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+}
 
 - (void)testModifyInfo
 {
@@ -271,30 +285,33 @@
 
 
 
-
-- (void)testCancelEye
+- (void)testEyeById:(NSInteger)uid
 {
+    
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
-    [bodyParams setValue:@"79" forKey:@"uid"];
+    [bodyParams setValue:[NSNumber numberWithInt:uid] forKey:@"uid"];
     
     HttpRequest *httpReq = [[HttpRequest alloc] init];
-    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_CANCEL_EYE];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_EYE];
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
-        NSLog(@"testCancelEye.msg = %@", [result valueForKey:@"msg"]);
+        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
+    
 }
+
+
+
 
 - (void)testGetFans
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
 
-    
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
     httpReq.bodyParams = bodyParams;
@@ -306,6 +323,9 @@
     }];
     
 }
+
+
+
 
 
 

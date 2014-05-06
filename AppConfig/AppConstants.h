@@ -43,7 +43,7 @@
 #define MAX_LOGIN_EMAIL_LENGTH          64
 
 
-#define NavigationBarDefaultHeight      ((isIP5Screen) ? 50.0f : 44.0f)
+#define NavigationBarDefaultHeight      ((isIP5Screen) ? 44.0f : 44.0f)
 #define TabbarDefaultHeight             49.0f
 #define GlobalNavBarBgColor  [UIColor colorWithRed:2/255.0 green:82/255.0 blue:152/255.0 alpha:1]
 

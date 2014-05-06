@@ -23,18 +23,9 @@
 
 @property(nonatomic, strong)TestBLEAdapter *testBleAdapter;
 @property(nonatomic, strong)HttpRequest *testHttp;
-@property(nonatomic, strong)SportHistoryViewController *sportHistoryVC;
-
-- (void)onBleScan:(id)sender;
-- (void)onShowKm:(id)sender;
-- (void)onShowCal:(id)sender;
-- (void)onShowStep:(id)sender;
-- (void)onFriend:(id)sender;
-- (void)onNearby:(id)sender;
-- (void)onStart:(id)sender;
-
 
 - (void)annotationAction;
+
 @end
 
 @implementation MainViewController
@@ -45,40 +36,6 @@
     if (self) {
         // Custom initialization
         
-//        self.testBleAdapter = [[TestBLEAdapter alloc] init];
-//        
-//        
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(handleCentralManagerStatePoweredOn:)
-//                                                     name:CentralManagerStatePoweredOnNotify
-//                                                   object:nil];
-//        
-//        
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(handleDidDiscoverPeripheral:)
-//                                                     name:DidDiscoverPeripheralNotify
-//                                                   object:nil];
-//        
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(handleDidConnectPeripheralSuccess:)
-//                                                     name:DidConnectPeripheralSuccessNotify
-//                                                   object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(handleDidFailToConnectPeripheral:)
-//                                                     name:DidFailToConnectPeripheralNotify
-//                                                   object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(handleDidDisconnectPeripheral:)
-//                                                     name:DidDisconnectPeripheralNotify
-//                                                   object:nil];
-//        
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(handleGetMacAddress:)
-//                                                     name:GetMacAddressNotify
-//                                                   object:nil];
-        
-        
-
     }
     return self;
 }
@@ -101,27 +58,16 @@
     [self.view addSubview:self.customNavigationBar];
     
     
-
-    self.menuButton = [UIFactory createButtonWithRect:CGRectMake(4, 6, 60, 32)
-                                              normal:@""
-                                           highlight:@""
-                                            selector:@selector(onMenu:)
-                                              target:self];
-    [self.menuButton setBackgroundColor:[UIColor redColor]];
-    [self.menuButton setTitle:@"菜单" forState:UIControlStateNormal];
-    [self.customNavigationBar addSubview:self.menuButton];
-    
-    self.bleButton = [UIFactory createButtonWithRect:CGRectMake(250, 6, 60, 32)
+    self.menuButton = [UIFactory createButtonWithRect:CGRectMake(8, 5, 40, 35)
                                                normal:@""
                                             highlight:@""
-                                             selector:@selector(onBleScan:)
+                                             selector:@selector(onMenu:)
                                                target:self];
+    [self.menuButton setImage:[UIImage imageNamedNoCache:@"Global_menu.png"]
+                     forState:UIControlStateNormal];
+    [self.menuButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+    [self.customNavigationBar addSubview:self.menuButton];
     
-    [self.bleButton setBackgroundColor:[UIColor redColor]];
-    [self.bleButton setTitle:@"蓝牙连接" forState:UIControlStateNormal];
-    [self.customNavigationBar addSubview:self.bleButton];
-    
-
 
     //背景view
     CGRect backViewFrame = [adapt getBackgroundViewFrame];
@@ -134,89 +80,30 @@
 
     
     //数据视图：千里，卡路里，步数
-    self.kmDataView     = [ViewFactory createSportDataView];
-    self.calDataView    = [ViewFactory createSportDataView];
-    self.stepDataView   = [ViewFactory createSportDataView];
+    CGRect sportDataFrame = CGRectMake(0, backViewFrame.origin.y, 320, 214);
+    CGRect sporterFrame = CGRectMake(0, backViewFrame.origin.y + backViewFrame.size.height - 140, 320, 140);
     
-    [self.kmDataView setBackgroundColor:[UIColor redColor]];
-    [self.calDataView setBackgroundColor:[UIColor grayColor]];
-    [self.stepDataView setBackgroundColor:[UIColor orangeColor]];
+    self.sportDataView = [ViewFactory createSportDataView];
+    [self.sportDataView setFrame:sportDataFrame];
+    [self.sportDataView setBackgroundColor:[UIColor whiteColor]];
+    [self.sportDataView.backgroundButton addTarget:self
+                                            action:@selector(onSportData)
+                                  forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.sportDataView];
 
-    
-    self.kmDataView.frame   = CGRectMake(107*0, backViewFrame.origin.y, 107, 80);
-    self.calDataView.frame  = CGRectMake(107*1, backViewFrame.origin.y, 107, 80);
-    self.stepDataView.frame = CGRectMake(107*2, backViewFrame.origin.y, 107, 80);
-    
-    [self.view addSubview:self.kmDataView];
-    [self.view addSubview:self.calDataView];
-    [self.view addSubview:self.stepDataView];
-    
-    
-    [self.kmDataView.selectButton addTarget:self
-                                     action:@selector(onShowKm:)
-                           forControlEvents:UIControlEventTouchUpInside];
-
-    
-    [self.calDataView.selectButton addTarget:self
-                                     action:@selector(onShowCal:)
-                           forControlEvents:UIControlEventTouchUpInside];
-
-    
-    [self.stepDataView.selectButton addTarget:self
-                                     action:@selector(onShowStep:)
-                           forControlEvents:UIControlEventTouchUpInside];
-
-    
     //人数视图：好友，附近
-    self.friendSportView = [ViewFactory createSporterView];
-    self.nearbySportView = [ViewFactory createSporterView];
-    
-    [self.friendSportView setBackgroundColor:[UIColor blueColor]];
-    [self.nearbySportView setBackgroundColor:[UIColor grayColor]];
+    self.sporterView = [ViewFactory createSporterView];
+    [self.sporterView setFrame:sporterFrame];
+    [self.sporterView.peopleButton addTarget:self
+                                      action:@selector(onPeople)
+                            forControlEvents:UIControlEventTouchUpInside];
 
-    self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
-    self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
-    
-    [self.view addSubview:self.friendSportView];
-    [self.view addSubview:self.nearbySportView];
-    
-    [self.friendSportView.selectButton addTarget:self
-                                      action:@selector(onFriend:)
+    [self.sporterView.sportButton addTarget:self
+                                      action:@selector(onSport)
                             forControlEvents:UIControlEventTouchUpInside];
     
-    [self.nearbySportView.selectButton addTarget:self
-                                       action:@selector(onNearby:)
-                             forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    CGRect startFrame = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame)-40, 320, 40);
-    self.startButton = [UIFactory createButtonWithRect:startFrame
-                                                 title:@"开始运动"
-                                             titleFont:[UIFont systemFontOfSize:24]
-                                            titleColor:[UIColor blackColor]
-                                                normal:@""
-                                             highlight:@""
-                                              selected:@""
-                                              selector:@selector(onStart:)
-                                                target:self];
-    
-    [self.startButton setBackgroundColor:[UIColor redColor]];
-    [self.view addSubview:self.startButton];
-
-    
-//    //手势：左扫，右扫
-//    UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-//                                                                                           action:@selector(onLeftSwipe)];
-//    leftSwipeGesture.numberOfTouchesRequired = 1;
-//    leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-//    [self.view addGestureRecognizer:leftSwipeGesture];
-//    
-//    
-//    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-//                                                                                            action:@selector(onRightSwipe)];
-//    rightSwipeGesture.numberOfTouchesRequired = 1;
-//    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
-//    [self.view addGestureRecognizer:rightSwipeGesture];
+    [self.sporterView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.sporterView];
     
 }
 
@@ -242,95 +129,41 @@
         //重置地图的frame
         CGRect backViewFrame = [adapt getBackgroundViewFrame];
         self.mapView.frame = backViewFrame;
-        
-        //重置数据视图
-        self.kmDataView.frame   = CGRectMake(107*0, backViewFrame.origin.y, 107, 60);
-        self.calDataView.frame  = CGRectMake(107*1, backViewFrame.origin.y, 107, 60);
-        self.stepDataView.frame = CGRectMake(107*2, backViewFrame.origin.y, 107, 60);
-        
-        //重置人数视图
-        self.friendSportView.frame  = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
-        self.nearbySportView.frame  = CGRectMake(160, backViewFrame.origin.y + CGRectGetHeight(backViewFrame) - 100, 160, 60);
-        self.startButton.frame      = CGRectMake(0, backViewFrame.origin.y + CGRectGetHeight(backViewFrame)-40, 320, 40);
+
+        CGRect sportDataFrame = CGRectMake(0, backViewFrame.origin.y, 320, 214);
+        CGRect sporterFrame = CGRectMake(0, backViewFrame.origin.y + backViewFrame.size.height - 140, 320, 140);
+        self.sportDataView.frame = sportDataFrame;
+        self.sporterView.frame   = sporterFrame;
+
     });
  
 }
 
-- (void)onAction
-{
-    NSLog(@"helloworld");
-}
 
 #pragma mark - private
 
 - (void)onMenu:(id)sender
 {
-    
-    TestHttpRequest *testReq = [[TestHttpRequest alloc] init];
-    //[testReq testCheckVersion];
-    
-    //[self.viewDeckController toggleLeftViewAnimated:YES];
-    
-    for (int  i = 64; i<85; ++i) {
-        [testReq testEyeById:i];
-    }
-    
-    
+    [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 
-- (void)onBleScan:(id)sender
+
+- (void)onSportData
+{
+    SportHistoryViewController *sportHistoryVC = [[SportHistoryViewController alloc] init];
+    [self.navigationController pushViewController:sportHistoryVC animated:YES];
+}
+
+
+- (void)onPeople
+{
+    PartnerViewController *partnerVC = [[PartnerViewController alloc] init];
+    [self.navigationController pushViewController:partnerVC animated:YES];
+}
+
+- (void)onSport
 {
     
-    BleMatchViewController *bleMatchVC = [[BleMatchViewController alloc] init];
-    [self.navigationController pushViewController:bleMatchVC animated:YES];
-}
-
-
-- (SportHistoryViewController *)getHistoryViewController
-{
-    if (self.sportHistoryVC == nil) {
-        self.sportHistoryVC = [[SportHistoryViewController alloc] init];
-    }
-    return self.sportHistoryVC;
-}
-
-- (void)onShowKm:(id)sender
-{
-    NSLog(@"show KM");
-    [self.navigationController pushViewController:[self getHistoryViewController] animated:YES];
-}
-
-- (void)onShowCal:(id)sender
-{
-    NSLog(@"show CAL");
-    [self.navigationController pushViewController:[self getHistoryViewController] animated:YES];
-
-}
-
-- (void)onShowStep:(id)sender
-{
-    NSLog(@"show STEP");
-    [self.navigationController pushViewController:[self getHistoryViewController] animated:YES];
-}
-
-- (void)onFriend:(id)sender
-{
-    NSLog(@"show Friend");
-    [self.navigationController pushViewController:kAppDelegate.parterVC animated:YES];
-}
-
-- (void)onNearby:(id)sender
-{
-    NSLog(@"show Nearby");
-    [self.navigationController pushViewController:kAppDelegate.parterVC animated:YES];
-    
-}
-
-- (void)onStart:(id)sender
-{
-    //开始运动
-    SportViewController *sportVC = [[SportViewController alloc] init];
-    [self.navigationController pushViewController:sportVC animated:YES];
 }
 
 
@@ -353,6 +186,8 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 250, 250);
     [self.mapView setRegion:region animated:YES];
 }
+
+
 
 #pragma mark - MKMapViewDelegate
 

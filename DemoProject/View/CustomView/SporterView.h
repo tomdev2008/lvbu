@@ -8,22 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-enum SportViewType {
-    SportViewType_friend = 1,
-    SportViewType_nearby,
-    };
-
 @interface SporterView : UIView
 
-@property(nonatomic, assign)NSInteger viewType;
-@property (weak, nonatomic) IBOutlet UIButton       *selectButton;
-@property (weak, nonatomic) IBOutlet UIImageView    *iconImgView;
-@property (weak, nonatomic) IBOutlet UILabel        *countLabel;
-@property (weak, nonatomic) IBOutlet UILabel        *descLabel;
+@property (weak, nonatomic) IBOutlet UIButton *peopleButton;
+@property (weak, nonatomic) IBOutlet UIButton *sportButton;
 
-- (id)initWithFrame:(CGRect)frame  SportViewType:(NSInteger)type;
-- (void)setPersonCount:(NSInteger)count;
+@property (weak, nonatomic) IBOutlet UILabel *friendCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *friendImgView;
+@property (weak, nonatomic) IBOutlet UILabel *friendTitleLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *nearbyCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *nearbyImgView;
+@property (weak, nonatomic) IBOutlet UILabel *nearbyTitleLabel;
+
+
+@property (weak, nonatomic) IBOutlet UIImageView *sportImgView;
+@property (weak, nonatomic) IBOutlet UILabel *startSportLabel;
 
 
 @end

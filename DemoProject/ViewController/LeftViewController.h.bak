@@ -1,22 +1,22 @@
+////
+////  LeftViewController.h
+////  DemoProject
+////
+////  Created by Proint on 14-4-22.
+////  Copyright (c) 2014年 zzc. All rights reserved.
+////
 //
-//  LeftViewController.h
-//  DemoProject
+//#import "BaseViewController.h"
 //
-//  Created by Proint on 14-4-22.
-//  Copyright (c) 2014年 zzc. All rights reserved.
+//@interface LeftViewController : BaseViewController
 //
-
-#import "BaseViewController.h"
-
-@interface LeftViewController : BaseViewController
-
-@property(nonatomic, retain)UIView      *backgroundView;
-@property(nonatomic, retain)UIImageView *avatarImgView;
-@property(nonatomic, retain)UILabel     *nameLabel;
-
-@property(nonatomic, retain)UIButton *mainButton;
-@property(nonatomic, retain)UIButton *partnerButton;
-@property(nonatomic, retain)UIButton *historyButton;
-@property(nonatomic, retain)UIButton *moreButton;
-
-@end
+//@property(nonatomic, retain)UIView      *backgroundView;
+//@property(nonatomic, retain)UIImageView *avatarImgView;
+//@property(nonatomic, retain)UILabel     *nameLabel;
+//
+//@property(nonatomic, retain)UIButton *mainButton;
+//@property(nonatomic, retain)UIButton *partnerButton;
+//@property(nonatomic, retain)UIButton *historyButton;
+//@property(nonatomic, retain)UIButton *moreButton;
+//
+//@end

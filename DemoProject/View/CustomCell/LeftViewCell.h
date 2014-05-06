@@ -18,7 +18,4 @@
 @property(nonatomic, assign) BOOL hasClickBackgroud;        //cell选中时是否有选中背景图
 
 
-- (void)setTitle:(NSString *)title;
-- (void)setRowType:(int)rowIndex rowCount:(int)rowCount;
-
 @end

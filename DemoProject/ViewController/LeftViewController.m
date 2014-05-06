@@ -15,7 +15,9 @@
 typedef enum {
     CELL_LVBU = 0,
     CELL_PARTNER,
+    CELL_MESSAGE,
     CELL_HISTORY,
+    CELL_BLEDEVICE,
     CELL_MORE,
     CELL_NUMCOUNT,
     
@@ -33,7 +35,9 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 
 @property(nonatomic, strong)LeftViewCell *lvbuCell;
 @property(nonatomic, strong)LeftViewCell *partnerCell;
+@property(nonatomic, strong)LeftViewCell *messageCell;
 @property(nonatomic, strong)LeftViewCell *historyCell;
+@property(nonatomic, strong)LeftViewCell *bleDeviceCell;
 @property(nonatomic, strong)LeftViewCell *moreCell;
 
 @end
@@ -49,19 +53,29 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 
         self.lvbuCell       = [CellFactory createLeftViewCellWithIdentifier:cellIdentifier];
         self.partnerCell    = [CellFactory createLeftViewCellWithIdentifier:cellIdentifier];
+        self.messageCell    = [CellFactory createLeftViewCellWithIdentifier:cellIdentifier];
         self.historyCell    = [CellFactory createLeftViewCellWithIdentifier:cellIdentifier];
+        self.bleDeviceCell  = [CellFactory createLeftViewCellWithIdentifier:cellIdentifier];
         self.moreCell       = [CellFactory createLeftViewCellWithIdentifier:cellIdentifier];
         
-        [self.lvbuCell setTitle:@"侣步"];
-        [self.partnerCell setTitle:@"陪伴"];
-        [self.historyCell setTitle:@"历史运动记录"];
-        [self.moreCell setTitle:@"更多"];
+        [self.lvbuCell.titleLabel       setText:@"侣步"];
+        [self.partnerCell.titleLabel    setText:@"陪伴"];
+        [self.messageCell.titleLabel    setText:@"消息中心"];
+        [self.historyCell.titleLabel    setText:@"历史运动记录"];
+        [self.bleDeviceCell.titleLabel  setText:@"蓝牙设备"];
+        [self.moreCell.titleLabel       setText:@"更多"];
+        
+        [self.lvbuCell.iconImgView      setImage:[UIImage imageNamedNoCache:@"Menu_lvbu.png"]];
+        [self.partnerCell.iconImgView   setImage:[UIImage imageNamedNoCache:@"Menu_partner.png"]];
+        [self.messageCell.iconImgView   setImage:[UIImage imageNamedNoCache:@"Menu_message.png"]];
+        [self.historyCell.iconImgView   setImage:[UIImage imageNamedNoCache:@"Menu_history.png"]];
+        [self.bleDeviceCell.iconImgView setImage:[UIImage imageNamedNoCache:@"test1.png"]];
+        [self.moreCell.iconImgView      setImage:[UIImage imageNamedNoCache:@"Menu_more.png"]];
+        
         
     }
     return self;
 }
-
-
 
 
 - (void)viewDidLoad
@@ -71,31 +85,33 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
     
     
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
-    [self.view setBackgroundColor:GlobalNavBarBgColor];
+    [self.view setBackgroundColor:RGBCOLOR(0, 37, 73)];
     
     
     //bodyTableView
     CGRect backViewFrame = [adapt getBackgroundViewFrameWithoutNavigationBar];
      self.bodyTableView = [[UITableView alloc] initWithFrame:backViewFrame
                                                         style:UITableViewStylePlain];
-    [self.bodyTableView setBackgroundColor:[UIColor clearColor]];
+    [self.bodyTableView setBackgroundColor:RGBCOLOR(0, 48, 92)];
     
     
     
     //表头
-    self.headerView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 130)];
-    [self.headerView setBackgroundColor:[UIColor clearColor]];
+    self.headerView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 92)];
+    [self.headerView setBackgroundColor:RGBCOLOR(0, 37, 73)];
     [self.headerView addTarget:self
                         action:@selector(onModify)
               forControlEvents:UIControlEventTouchUpInside];
     
-    self.avatarImgView = [[UIImageView alloc] initWithFrame:CGRectMake(16, 30, 80, 80)];
+    //头像
+    self.avatarImgView = [[UIImageView alloc] initWithFrame:CGRectMake(16, 16, 60, 60)];
     [self.avatarImgView setImage:[UIImage imageNamed:DefaultHeadIconFileName]];
     [self.avatarImgView setBackgroundColor:[UIColor blueColor]];
     [self.headerView addSubview:self.avatarImgView];
     
-    self.nicknameLabel = [UIFactory createLabelWith:CGRectMake(100, 55, 160, 30)
-                                               text:@"匿名"
+    //昵称
+    self.nicknameLabel = [UIFactory createLabelWith:CGRectMake(82, 35, 160, 30)
+                                               text:nil
                                                font:[UIFont systemFontOfSize:18]
                                           textColor:[UIColor whiteColor]
                                     backgroundColor:[UIColor clearColor]];
@@ -162,9 +178,7 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = 60.0f;
-    
-    return height;
+    return 62.0f;
 }
 
 
@@ -184,9 +198,19 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
             cell = self.partnerCell;
             break;
         }
+        case CELL_MESSAGE:
+        {
+            cell = self.messageCell;
+            break;
+        }
         case CELL_HISTORY:
         {
             cell = self.historyCell;
+            break;
+        }
+        case CELL_BLEDEVICE:
+        {
+            cell = self.bleDeviceCell;
             break;
         }
         case CELL_MORE:
@@ -219,9 +243,19 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
             [self onPartner];
             break;
         }
+        case CELL_MESSAGE:
+        {
+            [self onMessage];
+            break;
+        }
         case CELL_HISTORY:
         {
             [self onHistory];
+            break;
+        }
+        case CELL_BLEDEVICE:
+        {
+            [self onBleDevice];
             break;
         }
         case CELL_MORE:
@@ -270,6 +304,10 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
     }];
 }
 
+- (void)onMessage
+{
+    
+}
 
 - (void)onHistory
 {
@@ -277,6 +315,17 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
         
         SportHistoryViewController *historyVC = [[SportHistoryViewController alloc] init];
         [kAppDelegate.rootNav setViewControllers:[NSArray arrayWithObjects:historyVC, nil]];
+        self.viewDeckController.centerController = kAppDelegate.rootNav;
+        
+    }];
+}
+
+- (void)onBleDevice
+{
+    [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+        
+//        SportHistoryViewController *historyVC = [[SportHistoryViewController alloc] init];
+//        [kAppDelegate.rootNav setViewControllers:[NSArray arrayWithObjects:historyVC, nil]];
         self.viewDeckController.centerController = kAppDelegate.rootNav;
         
     }];

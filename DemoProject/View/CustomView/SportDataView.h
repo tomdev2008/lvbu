@@ -8,23 +8,47 @@
 
 #import <UIKit/UIKit.h>
 
-enum SportDataViewType {
-    DataViewType_km = 1,
-    DataViewType_cal,
-    DataViewType_step,
+enum SportDataViewStatus {
+    DataViewStatus_NonSync = 0,
+    DataViewStatus_Sync,
     };
 
 @interface SportDataView : UIView
 
-@property(nonatomic, assign)NSInteger viewType;
+@property(nonatomic, assign)NSInteger viewStatus;
 
-@property (weak, nonatomic) IBOutlet UIButton *selectButton;
-@property (weak, nonatomic) IBOutlet UILabel *todayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
+//背景
+@property (weak, nonatomic) IBOutlet UIButton *backgroundButton;
+
+//标题
+@property (weak, nonatomic) IBOutlet UILabel *dataViewTitleLabel;
+
+//公里
+@property (weak, nonatomic) IBOutlet UIImageView *kmIconImgView;
+@property (weak, nonatomic) IBOutlet UILabel *kmTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *kmValueLabel;
 
 
-- (id)initWithFrame:(CGRect)frame  DataViewType:(NSInteger)type;
-- (void)setToday:(NSInteger)today Total:(NSInteger)total;
+//卡路里
+@property (weak, nonatomic) IBOutlet UIImageView *calIconImgView;
+@property (weak, nonatomic) IBOutlet UILabel *calTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *calValueLabel;
+
+
+//分钟
+@property (weak, nonatomic) IBOutlet UIImageView *minIconImgView;
+@property (weak, nonatomic) IBOutlet UILabel *minTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *minValueLabel;
+
+
+//次数
+@property (weak, nonatomic) IBOutlet UIImageView *timesIconImgView;
+@property (weak, nonatomic) IBOutlet UILabel *timesTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timesValueLabel;
+
+//步数
+@property (weak, nonatomic) IBOutlet UIImageView *stepIconImgView;
+@property (weak, nonatomic) IBOutlet UILabel *stepTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *stepValueLabel;
 
 @end

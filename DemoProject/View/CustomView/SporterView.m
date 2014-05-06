@@ -7,30 +7,16 @@
 //
 
 #import "SporterView.h"
+#import "AppCore.h"
 
 @implementation SporterView
 
-- (id)initWithFrame:(CGRect)frame  SportViewType:(NSInteger)type
+- (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        
-        self.viewType = type;
-        switch (type) {
-            case SportViewType_friend:
-            {
-                [self.descLabel setText:@"正在运动的好友"];
-                break;
-            }
-            case SportViewType_nearby:
-            {
-                [self.descLabel setText:@"附近运动的人"];
-                break;
-            }
-            default:
-                break;
-        }
+
     }
     return self;
 }
@@ -38,16 +24,13 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
     CGRect frame = [self bounds];
-    self.selectButton.frame = frame;
- 
+    
+    [self.peopleButton setBackgroundColor:[UIColor whiteColor]];
+    [self.sportButton setBackgroundColor:RGBCOLOR(0, 175, 172)];
+
 }
 
-- (void)setPersonCount:(NSInteger)count
-{
-    [self.countLabel setText:[NSString stringWithFormat:@"%d", count]];
-}
 
 
 @end

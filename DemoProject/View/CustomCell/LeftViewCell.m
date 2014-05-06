@@ -28,14 +28,28 @@ typedef enum {
         self.hasClickBackgroud   = YES;
         self.isSelected          = NO;
         
-        self.titleLabel = [UIFactory createLabelWith:CGRectMake(40, 10, 120, 40)
+        
+        self.iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(17, 16, 30, 30)];
+        [self.iconImgView setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:self.iconImgView];
+        
+        self.titleLabel = [UIFactory createLabelWith:CGRectMake(52, 11, 120, 40)
                                                 text:nil
                                                 font:[UIFont systemFontOfSize:20]
-                                           textColor:[UIColor redColor]
+                                           textColor:[UIColor whiteColor]
                                      backgroundColor:[UIColor clearColor]];
         [self addSubview:self.titleLabel];
         
         
+    
+        
+    UIImage *backgroundImg = [UIImage imageNamedNoCache:@"Basecell_bg_first_n.png"];
+    UIImage *selectedBackgroundImg = [UIImage imageNamedNoCache:@"Basecell_bg_first_c.png"];
+//    self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImg];
+//    self.selectedBackgroundView = [[UIImageView alloc] initWithImage:selectedBackgroundImg];
+        
+    self.backgroundView = [[UIImageView alloc] initWithImage:selectedBackgroundImg];
+    self.selectedBackgroundView = [[UIImageView alloc] initWithImage:backgroundImg];
     }
     return self;
 }
@@ -82,79 +96,6 @@ typedef enum {
     [super setSelected:selected animated:animated];
     [self setCellStatus:selected];
 }
-
-
-
-- (void)setTitle:(NSString *)title
-{
-    self.titleLabel.text = title;
-}
-
-
-
-
--(void)setRowType:(int)n{
-    _rowType = n;
-    
-    UIImage *backgroundImage = nil;
-    UIImage *selectedBackgroundImage = nil;
-    switch (_rowType) {
-        case ROW_SINGLE:
-        {
-            backgroundImage = [UIImage imageNamed:@"set_bk_single_n.png"];
-            if (self.hasClickBackgroud) {
-                selectedBackgroundImage = [UIImage imageNamed:@"set_bk_single_c.png"];
-            }
-            break;
-        }
-        case ROW_FIRST:
-        {
-            backgroundImage = [UIImage imageNamed:@"set_bk_up_n@2x.png"];
-            if(self.hasClickBackgroud)
-                selectedBackgroundImage = [UIImage imageNamed:@"set_bk_up_c@2x.png"];
-            break;
-        }
-        case ROW_MIDDLE:
-        {
-            backgroundImage = [UIImage imageNamed:@"set_bk_mid_n@2x.png"];
-            if(self.hasClickBackgroud)
-                selectedBackgroundImage = [UIImage imageNamed:@"set_bk_mid_c@2x.png"];
-            break;
-        }
-        case ROW_LAST:
-        {
-            backgroundImage = [UIImage imageNamed:@"set_bk_down_n@2x.png"];
-            if(self.hasClickBackgroud)
-                selectedBackgroundImage = [UIImage imageNamed:@"set_bk_down_c@2x.png"];
-            break;
-        }
-        default:
-            break;
-    }
-    
-    self.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
-    self.selectedBackgroundView = [[UIImageView alloc] initWithImage:selectedBackgroundImage];
-}
-
-
-- (void)setRowType:(int)rowIndex rowCount:(int)rowCount{
-    
-    NSInteger type = ROW_MIDDLE;
-    if (rowCount == 1) {
-        type = ROW_SINGLE;
-    } else if (rowIndex == 0) {
-        type = ROW_FIRST;
-    } else if (rowIndex == rowCount - 1) {
-        type = ROW_LAST;
-    } else {
-        type = ROW_MIDDLE;
-    }
-    
-    [self setRowType:type];
-}
-
-
-
 
 
 @end

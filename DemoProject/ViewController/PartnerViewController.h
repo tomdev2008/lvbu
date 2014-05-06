@@ -16,8 +16,7 @@
 @property(nonatomic, strong)UIButton    *menuButton;
 @property(nonatomic, strong)UIButton    *partnerButton;
 @property(nonatomic, strong)UIButton    *nearbyButton;
-@property(nonatomic, strong)UIButton    *addButton;
+@property(nonatomic, strong)UIButton    *searchButton;
 @property(nonatomic, strong)UIScrollView *bodyScrollView;
-
 
 @end

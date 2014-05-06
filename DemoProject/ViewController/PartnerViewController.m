@@ -22,7 +22,9 @@
 
 @property(nonatomic, assign)float contentOffsetX;
 @property(nonatomic, assign)float oldContentOffsetX;
-@property(nonatomic, assign)float newContentOffsetX;
+@property(nonatomic, assign)float contentOffsetY;
+@property(nonatomic, assign)float oldContentOffsetY;
+
 
 
 - (void)onPartner:(id)sender;
@@ -72,15 +74,17 @@
     
     
     
-    self.menuButton = [UIFactory createButtonWithRect:CGRectMake(4, 5, 60, 34)
+    self.menuButton = [UIFactory createButtonWithRect:CGRectMake(8, 5, 40, 35)
                                                   normal:@""
                                                highlight:@""
                                                 selector:@selector(onBack:)
                                                   target:self];
-    [self.menuButton setBackgroundColor:[UIColor redColor]];
-    [self.menuButton setTitle:@"菜单" forState:UIControlStateNormal];
+    [self.menuButton setImage:[UIImage imageNamedNoCache:@"Global_menu.png"]
+                     forState:UIControlStateNormal];
+    [self.menuButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
     [self.customNavigationBar addSubview:self.menuButton];
 
+    
     self.partnerButton = [UIFactory createButtonWithRect:CGRectMake(160 - 60, 5, 60, 34)
                                                normal:@""
                                             highlight:@""
@@ -102,15 +106,20 @@
     [self.customNavigationBar addSubview:self.nearbyButton];
     
 
-    self.addButton = [UIFactory createButtonWithRect:CGRectMake(240, 5, 60, 34)
+    self.searchButton = [UIFactory createButtonWithRect:CGRectMake(272, 5, 40, 35)
                                                  normal:@""
                                               highlight:@""
                                                selector:@selector(onAdd:)
                                                  target:self];
     
-    [self.addButton setBackgroundColor:[UIColor redColor]];
-    [self.addButton setTitle:@"添加" forState:UIControlStateNormal];
-    [self.customNavigationBar addSubview:self.addButton];
+//    [self.searchButton setBackgroundColor:[UIColor redColor]];
+//    [self.searchButton setTitle:@"添加" forState:UIControlStateNormal];
+    [self.searchButton setImage:[UIImage imageNamedNoCache:@"Partner_search_n.png"]
+                     forState:UIControlStateNormal];
+    [self.searchButton setImage:[UIImage imageNamedNoCache:@"Partner_search_c.png"]
+                       forState:UIControlStateHighlighted];
+    [self.searchButton setImageEdgeInsets:UIEdgeInsetsMake(6, 10, 7, 9)];
+    [self.customNavigationBar addSubview:self.searchButton];
     
 
 
@@ -135,6 +144,7 @@
     CGRect tableFrame = [self.bodyScrollView bounds];
     self.partTableView = [[PullTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
     self.partTableView.dataSource = self;
+    self.partTableView.delegate = self;
     self.partTableView.pullDelegate = self;
     self.partTableView.pullArrowImage = [UIImage imageNamed:@"blackArrow"];
     self.partTableView.pullBackgroundColor = [UIColor yellowColor];
@@ -144,6 +154,7 @@
     tableFrame.origin.x += 320;
     self.nearbyTableView = [[PullTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
     self.nearbyTableView.dataSource = self;
+    self.nearbyTableView.delegate = self;
     self.nearbyTableView.pullDelegate = self;
     self.nearbyTableView.pullArrowImage = [UIImage imageNamed:@"blueArrow"];
     self.nearbyTableView.pullBackgroundColor = [UIColor redColor];
@@ -341,6 +352,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     self.contentOffsetX = self.bodyScrollView.contentOffset.x;
+    self.contentOffsetY = self.bodyScrollView.contentOffset.y;
     NSLog(@"self.contentOffsetX  = %f", self.contentOffsetX);
 }
 
@@ -349,7 +361,8 @@
 {
     
     self.oldContentOffsetX = self.bodyScrollView.contentOffset.x;
-    if (self.contentOffsetX == 0 && self.oldContentOffsetX == 0) {
+    self.oldContentOffsetY = self.bodyScrollView.contentOffset.y;
+    if (self.contentOffsetX == 0 && self.oldContentOffsetX == 0 && scrollView == self.bodyScrollView) {
         [self showLeftView];
     }
     NSLog(@"self.contentOffsetX = %f; self.oldContentOffsetX  = %f", self.contentOffsetX, self.oldContentOffsetX);
@@ -357,10 +370,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    CGFloat pageWidth = self.bodyScrollView.frame.size.width;
-//    int page = floor((self.bodyScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-//    [self.bodyScrollView setContentOffset:CGPointMake(320 * page, 0)];
-//    NSLog(@"self.contentOffsetX  = %f", self.contentOffsetX);
+
 }
 
 - (void)showLeftView
@@ -380,7 +390,7 @@
 }
 
 
-#pragma mark - UITableView delegate
+
 
 #pragma mark - Refresh and load more methods
 
@@ -429,12 +439,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = 44.0f;
-    if (tableView == self.partTableView) {
-        height = 60;
-    } else {
-        height = 72;
-    }
+    CGFloat height = 72.0f;
     return height;
 }
 
@@ -453,7 +458,6 @@
             cell = [CellFactory createPartnerCell];
         }
         
-    
         NSDictionary *fan = [self.partnerArr objectAtIndex:indexPath.row];
         
         //设置头像
@@ -471,7 +475,7 @@
         [cell.inviteButton addTarget:self
                               action:@selector(onInvite:)
                     forControlEvents:UIControlEventTouchUpInside];
-
+        
         resultCell = cell;
         
         
@@ -514,6 +518,8 @@
 
 
 
+#pragma mark - UITableView delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.partTableView) {
@@ -521,6 +527,8 @@
     } else {
    
     }
+
+    
 }
 
 

@@ -21,7 +21,6 @@
 - (void)testRegister
 {
 
-    
 
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:UserName forKey:@"email"];

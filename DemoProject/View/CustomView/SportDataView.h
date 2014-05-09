@@ -14,8 +14,11 @@ enum SportDataViewStatus {
     };
 
 @interface SportDataView : UIView
+{
+    NSInteger _curViewStatus;
+}
 
-@property(nonatomic, assign)NSInteger viewStatus;
+@property (assign, nonatomic) NSInteger curViewStatus;
 
 //背景
 @property (weak, nonatomic) IBOutlet UIButton *backgroundButton;

@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+enum SporterViewStatus {
+    ViewStatus_nonRequest = 0,
+    ViewStatus_Requested,
+};
+
+
 @interface SporterView : UIView
+{
+    NSInteger _curViewStatus;
+}
+
+@property (assign, nonatomic) NSInteger curViewStatus;
 
 @property (weak, nonatomic) IBOutlet UIButton *peopleButton;
 @property (weak, nonatomic) IBOutlet UIButton *sportButton;
@@ -21,9 +32,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *nearbyImgView;
 @property (weak, nonatomic) IBOutlet UILabel *nearbyTitleLabel;
 
-
-@property (weak, nonatomic) IBOutlet UIImageView *sportImgView;
-@property (weak, nonatomic) IBOutlet UILabel *startSportLabel;
 
 
 @end

@@ -47,18 +47,19 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
     //暂时先隐藏导航栏
     [self.rootNav setNavigationBarHidden:YES];
 
-
-//    self.mainVC.title      = @"侣步";
-//    self.parterVC.title    = @"陪伴";
-//    self.moreVC.title      = @"更多";
-
     self.window.rootViewController = self.viewDeckController;
 
     NSString *isFirstLaunch = [[NSUserDefaults standardUserDefaults] stringForKey:KEY_IsFirstLaunch];
     if (isFirstLaunch == nil /*|| ![isFirstLaunch isEqualToString:@"NO"]*/) {
         
-        //第一次启动
-        [self firstLanch];
+//        //第一次启动
+//        [self firstLanch];
+        
+        
+        //测试用
+        [self normalLanch];
+        
+        
     } else {
         
         //启动方式

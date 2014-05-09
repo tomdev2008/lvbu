@@ -21,16 +21,60 @@
     return self;
 }
 
+- (void)setCurViewStatus:(NSInteger)status
+{
+    _curViewStatus = status;
+    [self setNeedsLayout];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     CGRect frame = [self bounds];
-    
-    [self.peopleButton setBackgroundColor:[UIColor whiteColor]];
-    [self.sportButton setBackgroundColor:RGBCOLOR(0, 175, 172)];
 
+    [self.sportButton setBackgroundColor:RGBCOLOR(0, 175, 172)];
+    
+    switch (self.curViewStatus) {
+        case ViewStatus_nonRequest:
+        {
+            [self hidePeople];
+            [self setBackgroundColor:[UIColor clearColor]];
+            break;
+        }
+        case ViewStatus_Requested:
+        {
+            [self showPeople];
+            [self setBackgroundColor:[UIColor whiteColor]];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 
+- (void)hidePeople
+{
+    [self.peopleButton setHidden:YES];
+    [self.friendTitleLabel setHidden:YES];
+    [self.friendImgView setHidden:YES];
+    [self.friendCountLabel setHidden:YES];
+    
+    [self.nearbyTitleLabel setHidden:YES];
+    [self.nearbyImgView setHidden:YES];
+    [self.nearbyCountLabel setHidden:YES];
+}
+
+- (void)showPeople
+{
+    [self.peopleButton setHidden:NO];
+    [self.friendTitleLabel setHidden:NO];
+    [self.friendImgView setHidden:NO];
+    [self.friendCountLabel setHidden:NO];
+    
+    [self.nearbyTitleLabel setHidden:NO];
+    [self.nearbyImgView setHidden:NO];
+    [self.nearbyCountLabel setHidden:NO];
+}
 
 @end

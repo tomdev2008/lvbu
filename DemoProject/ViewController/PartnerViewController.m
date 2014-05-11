@@ -77,7 +77,7 @@
     self.menuButton = [UIFactory createButtonWithRect:CGRectMake(8, 5, 40, 35)
                                                   normal:@""
                                                highlight:@""
-                                                selector:@selector(onBack:)
+                                                selector:@selector(onMenu:)
                                                   target:self];
     [self.menuButton setImage:[UIImage imageNamedNoCache:@"Global_menu.png"]
                      forState:UIControlStateNormal];
@@ -132,7 +132,7 @@
 	[self.bodyScrollView setBackgroundColor:[UIColor clearColor]];
 	[self.bodyScrollView setCanCancelContentTouches:NO];
 	self.bodyScrollView.indicatorStyle  = UIScrollViewIndicatorStyleWhite;
-	self.bodyScrollView.scrollEnabled   = YES;
+	self.bodyScrollView.scrollEnabled   = NO;
     self.bodyScrollView.bounces         = NO;
 	self.bodyScrollView.pagingEnabled   = YES;
     self.bodyScrollView.scrollsToTop    = NO;
@@ -140,22 +140,23 @@
     self.bodyScrollView.showsVerticalScrollIndicator    = NO;
     [self.view addSubview:self.bodyScrollView];
 
-    
+
     CGRect tableFrame = [self.bodyScrollView bounds];
     self.partTableView = [[PullTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
     self.partTableView.dataSource = self;
     self.partTableView.delegate = self;
     self.partTableView.pullDelegate = self;
+    [self.partTableView setEditing:YES];
     self.partTableView.pullArrowImage = [UIImage imageNamed:@"blackArrow"];
     self.partTableView.pullBackgroundColor = [UIColor yellowColor];
     self.partTableView.pullTextColor = [UIColor blackColor];
 
-    
     tableFrame.origin.x += 320;
     self.nearbyTableView = [[PullTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
     self.nearbyTableView.dataSource = self;
     self.nearbyTableView.delegate = self;
     self.nearbyTableView.pullDelegate = self;
+    [self.nearbyTableView setEditing:YES];
     self.nearbyTableView.pullArrowImage = [UIImage imageNamed:@"blueArrow"];
     self.nearbyTableView.pullBackgroundColor = [UIColor redColor];
     self.nearbyTableView.pullTextColor = [UIColor blackColor];
@@ -180,7 +181,7 @@
         if (ret == 0) {
             
             //成功获取我的好友
-            self.partnerArr = [result valueForKey:@"fans"];
+            self.partnerArr = [NSMutableArray arrayWithArray:[result valueForKey:@"fans"]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.partTableView reloadData];
             });
@@ -207,7 +208,7 @@
         if (ret == 0) {
             
             //成功获取附近的人
-            self.nearbyArr = [result valueForKey:@"users"];
+            self.nearbyArr = [NSMutableArray arrayWithArray:[result valueForKey:@"users"]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.nearbyTableView reloadData];
             });
@@ -238,11 +239,8 @@
 
 #pragma mark - private
 
-
-- (void)onBack:(id)sender
+- (void)onMenu:(id)sender
 {
-    self.bodyScrollView.scrollEnabled =NO;
-    self.viewDeckController.panningMode = IIViewDeckFullViewPanning;
     [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 
@@ -346,46 +344,52 @@
     }];
 }
 
-
-#pragma mark UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    self.contentOffsetX = self.bodyScrollView.contentOffset.x;
-    self.contentOffsetY = self.bodyScrollView.contentOffset.y;
-    NSLog(@"self.contentOffsetX  = %f", self.contentOffsetX);
-}
-
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    
-    self.oldContentOffsetX = self.bodyScrollView.contentOffset.x;
-    self.oldContentOffsetY = self.bodyScrollView.contentOffset.y;
-    if (self.contentOffsetX == 0 && self.oldContentOffsetX == 0 && scrollView == self.bodyScrollView) {
-        [self showLeftView];
-    }
-    NSLog(@"self.contentOffsetX = %f; self.oldContentOffsetX  = %f", self.contentOffsetX, self.oldContentOffsetX);
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-
-}
-
-- (void)showLeftView
-{
-    self.bodyScrollView.scrollEnabled =NO;
-    [self.viewDeckController toggleLeftViewAnimated:YES];
-    self.viewDeckController.panningMode = IIViewDeckFullViewPanning;
-}
+//#pragma mark UIScrollViewDelegate
+//
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+//{
+//    self.contentOffsetX = self.bodyScrollView.contentOffset.x;
+//    self.contentOffsetY = self.bodyScrollView.contentOffset.y;
+//    NSLog(@"self.contentOffsetX  = %f", self.contentOffsetX);
+//}
+//
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    
+//    self.oldContentOffsetX = self.bodyScrollView.contentOffset.x;
+//    self.oldContentOffsetY = self.bodyScrollView.contentOffset.y;
+//    if (self.contentOffsetX == 0 && self.oldContentOffsetX == 0 && scrollView == self.bodyScrollView) {
+//        [self showLeftView];
+//    }
+//    NSLog(@"self.contentOffsetX = %f; self.oldContentOffsetX  = %f", self.contentOffsetX, self.oldContentOffsetX);
+//}
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//
+//}
+//
+//- (void)showLeftView
+//{
+//    self.bodyScrollView.scrollEnabled =NO;
+//    [self.viewDeckController toggleLeftViewAnimated:YES];
+//    self.viewDeckController.panningMode = IIViewDeckFullViewPanning;
+//}
 
 
 #pragma mark IIViewDeckControllerDelegate
 
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController willOpenViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+    //启用viewDeckController手势处理
+    self.viewDeckController.panningMode = IIViewDeckFullViewPanning;
+}
+
+
 - (void)viewDeckController:(IIViewDeckController*)viewDeckController didCloseViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
 {
-    self.bodyScrollView.scrollEnabled =YES;
+    //禁止viewDeckController手势处理
     self.viewDeckController.panningMode = IIViewDeckNoPanning;
 }
 
@@ -498,6 +502,7 @@
                                       });
                                   }];
         
+
         //设置昵称
         cell.nameLabel.text = [user valueForKey:@"u_nick_name"];
         cell.inviteButton.tag = 10+100 * indexPath.row;
@@ -512,10 +517,33 @@
         
         resultCell = cell;
     }
+    
 
     return resultCell;
 }
 
+
+
+////通过UITableViewDelegate方法可以实现删除 tableview中某一行
+////滑动删除
+//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSUInteger row = [indexPath row];
+//    
+//    if (tableView == self.nearbyTableView) {
+//        //附近的人
+//        [self.nearbyArr removeObjectAtIndex:row];
+//    } else {
+//        //炮友
+//        [self.partnerArr removeObjectAtIndex:row];
+//    }
+//    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+//}
+//
+////此时删除按钮为Delete，如果想显示为“删除” 中文的话，则需要实现
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return @"删除";
+//}
 
 
 #pragma mark - UITableView delegate

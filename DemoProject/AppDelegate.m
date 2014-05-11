@@ -52,14 +52,8 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
     NSString *isFirstLaunch = [[NSUserDefaults standardUserDefaults] stringForKey:KEY_IsFirstLaunch];
     if (isFirstLaunch == nil /*|| ![isFirstLaunch isEqualToString:@"NO"]*/) {
         
-//        //第一次启动
-//        [self firstLanch];
-        
-        
-        //测试用
-        [self normalLanch];
-        
-        
+        //第一次启动
+        [self firstLanch];
     } else {
         
         //启动方式

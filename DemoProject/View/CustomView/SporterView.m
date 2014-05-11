@@ -27,6 +27,13 @@
     [self setNeedsLayout];
 }
 
+- (void)updateViewWithParter:(NSInteger)parterCount  Nearby:(NSInteger)nearbyCount
+{
+    [self.friendCountLabel setText:[NSString stringWithFormat:@"%d", parterCount]];
+    [self.nearbyCountLabel setText:[NSString stringWithFormat:@"%d", nearbyCount]];
+}
+
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];

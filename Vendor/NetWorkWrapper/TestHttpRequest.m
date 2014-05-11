@@ -406,7 +406,7 @@
 - (void)testGpsUpdate
 {
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:@"12345678123456781234567812345678" forKey:@"scode"];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
     [bodyParams setValue:@"aaabbb" forKey:@"gps"];
 
     

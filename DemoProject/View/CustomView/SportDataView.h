@@ -54,4 +54,7 @@ enum SportDataViewStatus {
 @property (weak, nonatomic) IBOutlet UILabel *stepTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stepValueLabel;
 
+- (void)updateViewWithKM:(NSString *)kmCount  Cal:(NSString *)calCount
+                     Min:(NSString *)minute Times:(NSString *)times Step:(NSString *)step;
+
 @end

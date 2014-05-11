@@ -8,16 +8,18 @@
 
 #import "BaseViewController.h"
 
-@interface SearchViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate>
+@interface SearchViewController : BaseViewController
+<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 
 @property(nonatomic, strong)UIImageView *customNavigationBar;
 @property(nonatomic, strong)UIButton    *backButton;
 
-@property(nonatomic, retain)UIView      *backgroundView;
-@property(nonatomic, retain)UITextField *inputTextfiled;
-@property(nonatomic, retain)UIButton    *searchButton;
-@property(nonatomic, retain)UITableView *resultTableView;
+@property(nonatomic, strong)UIView      *backgroundView;
+@property(nonatomic, strong)UITextField *inputTextfiled;
+@property(nonatomic, strong)UIButton    *searchButton;
+@property(nonatomic, strong)UITableView *resultTableView;
+@property(nonatomic, strong)UITapGestureRecognizer *tapGestureRecognizer;
 
 
 @end

@@ -180,9 +180,6 @@
     [self.tapGestureRecognizer setNumberOfTouchesRequired:1];
     [self.view addGestureRecognizer:self.tapGestureRecognizer];
 
-    
-    
-
 }
 
 - (void)didReceiveMemoryWarning

@@ -176,6 +176,7 @@
 		6ADF1EB9190CCD1C00698296 /* ModifyPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF1EB8190CCD1C00698296 /* ModifyPwdViewController.m */; };
 		6AE2B5821917C09E00DA2D9E /* Global_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 6AE2B5811917C09E00DA2D9E /* Global_menu.png */; };
 		6AEB5BD5186D5AEB00F82AAA /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB5BD4186D5AEB00F82AAA /* HttpRequest.m */; };
+		6AEC5434191DF556005ABCBF /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AEC5433191DF556005ABCBF /* Reveal.framework */; };
 		6AF27E5B190B9604000F0C80 /* UserMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF27E5A190B9604000F0C80 /* UserMsg.m */; };
 		6AF4EB7E190B416300281ED5 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF4EB7D190B416300281ED5 /* LeftViewController.m */; };
 		6AF4EB81190B45A100281ED5 /* LeftViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF4EB80190B45A100281ED5 /* LeftViewCell.m */; };
@@ -542,6 +543,7 @@
 		6AEB5BD3186D5AEB00F82AAA /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
 		6AEB5BD4186D5AEB00F82AAA /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		6AEB5BD6186D6A5D00F82AAA /* HttpConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpConfig.h; sourceTree = "<group>"; };
+		6AEC5433191DF556005ABCBF /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		6AF27E59190B9604000F0C80 /* UserMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserMsg.h; sourceTree = "<group>"; };
 		6AF27E5A190B9604000F0C80 /* UserMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMsg.m; sourceTree = "<group>"; };
 		6AF4EB7C190B416300281ED5 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
@@ -831,6 +833,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AEC5434191DF556005ABCBF /* Reveal.framework in Frameworks */,
 				E70FE9061907F82F00A607DD /* libz.dylib in Frameworks */,
 				E705B3FF19021C9E0067C30E /* CoreLocation.framework in Frameworks */,
 				6AAF7558186C6C050026252F /* MapKit.framework in Frameworks */,
@@ -1010,6 +1013,7 @@
 		6A785DEE186C4F700081F1E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6AEC5433191DF556005ABCBF /* Reveal.framework */,
 				E70FE9051907F82F00A607DD /* libz.dylib */,
 				E705B3FE19021C9E0067C30E /* CoreLocation.framework */,
 				E75E10D918E40A7600111D8E /* CoreData.framework */,
@@ -1103,14 +1107,14 @@
 		6AAF7567186C6DBD0026252F /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E7E7FE3718D7E1DD002B8FF3 /* MainViewController.h */,
-				E7E7FE3818D7E1DD002B8FF3 /* MainViewController.m */,
-				E712962C18FFF79C0094B614 /* MoreViewController.h */,
-				E712962D18FFF79C0094B614 /* MoreViewController.m */,
-				E712962E18FFF79C0094B614 /* PartnerViewController.h */,
-				E712962F18FFF79C0094B614 /* PartnerViewController.m */,
 				6AF4EB7C190B416300281ED5 /* LeftViewController.h */,
 				6AF4EB7D190B416300281ED5 /* LeftViewController.m */,
+				E7E7FE3718D7E1DD002B8FF3 /* MainViewController.h */,
+				E7E7FE3818D7E1DD002B8FF3 /* MainViewController.m */,
+				E712962E18FFF79C0094B614 /* PartnerViewController.h */,
+				E712962F18FFF79C0094B614 /* PartnerViewController.m */,
+				E712962C18FFF79C0094B614 /* MoreViewController.h */,
+				E712962D18FFF79C0094B614 /* MoreViewController.m */,
 				E7F5972219068DE8008AC40A /* LeftViewController.h.bak */,
 				E7F5972319068DE8008AC40A /* LeftViewController.m.bak */,
 				6A2342E2190BDC9F00BB268E /* loginRegister */,
@@ -2289,6 +2293,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zelong Chen (437HFW48GM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zelong Chen (437HFW48GM)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/ll/Desktop/lvbuwendang/lvbu,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoProject/DemoProject-Prefix.pch";
 				INFOPLIST_FILE = "DemoProject/DemoProject-Info.plist";
@@ -2323,6 +2331,10 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/ll/Desktop/lvbuwendang/lvbu,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoProject/DemoProject-Prefix.pch";
 				INFOPLIST_FILE = "DemoProject/DemoProject-Info.plist";

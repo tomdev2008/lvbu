@@ -32,6 +32,6 @@ enum SporterViewStatus {
 @property (weak, nonatomic) IBOutlet UIImageView *nearbyImgView;
 @property (weak, nonatomic) IBOutlet UILabel *nearbyTitleLabel;
 
-
+- (void)updateViewWithParter:(NSInteger)parterCount  Nearby:(NSInteger)nearbyCount;
 
 @end

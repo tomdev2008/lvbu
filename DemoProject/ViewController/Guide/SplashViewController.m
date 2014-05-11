@@ -56,17 +56,9 @@
 {
     [super viewWillAppear: animated];
     
-    
-    //测试用
-    [self onStart];
-    return;
-    
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *userName = [userDefault valueForKey:KEY_CurrentUserName];
     NSString *password = [userDefault valueForKey:KEY_CurrentPassword];
-    
-//    userName = @"test";
-//    password = @"test";
     
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:userName forKey:@"email"];

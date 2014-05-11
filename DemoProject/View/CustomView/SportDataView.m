@@ -128,6 +128,18 @@
 
 
 
+- (void)updateViewWithKM:(NSString *)kmCount  Cal:(NSString *)calCount
+                     Min:(NSString *)minute Times:(NSString *)times Step:(NSString *)step
+{
+    [self.kmValueLabel setText:kmCount];
+    [self.calValueLabel setText:calCount];
+    [self.minValueLabel setText:minute];
+    [self.timesValueLabel setText:times];
+    [self.stepValueLabel setText:step];
+    
+    self.curViewStatus = DataViewStatus_Sync;
+}
+
 
 
 @end

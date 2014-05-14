@@ -16,7 +16,7 @@
 @property(nonatomic, strong)UIButton    *backButton;
 
 @property(nonatomic, strong)UIView      *backgroundView;
-@property(nonatomic, strong)UITextField *inputTextfiled;
+@property(nonatomic, strong)UITextField *inputTextfield;
 @property(nonatomic, strong)UIButton    *searchButton;
 @property(nonatomic, strong)UITableView *resultTableView;
 @property(nonatomic, strong)UITapGestureRecognizer *tapGestureRecognizer;

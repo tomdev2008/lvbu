@@ -19,6 +19,8 @@
 
 
 @property (weak, nonatomic) IBOutlet UIButton *inviteButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+
 
 
 @end

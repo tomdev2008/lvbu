@@ -7,12 +7,12 @@
 //
 
 #import "MessageAvatarFactory.h"
-#import "UIImage+Rounded.h"
+#import "MsgMacro.h"
 
 @implementation MessageAvatarFactory
 
 + (UIImage *)avatarImageNamed:(UIImage *)originImage
-            messageAvatorType:(MessageAvatorType)type
+            messageAvatarType:(MessageAvatarType)type
 {
     CGFloat radius = 0.0;
     switch (type) {

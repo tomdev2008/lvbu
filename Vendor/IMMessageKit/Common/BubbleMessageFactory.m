@@ -72,9 +72,9 @@
     }
     
     
-    UIImage *bublleImage = [UIImage imageNamed:messageTypeString];
+    UIImage *bubbleImage = [UIImage imageNamed:messageTypeString];
     UIEdgeInsets bubbleImageEdgeInsets = [self bubbleImageEdgeInsetsWithStyle:style];
-    return STRETCH_IMAGE_EDGE(bublleImage, bubbleImageEdgeInsets);
+    return STRETCH_IMAGE_EDGE(bubbleImage, bubbleImageEdgeInsets);
 }
 
 + (UIEdgeInsets)bubbleImageEdgeInsetsWithStyle:(BubbleImageViewStyle)style

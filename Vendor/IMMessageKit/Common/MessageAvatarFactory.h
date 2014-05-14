@@ -11,7 +11,7 @@
 
 static CGFloat const kAvatarImageSize = 40.0f;
 
-typedef NS_ENUM(NSInteger, MessageAvatorType) {
+typedef NS_ENUM(NSInteger, MessageAvatarType) {
     MessageAvatarType_Square = 0,
     MessageAvatarType_Circle,
 };
@@ -19,6 +19,6 @@ typedef NS_ENUM(NSInteger, MessageAvatorType) {
 @interface MessageAvatarFactory : NSObject
 
 + (UIImage *)avatarImageNamed:(UIImage *)originImage
-            messageAvatorType:(MessageAvatorType)type;
+            messageAvatarType:(MessageAvatarType)type;
 
 @end

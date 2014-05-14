@@ -63,31 +63,32 @@
     [self.backgroundView setUserInteractionEnabled:YES];
     [self.view addSubview:self.backgroundView];
     
-    self.inputTextfiled = [UIFactory createTextFieldWithRect:CGRectMake(60, 40, 170, 34)
+    self.inputTextfield = [UIFactory createTextFieldWithRect:CGRectMake(20, 40, 230, 34)
                                                 keyboardType:UIKeyboardTypeDefault
                                                       secure:NO
-                                                 placeholder:@"search"
-                                                        font:[UIFont systemFontOfSize:18]
+                                                 placeholder:@"请输入对方的账号或昵称"
+                                                        font:[UIFont systemFontOfSize:15]
                                                        color:[UIColor redColor]
                                                     delegate:self];
-    self.inputTextfiled.borderStyle = UITextBorderStyleNone;
-    [self.backgroundView addSubview:self.inputTextfiled];
+    self.inputTextfield.borderStyle = UITextBorderStyleNone;
+    self.inputTextfield.clearButtonMode = UITextFieldViewModeNever;
+    [self.backgroundView addSubview:self.inputTextfield];
     
-    
-    self.searchButton = [UIFactory createButtonWithRect:CGRectMake(240, 40, 60, 34)
-                                                  title:@"搜索"
-                                              titleFont:[UIFont systemFontOfSize:18]
-                                             titleColor:[UIColor redColor]
-                                                 normal:@""
-                                              highlight:@""
-                                               selected:@""
+
+    self.searchButton = [UIFactory createButtonWithRect:CGRectMake(260, 40, 40, 35)
+                                                 normal:nil
+                                              highlight:nil
                                                selector:@selector(onSearch)
                                                  target:self];
-    
+    [self.searchButton setImage:[UIImage imageNamedNoCache:@"Partner_search_c.png"]
+                       forState:UIControlStateNormal];
+    [self.searchButton setImage:[UIImage imageNamedNoCache:@"Partner_search_n.png"]
+                       forState:UIControlStateHighlighted];
+    [self.searchButton setImageEdgeInsets:UIEdgeInsetsMake(6, 10, 7, 9)];
     [self.backgroundView addSubview:self.searchButton];
     
     
-    CGRect tableFrame = CGRectMake(0, 80, 320, CGRectGetHeight(backgroundFrame) - 80);
+    CGRect tableFrame = CGRectMake(0, 100, 320, CGRectGetHeight(backgroundFrame) - 100);
     self.resultTableView = [[UITableView alloc] initWithFrame:tableFrame
                                                         style:UITableViewStylePlain];
     self.resultTableView.dataSource = self;
@@ -122,7 +123,7 @@
 
 - (void)hideKeyboard
 {
-    [self.inputTextfiled resignFirstResponder];
+    [self.inputTextfield resignFirstResponder];
 }
 
 - (void)onBack:(id)sender
@@ -133,9 +134,9 @@
 - (void)onSearch
 {
     [self hideKeyboard];
-    NSString *keystr = [self.inputTextfiled.text trim];
+    NSString *keystr = [self.inputTextfield.text trim];
     
-    keystr = @"new User";
+    //keystr = @"new User";
     
     //search请求
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -145,8 +146,7 @@
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_SEARCHUSER];
     httpReq.bodyParams = bodyParams;
-    
-    __weak SearchViewController *weakSelf = self;
+
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *dic) {
         
         NSLog(@"result = %@", dic);
@@ -159,8 +159,8 @@
                                     message:nil
                                 buttonTitle:@"确定"];
             } else {
-                weakSelf.resultArr = resultArr;
-                [weakSelf.resultTableView reloadData];
+                self.resultArr = resultArr;
+                [self.resultTableView reloadData];
             }
         }
         
@@ -233,18 +233,17 @@
         cell = [CellFactory createPartnerCell];
     }
     NSDictionary *user = [self.resultArr objectAtIndex:indexPath.row];
-    
+
     //设置头像
-    __weak PartnerCell *weakCell = cell;
-    id headUrl = [user valueForKey:@"u_head_photo"];
-    if (headUrl == nil || [headUrl isKindOfClass:[NSNull class]]) {
+    id avatarURL = [user valueForKey:@"u_head_photo"];
+    if ([avatarURL isKindOfClass:[NSNull class]]) {
         [cell.avatarImgView setImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]];
     } else {
         [cell.avatarImgView setImageWithURL:[user valueForKey:@"u_head_photo"]
                            placeholderImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]
                                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                          [weakCell.avatarImgView setImage:image];
+                                          [cell.avatarImgView setImage:image];
                                       });
                                   }];
     }
@@ -253,6 +252,7 @@
     cell.nameLabel.text = [user valueForKey:@"u_nick_name"];
     cell.inviteButton.tag = 1000+indexPath.row;
     
+    cell.inviteButton.titleLabel.font = [UIFont systemFontOfSize: 14.0];
     [cell.inviteButton setTitle:@"加好友" forState:UIControlStateNormal];
     [cell.inviteButton addTarget:self
                           action:@selector(onAdd:)
@@ -266,6 +266,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+
+
+
+#pragma mark - UIGesture delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([[touch view] isKindOfClass:[UITextField class]] ||
+        [[touch view] isKindOfClass:[UIButton class]]) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 

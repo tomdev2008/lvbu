@@ -7,6 +7,7 @@
 //
 
 #import "NearbyCell.h"
+#import "AppCore.h"
 
 @implementation NearbyCell
 
@@ -18,6 +19,15 @@
     }
     return self;
 }
+
+
+- (void)awakeFromNib
+{
+    
+    [self.inviteButton setTitleColor:RGBCOLOR(106, 161, 209) forState:UIControlStateNormal];
+    [self.addButton setTitleColor:RGBCOLOR(106, 161, 209) forState:UIControlStateNormal];
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

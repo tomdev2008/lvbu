@@ -6,8 +6,52 @@
 //  Copyright (c) 2014年 zzc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "MessageModelDelegate.h"
+#import "BubbleMessageFactory.h"
+
+@protocol MessageModelDelegate <NSObject>
+
+@required
+
+//文字
+- (NSString *)text;
+
+//图片
+- (UIImage *)photo;
+- (NSString *)thumbnailUrl;
+- (NSString *)originPhotoUrl;
+
+//视频
+- (UIImage *)videoConverPhoto;
+- (NSString *)videoPath;
+- (NSString *)videoUrl;
+
+//声音
+- (NSString *)voicePath;
+- (NSString *)voiceUrl;
+
+
+//位置
+- (UIImage *)localPositionPhoto;
+
+//表情
+- (NSString *)emotionPath;
+
+//头像
+- (UIImage *)avatar;
+- (NSString *)avatarUrl;
+
+//消息类型
+- (BubbleMessageMediaType)messageMediaType;
+- (BubbleMessageType)bubbleMessageType;
+
+@optional
+
+- (NSString *)sender;
+- (NSDate *)timestamp;
+
+@end
+
+
 
 @interface MessageModel : NSObject<MessageModelDelegate, NSCoding, NSCopying>
 
@@ -16,8 +60,8 @@
 
 //图片
 @property (nonatomic, strong) UIImage *photo;
-@property (nonatomic, copy) NSString *thumbnailUrl;
-@property (nonatomic, copy) NSString *originPhotoUrl;
+@property (nonatomic, copy) NSString *thumbnailUrl;         //缩略图
+@property (nonatomic, copy) NSString *originPhotoUrl;       //原始图
 
 //视频
 @property (nonatomic, strong) UIImage *videoConverPhoto;
@@ -32,8 +76,8 @@
 
 @property (nonatomic, strong) UIImage *localPositionPhoto;
 
-@property (nonatomic, strong) UIImage *avator;
-@property (nonatomic, copy) NSString *avatorUrl;
+@property (nonatomic, strong) UIImage *avatar;
+@property (nonatomic, copy) NSString *avatarUrl;
 
 @property (nonatomic, copy) NSString *sender;
 

@@ -30,19 +30,23 @@
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dFD-72-mxb">
-                        <rect key="frame" x="191" y="13" width="44" height="44"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dFD-72-mxb">
+                        <rect key="frame" x="193" y="13" width="48" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="邀跑">
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="邀跑" backgroundImage="Partner_cell_invite_n.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <state key="highlighted" backgroundImage="Partner_cell_invite_c.png"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WaZ-Tz-44p">
-                        <rect key="frame" x="243" y="13" width="44" height="44"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WaZ-Tz-44p">
+                        <rect key="frame" x="249" y="13" width="48" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="好友">
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="加好友" backgroundImage="Partner_cell_invite_n.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <state key="highlighted" backgroundImage="Partner_cell_invite_n.png"/>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="lJu-wF-IZW">
                         <rect key="frame" x="77" y="40" width="34" height="21"/>
@@ -59,4 +63,8 @@
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Partner_cell_invite_c.png" width="86" height="86"/>
+        <image name="Partner_cell_invite_n.png" width="80" height="80"/>
+    </resources>
 </document>

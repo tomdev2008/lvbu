@@ -26,7 +26,6 @@
 @property(nonatomic, assign)float oldContentOffsetY;
 
 
-
 - (void)onPartner:(id)sender;
 - (void)onNearby:(id)sender;
 - (void)onAdd:(id)sender;
@@ -57,10 +56,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     [self.view setBackgroundColor:GlobalNavBarBgColor];
     
-//    UIImageView *fullBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamedNoCache:@"MainView_background.png"]];
-//    fullBackgroundImageView.frame = [[UIScreen mainScreen] bounds];
-//    [self.view addSubview:fullBackgroundImageView];
-    
+
     AdaptiverServer *adapt = [AdaptiverServer sharedInstance];
     
     
@@ -146,26 +142,59 @@
     self.partTableView.dataSource = self;
     self.partTableView.delegate = self;
     self.partTableView.pullDelegate = self;
-    [self.partTableView setEditing:YES];
+    //[self.partTableView setEditing:YES];
     self.partTableView.pullArrowImage = [UIImage imageNamed:@"blackArrow"];
-    self.partTableView.pullBackgroundColor = [UIColor yellowColor];
-    self.partTableView.pullTextColor = [UIColor blackColor];
+    self.partTableView.pullBackgroundColor = RGBCOLOR(226, 231, 236);
+    self.partTableView.pullTextColor = RGBCOLOR(86, 108, 135);
 
     tableFrame.origin.x += 320;
     self.nearbyTableView = [[PullTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
     self.nearbyTableView.dataSource = self;
     self.nearbyTableView.delegate = self;
     self.nearbyTableView.pullDelegate = self;
-    [self.nearbyTableView setEditing:YES];
+    //[self.nearbyTableView setEditing:YES];
     self.nearbyTableView.pullArrowImage = [UIImage imageNamed:@"blueArrow"];
-    self.nearbyTableView.pullBackgroundColor = [UIColor redColor];
-    self.nearbyTableView.pullTextColor = [UIColor blackColor];
+    self.nearbyTableView.pullBackgroundColor = RGBCOLOR(226, 231, 236);
+    self.nearbyTableView.pullTextColor = RGBCOLOR(86, 108, 135);
     
 
     [self.bodyScrollView addSubview:self.partTableView];
     [self.bodyScrollView addSubview:self.nearbyTableView];
     
+    
+    
+    
+    [self getFriend];
+    [self getNearby];
 
+  }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+
+
+
+- (void)dealloc
+{
+    self.partTableView = nil;
+    self.nearbyTableView = nil;
+}
+
+
+
+
+#pragma mark - private
+
+
+
+- (void)getFriend
+{
     //获取好友列表
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE]
@@ -197,7 +226,16 @@
     
     
     
+    
+}
+
+- (void)getNearby
+{
     //获取附近的人
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE]
+                  forKey:@"scode"];
+    
     HttpRequest *nearbyHttpReq = [[HttpRequest alloc] init];
     nearbyHttpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_NEARBY];
     nearbyHttpReq.bodyParams = bodyParams;
@@ -216,28 +254,15 @@
         } else {
             
         }
-
+        
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
         [self reportNetworkError:err];
     }];
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
-- (void)dealloc
-{
-    self.partTableView = nil;
-    self.nearbyTableView = nil;
-}
-
-
-#pragma mark - private
 
 - (void)onMenu:(id)sender
 {
@@ -262,10 +287,11 @@
 }
 
 
+//邀跑好友
 - (void)onInvite:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSInteger index = btn.tag - 1000;
+    NSInteger index = btn.tag - 10000;
     NSDictionary *fan = [self.partnerArr objectAtIndex:index];
     
     NSLog(@"invite [%@]~~~", [fan valueForKey:@"u_nick_name"]);
@@ -282,18 +308,65 @@
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
         NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
+        
+        NSString *msg = [result valueForKey:@"msg"];
+//        if (msg == nil  || [msg isKindOfClass:[NSNull class]]) {
+//            msg = @"邀请成功";
+//        }
+//        [PRPAlertView showWithTitle:msg
+//                            message:nil
+//                        buttonTitle:@"确定"];
+        
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
     
 }
 
+//删除好友
+- (void)onDelete:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    NSInteger index = btn.tag - 20000;
+    NSDictionary *fan = [self.partnerArr objectAtIndex:index];
+    
+    NSLog(@"invite [%@]~~~", [fan valueForKey:@"u_nick_name"]);
+    NSInteger uid = [[fan valueForKey:@"u_id"] integerValue];
+    
+    [self.partnerArr removeObjectAtIndex:index];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.partTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                              withRowAnimation:UITableViewRowAnimationMiddle];
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    [bodyParams setValue:[NSNumber numberWithInt:uid] forKey:@"uid"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_CANCEL_EYE];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
+        NSString *msg = [result valueForKey:@"msg"];
+        if (msg == nil  || [msg isKindOfClass:[NSNull class]]) {
+            msg = @"删除成功";
+        }
+        [PRPAlertView showWithTitle:msg
+                            message:nil
+                        buttonTitle:@"确定"];
+        
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
 
+}
 
+//邀跑附近的人
 - (void)onInviteNearby:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSInteger index = btn.tag / 100;
+    NSInteger index = btn.tag - 30000;
     
     NSDictionary *user = [self.nearbyArr objectAtIndex:index];
     
@@ -310,17 +383,20 @@
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
         NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
+        [PRPAlertView showWithTitle:[result valueForKey:@"msg"]
+                            message:nil
+                        buttonTitle:@"确定"];
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
 }
 
 
-
+//添加附近的人为好友
 - (void)onAddNearby:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSInteger index = btn.tag / 100;
+    NSInteger index = btn.tag - 40000;
     NSDictionary *user = [self.nearbyArr objectAtIndex:index];
     
     NSLog(@"invite [%@]~~~", [user valueForKey:@"u_nick_name"]);
@@ -337,12 +413,23 @@
         
         NSLog(@"result = %@", result);
         NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
+        NSString *msg = [result valueForKey:@"msg"];
+        if (msg == nil  || [msg isKindOfClass:[NSNull class]]) {
+            msg = @"添加成功";
+        }
+        [PRPAlertView showWithTitle:msg
+                            message:nil
+                        buttonTitle:@"确定"];
 
         
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
+    
+    
 }
+
+
 
 //#pragma mark UIScrollViewDelegate
 //
@@ -401,10 +488,14 @@
 - (void) refreshTable:(PullTableView *)pullTableView
 {
     /*
-     
      Code to actually refresh goes here.
-     
      */
+    
+    if (pullTableView == self.partTableView) {
+        [self getFriend];
+    } else {
+        [self getNearby];
+    }
     pullTableView.pullLastRefreshDate = [NSDate date];
     pullTableView.pullTableIsRefreshing = NO;
 }
@@ -416,6 +507,13 @@
      Code to actually load more data goes here.
      
      */
+    
+    if (pullTableView == self.partTableView) {
+        [self getFriend];
+    } else {
+        [self getNearby];
+    }
+    
     pullTableView.pullTableIsLoadingMore = NO;
 }
 
@@ -465,19 +563,31 @@
         NSDictionary *fan = [self.partnerArr objectAtIndex:indexPath.row];
         
         //设置头像
-        [cell.avatarImgView setImageWithURL:[fan valueForKey:@"u_head_photo"]
-                           placeholderImage:[UIImage imageNamed:@""]
-                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                         [cell.avatarImgView setImage:image];
-                                      });
-                                  }];
+        id avatarURL = [fan valueForKey:@"u_head_photo"];
+        if ([avatarURL isKindOfClass:[NSNull class]]) {
+            [cell.avatarImgView setImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]];
+        } else {
+            [cell.avatarImgView setImageWithURL:[fan valueForKey:@"u_head_photo"]
+                               placeholderImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]
+                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              [cell.avatarImgView setImage:image];
+                                          });
+                                      }];
+        }
+        
+
         
         //设置昵称
         cell.nameLabel.text = [fan valueForKey:@"u_nick_name"];
-        cell.inviteButton.tag = 1000+indexPath.row;
+        cell.inviteButton.tag = 10000+indexPath.row;
         [cell.inviteButton addTarget:self
                               action:@selector(onInvite:)
+                    forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.deleteButton.tag = 20000+indexPath.row;
+        [cell.deleteButton addTarget:self
+                              action:@selector(onDelete:)
                     forControlEvents:UIControlEventTouchUpInside];
         
         resultCell = cell;
@@ -494,23 +604,28 @@
         NSDictionary *user = [self.nearbyArr objectAtIndex:indexPath.row];
         
         //设置头像
-        [cell.avatarImgView setImageWithURL:[user valueForKey:@"u_head_photo"]
-                           placeholderImage:[UIImage imageNamed:@""]
-                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          [cell.avatarImgView setImage:image];
-                                      });
-                                  }];
+        id avatarURL = [user valueForKey:@"u_head_photo"];
+        if ([avatarURL isKindOfClass:[NSNull class]]) {
+            [cell.avatarImgView setImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]];
+        } else {
+            [cell.avatarImgView setImageWithURL:[user valueForKey:@"u_head_photo"]
+                               placeholderImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]
+                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              [cell.avatarImgView setImage:image];
+                                          });
+                                      }];
+        }
         
 
         //设置昵称
         cell.nameLabel.text = [user valueForKey:@"u_nick_name"];
-        cell.inviteButton.tag = 10+100 * indexPath.row;
+        cell.inviteButton.tag = 30000+indexPath.row;
         [cell.inviteButton addTarget:self
                               action:@selector(onInviteNearby:)
                     forControlEvents:UIControlEventTouchUpInside];
         
-        cell.addButton.tag = 20+100 * indexPath.row;
+        cell.addButton.tag = 40000+indexPath.row;
         [cell.addButton addTarget:self
                               action:@selector(onAddNearby:)
                     forControlEvents:UIControlEventTouchUpInside];
@@ -518,6 +633,7 @@
         resultCell = cell;
     }
     
+    resultCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return resultCell;
 }

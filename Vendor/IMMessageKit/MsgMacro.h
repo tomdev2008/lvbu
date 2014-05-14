@@ -6,16 +6,14 @@
 //  Copyright (c) 2014年 zzc. All rights reserved.
 //
 
-#ifndef DemoProject_MsgMacro_h
-#define DemoProject_MsgMacro_h
 
+#import "UIImage+Rounded.h"
+#import "UIImage+AnimatedFaceGif.h"
+#import "NSString+MessageInputView.h"
+#import "UIScrollView+KeyBoardControl.h"
 
 // device verson float value
 #define CURRENT_SYS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
-
-// block self
-#define WEAKSELF typeof(self) __weak weakSelf = self;
-#define STRONGSELF typeof(weakSelf) __strong strongSelf = weakSelf;
 
 
 //stretch image
@@ -23,4 +21,3 @@
 
 #define STRETCH_IMAGE_EDGE(image, edgeInsets) (CURRENT_SYS_VERSION < 6.0 ? [image stretchableImageWithLeftCapWidth:edgeInsets.left topCapHeight:edgeInsets.top] : [image resizableImageWithCapInsets:edgeInsets resizingMode:UIImageResizingModeStretch])
 
-#endif

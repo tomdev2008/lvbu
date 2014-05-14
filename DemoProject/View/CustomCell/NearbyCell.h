@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;            //距离
 
 @property (weak, nonatomic) IBOutlet UIButton *inviteButton;
-
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 

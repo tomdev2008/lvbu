@@ -131,7 +131,7 @@
 {
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
-                                                           cachePolicy:NSURLCacheStorageNotAllowed
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy 
                                                        timeoutInterval:REQUEST_TIME_OUT];
     
     if (self.headParams) {

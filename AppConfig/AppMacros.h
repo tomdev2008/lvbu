@@ -44,6 +44,11 @@
 #define kDegreesToRadian(x)      (M_PI * (x) / 180.0)
 #define kRadianToDegrees(radian) (radian*180.0) / (M_PI)
 
+
+//Block self
+#define WEAKSELF    __weak      typeof(self)  weakSelf = self;
+#define STRONGSELF  __strong    typeof(weakSelf) strongSelf = weakSelf;
+
 //GCD
 #define kGCDBackground(block) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
 #define kGCDMain(block)       dispatch_async(dispatch_get_main_queue(),block)

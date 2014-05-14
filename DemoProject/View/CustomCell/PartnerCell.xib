@@ -25,20 +25,38 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="90K-CQ-bdk">
-                        <rect key="frame" x="242" y="16" width="44" height="44"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="90K-CQ-bdk">
+                        <rect key="frame" x="242" y="16" width="43" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="邀跑">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="邀跑" backgroundImage="Partner_cell_invite_n.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <state key="highlighted" backgroundImage="Partner_cell_invite_c.png"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SbN-q5-jFl">
+                        <rect key="frame" x="242" y="16" width="43" height="43"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="删除" backgroundImage="Partner_cell_delete_n.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="highlighted" title="删除" backgroundImage="Partner_cell_delete_c.png"/>
                     </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImgView" destination="J1h-hs-u0q" id="5Qh-ez-hAr"/>
+                <outlet property="deleteButton" destination="SbN-q5-jFl" id="hrt-fu-D9F"/>
                 <outlet property="inviteButton" destination="90K-CQ-bdk" id="DPV-q7-rKw"/>
                 <outlet property="nameLabel" destination="vwV-Eb-BGK" id="yl9-Zy-njX"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Partner_cell_delete_c.png" width="86" height="86"/>
+        <image name="Partner_cell_delete_n.png" width="80" height="80"/>
+        <image name="Partner_cell_invite_c.png" width="86" height="86"/>
+        <image name="Partner_cell_invite_n.png" width="80" height="80"/>
+    </resources>
 </document>

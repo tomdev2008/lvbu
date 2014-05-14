@@ -24,6 +24,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     fw = CGRectGetWidth(rect) / ovalWidth;
     fh = CGRectGetHeight(rect) / ovalHeight;
     
+    
     CGContextMoveToPoint(context, fw, fh/2);                    // Start at lower right corner
     CGContextAddArcToPoint(context, fw, fh, fw/2, fh, 1);       // Top right corner
     CGContextAddArcToPoint(context, 0, fh, 0, fh/2, 1);         // Top left corner

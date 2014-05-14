@@ -38,12 +38,14 @@
 {
     [super layoutSubviews];
     CGRect frame = [self bounds];
-
-    [self.sportButton setBackgroundColor:RGBCOLOR(0, 175, 172)];
+    [self.sportButton setBackgroundColor:[UIColor clearColor]];
+    [self.sportButton setBackgroundImage:[UIImage imageNamed:@"Lvbu_startsport.png"]
+                                forState:UIControlStateNormal];
     
     switch (self.curViewStatus) {
         case ViewStatus_nonRequest:
         {
+            
             [self hidePeople];
             [self setBackgroundColor:[UIColor clearColor]];
             break;

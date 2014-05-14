@@ -23,6 +23,7 @@
 #import "JSONKit.h"
 #import "MBProgressHUD.h"
 #import "TouchXML.h"
+#import "SDURLCache.h"
 #import "UIImageView+WebCache.h"
 #import "IIViewDeckController.h"
 #import "CorePlot-CocoaTouch.h"

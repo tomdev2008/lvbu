@@ -163,8 +163,8 @@
     _localPositionPhoto = nil;
     
     //头像
-    _avator             = nil;
-    _avatorUrl          = nil;
+    _avatar             = nil;
+    _avatarUrl          = nil;
     
     //接受者，时间
     _sender             = nil;
@@ -193,8 +193,8 @@
         
         _localPositionPhoto = [aDecoder decodeObjectForKey:@"localPositionPhoto"];
         
-        _avator             = [aDecoder decodeObjectForKey:@"avator"];
-        _avatorUrl          = [aDecoder decodeObjectForKey:@"avatorUrl"];
+        _avatar             = [aDecoder decodeObjectForKey:@"avatar"];
+        _avatarUrl          = [aDecoder decodeObjectForKey:@"avatarUrl"];
         
         _sender             = [aDecoder decodeObjectForKey:@"sender"];
         _timestamp          = [aDecoder decodeObjectForKey:@"timestamp"];

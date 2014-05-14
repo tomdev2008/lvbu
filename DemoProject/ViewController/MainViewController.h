@@ -26,6 +26,9 @@
 
 
 @property(nonatomic, strong)UIScrollView    *containerScrollview;               //运动数据视图容器
+@property(nonatomic, strong)UISwipeGestureRecognizer *leftSwipeGesture;
+@property(nonatomic, strong)UISwipeGestureRecognizer *rightSwipeGesture;
+
 @property(nonatomic, strong)SportDataView   *todaySportDataView;                //今天运动数据
 @property(nonatomic, strong)SportDataView   *historySportDataView;              //历史运动数据
 @property(nonatomic, strong)SporterView     *sporterView;                       //运动人数，运动开始

@@ -27,6 +27,9 @@ static double kRegionDistance = 500;
 @property(nonatomic, assign)CLLocationCoordinate2D curLocation;
 
 
+@property(nonatomic, strong)NSMutableArray *myLocationArr;
+
+
 @end
 
 @implementation MainViewController
@@ -36,6 +39,7 @@ static double kRegionDistance = 500;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.myLocationArr = [[NSMutableArray alloc] initWithCapacity:0];
         
     }
     return self;
@@ -99,12 +103,29 @@ static double kRegionDistance = 500;
 
     //今天运动数据，历史运动数据
     self.containerScrollview = [[UIScrollView alloc] initWithFrame:sportDataFrame];
+    [self.containerScrollview setScrollEnabled:NO];
     CGSize contentSize = sportDataFrame.size;
     contentSize.width += 320;
     [self.containerScrollview setContentSize:contentSize];
     [self.containerScrollview setUserInteractionEnabled:YES];
     [self.containerScrollview setBackgroundColor:[UIColor whiteColor]];
     [self.mainView addSubview:self.containerScrollview];
+    
+    
+    self.leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                      action:@selector(onLeftSwipe)];
+    self.leftSwipeGesture.numberOfTouchesRequired = 1;
+    self.leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    self.rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                      action:@selector(onRightSwipe)];
+    self.rightSwipeGesture.numberOfTouchesRequired = 1;
+    self.rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    
+//    [self.containerScrollview addGestureRecognizer:self.leftSwipeGesture];
+//    [self.containerScrollview addGestureRecognizer:self.rightSwipeGesture];
+    
+    
     
     //今天运动数据视图：千里，卡路里，步数
     sportDataFrame.origin.y = 0;
@@ -134,6 +155,7 @@ static double kRegionDistance = 500;
     CGRect sporterFrame = CGRectMake(0, CGRectGetHeight([self.mainView bounds]) - 130, 320, 130);
     self.sporterView = [ViewFactory createSporterView];
     [self.sporterView setFrame:sporterFrame];
+    self.sporterView.curViewStatus = ViewStatus_Requested;
     [self.sporterView.peopleButton addTarget:self
                                       action:@selector(onPeople)
                             forControlEvents:UIControlEventTouchUpInside];
@@ -142,9 +164,9 @@ static double kRegionDistance = 500;
                                      action:@selector(onSport)
                            forControlEvents:UIControlEventTouchUpInside];
     
-    self.sporterView.curViewStatus = ViewStatus_nonRequest;
-    sporterFrame = CGRectMake(0, CGRectGetHeight([self.mainView bounds]) - 130, 130, 130);
-    self.sporterView.frame = sporterFrame;
+//    self.sporterView.curViewStatus = ViewStatus_nonRequest;
+//    sporterFrame = CGRectMake(0, CGRectGetHeight([self.mainView bounds]) - 130, 130, 130);
+//    self.sporterView.frame = sporterFrame;
     [self.sporterView setBackgroundColor:[UIColor whiteColor]];
     [self.mainView addSubview:self.sporterView];
 
@@ -169,6 +191,7 @@ static double kRegionDistance = 500;
                                              selector:@selector(onBack)
                                                target:self];
     [self.backButton setBackgroundColor:[UIColor redColor]];
+    [self.backButton setTitle:@"返回" forState:UIControlStateNormal];
     [self.reverseView addSubview:self.backButton];
 
     //眼睛
@@ -178,6 +201,7 @@ static double kRegionDistance = 500;
                                             selector:@selector(onEye)
                                               target:self];
     [self.eyeButton setBackgroundColor:[UIColor redColor]];
+    [self.eyeButton setTitle:@"eye" forState:UIControlStateNormal];
     [self.reverseView addSubview:self.eyeButton];
     
     
@@ -189,35 +213,15 @@ static double kRegionDistance = 500;
                                     repeats:YES];
     
     
-
-    //请求正在运动的好友人数以及附近的人
-    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
-    
-    HttpRequest *httpReq = [[HttpRequest alloc] init];
-    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
-    httpReq.bodyParams = bodyParams;
-    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
-        NSLog(@"result = %@", result);
-        NSLog(@"testGetFans.msg = %@", [result valueForKey:@"msg"]);
-        NSInteger ret = [[result valueForKey:@"ret"] integerValue];
-        if (ret == 0) {
-            
-            //请求成功
-            dispatch_async(dispatch_get_main_queue(), ^{
-                CGRect frame = self.sporterView.frame;
-                frame.size = CGSizeMake(320, 130);
-                self.sporterView.frame = frame;
-                [self.sporterView updateViewWithParter:10 Nearby:20];
-                self.sporterView.curViewStatus = ViewStatus_Requested;
-            });
-        }
-    } Failure:^(NSError *err) {
-        NSLog(@"error = %@", [err description]);
-    }];
     
     
-
+    //开启定时器，每隔120s获取正在运动的好友，以及附近的人
+    [NSTimer scheduledTimerWithTimeInterval:121
+                                     target:self
+                                   selector:@selector(getSporter)
+                                   userInfo:nil
+                                    repeats:YES];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -226,6 +230,9 @@ static double kRegionDistance = 500;
 
     //禁用viewDeckController的手势处理
     [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
+    
+    [self.containerScrollview addGestureRecognizer:self.leftSwipeGesture];
+    [self.containerScrollview addGestureRecognizer:self.rightSwipeGesture];
 
     
     static dispatch_once_t once;
@@ -301,6 +308,16 @@ static double kRegionDistance = 500;
 }
 
 
+- (void)onLeftSwipe
+{
+    [self.containerScrollview setContentOffset:CGPointMake(320, 0) animated:YES];
+}
+
+- (void)onRightSwipe
+{
+    [self.containerScrollview setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
 
 - (void)onSportData
 {
@@ -344,21 +361,73 @@ static double kRegionDistance = 500;
 
 - (void)updateMyLocation
 {
-    CLLocationCoordinate2D loc = self.curLocation;
-    if (loc.latitude > 0 && loc.longitude > 0) {
-        NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-        [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
-        [bodyParams setValue:[NSString stringWithFormat:@"%f=%f", loc.longitude, loc.latitude] forKey:@"gps"];
-        
-        HttpRequest *httpReq = [[HttpRequest alloc] init];
-        httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GPSUPDATE];
-        httpReq.bodyParams = bodyParams;
-        [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
-            NSLog(@"result = %@", result);
-        } Failure:^(NSError *err) {
-            NSLog(@"error = %@", [err description]);
-        }];
+
+    NSMutableArray *gpsArr = nil;
+    if ([self.myLocationArr count] < 6) {
+        return;
     }
+    
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    
+    gpsArr = [[NSMutableArray alloc] initWithCapacity:0];
+    for (int i = 0; i < [self.myLocationArr count]; ++i) {
+        NSMutableDictionary *locDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+        MKUserLocation *userLocation = [self.myLocationArr objectAtIndex:i];
+        CLLocationCoordinate2D loc = [userLocation coordinate];
+        [locDic setValue:[NSNumber numberWithFloat:loc.longitude] forKey:@"longitude"];
+        [locDic setValue:[NSNumber numberWithFloat:loc.latitude] forKey:@"latitude"];
+        
+        [gpsArr addObject:locDic];
+    }
+    
+    
+    [bodyParams setValue:gpsArr forKey:@"gps"];
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GPSUPDATE];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+}
+
+
+- (void)getSporter
+{
+    
+    //请求正在运动的好友人数以及附近的人
+    NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
+    NSMutableDictionary *gpsDic = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [gpsDic setValue:[NSNumber numberWithFloat:self.curLocation.latitude] forKey:@"latitude"];
+    [gpsDic setValue:[NSNumber numberWithFloat:self.curLocation.longitude] forKey:@"longitude"];
+    [bodyParams setValue:gpsDic forKey:@"gps"];
+    
+    HttpRequest *httpReq = [[HttpRequest alloc] init];
+    httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_GETFANS];
+    httpReq.bodyParams = bodyParams;
+    [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        NSLog(@"result = %@", result);
+        NSLog(@"testGetFans.msg = %@", [result valueForKey:@"msg"]);
+        NSInteger ret = [[result valueForKey:@"ret"] integerValue];
+        if (ret == 0) {
+
+            //请求成功
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                CGRect frame = self.sporterView.frame;
+                frame.size = CGSizeMake(320, 130);
+                self.sporterView.frame = frame;
+                [self.sporterView updateViewWithParter:10 Nearby:20];
+                self.sporterView.curViewStatus = ViewStatus_Requested;
+            });
+        }
+    } Failure:^(NSError *err) {
+        NSLog(@"error = %@", [err description]);
+    }];
+
 }
 
 
@@ -367,7 +436,8 @@ static double kRegionDistance = 500;
 - (void)viewDeckController:(IIViewDeckController*)viewDeckController willOpenViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
 {
     //禁止dataScrollview手势处理， 开始viewDeckController手势处理
-    [self.containerScrollview setScrollEnabled:NO];
+    [self.containerScrollview removeGestureRecognizer:self.leftSwipeGesture];
+    [self.containerScrollview removeGestureRecognizer:self.rightSwipeGesture];
     self.viewDeckController.panningMode = IIViewDeckFullViewPanning;
 }
 
@@ -375,7 +445,8 @@ static double kRegionDistance = 500;
 - (void)viewDeckController:(IIViewDeckController*)viewDeckController didCloseViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
 {
     //开始dataScrollview手势处理， 禁止viewDeckController手势处理
-    [self.containerScrollview setScrollEnabled:YES];
+    [self.containerScrollview addGestureRecognizer:self.leftSwipeGesture];
+    [self.containerScrollview addGestureRecognizer:self.rightSwipeGesture];
     self.viewDeckController.panningMode = IIViewDeckNoPanning;
 }
 
@@ -387,23 +458,28 @@ static double kRegionDistance = 500;
     
     
     CLLocationCoordinate2D loc = [userLocation coordinate];
-    if (loc.latitude > 0 && loc.longitude > 0) {
+    if (loc.latitude > 0 && loc.longitude > 0 ) {
         
+        
+        if (mapView == self.mainMapView) {
+            self.curLocation = loc;
+            
+            //如果GPS采样超过6个，则删除第一个，并添加当前位置到数组末尾
+            if ([self.myLocationArr count] >= 6) {
+                [self.myLocationArr removeObjectAtIndex:0];
+            }
+            
+            MKUserLocation *userLocation = [[MKUserLocation alloc] init];
+            userLocation.coordinate = loc;
+            [self.myLocationArr addObject:userLocation];
+            
+        }
 
-        self.curLocation = loc;
         //放大地图到自身的经纬度位置。
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(loc, kRegionDistance, kRegionDistance);
         [self.mainMapView setRegion:region animated:YES];
         
-        
-        
-        NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
-        [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
-        [bodyParams setValue:@"aaabbb" forKey:@"gps"];
-        
     }
-    
-
 }
 
 

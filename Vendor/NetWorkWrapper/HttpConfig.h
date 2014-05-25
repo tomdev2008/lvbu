@@ -10,9 +10,9 @@
 #define HttpConfig_h
 
 
-//#define BASE_URL @"http://api.reallybe.com"
+#define BASE_URL @"http://api.reallybe.com"
 //#define BASE_URL @"http://api.maipal.com"
-#define BASE_URL @"http://114.215.191.238"
+//#define BASE_URL @"http://114.215.191.238"
 
 
 //注册
@@ -56,16 +56,35 @@
 
 //运动服务
 //邀跑
-#define URL_INVITE                  @"/v1/sport/invite"
+#define URL_INVITE                  @"/v1/banpao/invite"
 
 //取消邀请
-#define URL_INVITE_CANCEL           @"/v1/sport/invite_cancel"
+#define URL_INVITE_CANCEL           @"/v1/banpao/invite_cancel"
 
 //回复邀请
-#define URL_INVITE_RET             @"/v1/sport/invite_ret"
+#define URL_INVITE_RET             @"/v1/banpao/invite_ret"
 
 //发定时GPS轨迹
 #define URL_GPSUPDATE               @"/v1/sport/gps_update"
+
+//取运动统计信息
+#define URL_SPORT_SUM               @"/v1/sport/sport_sum"
+
+//取运动历史
+#define URL_SPORT_HISTORY           @"/v1/sport/sport_get"
+
+//增加主动运动历史
+#define URL_SPORT_ADDSPORT          @"/v1/sport/sport_add"
+
+//删除主动运动历史
+#define URL_SPORT_DELSPORT          @"/v1/sport/sport_delete"
+
+//增加碎片运动历史
+#define URL_SPORT_ADDFRAGMENT       @"/v1/sport/fragment_add"
+
+//删除碎片运动历史
+#define URL_SPORT_DELFRAGMENT       @"/v1/sport/fragment_delete"
+
 
 
 //分组服务
@@ -90,7 +109,7 @@
 #define URL_CHAT_CHANGEGROUP        @"/v1/chat/chat_change"
 
 //推荐服务
-#define URL_RECOMMEND               @"/v1/recommend/recommend"
+#define URL_RECOMMEND               @"/v1/recommend/recommend_self"
 
 //历史
 #define URL_HISTORY_SPORT           @"/v1/histroy/sport_histroy"
@@ -110,41 +129,6 @@
 
 //获取所有上传URL
 #define URL_GET_UPLOADURL           @"/v1/system/get_upload_url"
-
-
-
-enum PUSHMESSAGETYPE {
-    
-    //添加好友
-    MSG_ADDFANS = 0,
-    
-    //好友状态改变
-    MSG_PARTNERSTATUS,
-    
-    //推荐
-    MSG_RECOMMAND,
-    
-    //邀请伴跑
-    MSG_INVITE,
-    
-    //取消邀请伴跑
-    MSG_CANCELINVITE,
-    
-    //应答伴跑邀请
-    MSG_RETINVITE,
-    
-    //消息
-    MSG_IM_TEXT,
-    MSG_IM_VOICE,
-    MSG_IM_IMAGE,
-    
-    //群消息
-    MSG_GROUP_TEXT,
-    MSG_GROUP_VOICE,
-    MSG_GROUP_IMAGE,
-    
-    };
-
 
 
 #endif

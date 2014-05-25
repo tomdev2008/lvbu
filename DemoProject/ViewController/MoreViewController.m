@@ -8,7 +8,10 @@
 
 #import "MoreViewController.h"
 
+
 @interface MoreViewController ()
+
+@property(nonatomic, strong)NSMutableArray *messageArr;
 
 @end
 
@@ -20,7 +23,7 @@
     if (self) {
         // Custom initialization
         
-        
+        self.messageArr = [[NSMutableArray alloc] initWithCapacity:0];
         
     }
     return self;
@@ -63,8 +66,8 @@
     
     CGRect tabelFrame = [adapt getBackgroundViewFrame];
     self.moreTableView = [[UITableView alloc] initWithFrame:tabelFrame];
-//    self.moreTableView.delegate = self;
-//    self.moreTableView.dataSource = self;
+    self.moreTableView.delegate = self;
+    self.moreTableView.dataSource = self;
     self.moreTableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.moreTableView];
 }
@@ -76,12 +79,14 @@
 }
 
 
-
 #pragma mark - private
 
 - (void)onBack:(id)sender
 {
     [self.viewDeckController toggleLeftViewAnimated:YES];
 }
+
+
+
 
 @end

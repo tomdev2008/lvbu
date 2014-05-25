@@ -51,15 +51,16 @@
                                                highlight:@""
                                                 selector:@selector(onBack:)
                                                   target:self];
-    [self.backButton setBackgroundColor:[UIColor redColor]];
+    [self.backButton setBackgroundColor:[UIColor clearColor]];
     [self.backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [self.backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.customNavigationBar addSubview:self.backButton];
     
     
     
     CGRect backgroundFrame = [adapt getBackgroundViewFrame];
     self.backgroundView = [[UIView alloc] initWithFrame:backgroundFrame];
-    [self.backgroundView setBackgroundColor:[UIColor whiteColor]];
+    [self.backgroundView setBackgroundColor:RGBCOLOR(240, 240, 240)];
     [self.backgroundView setUserInteractionEnabled:YES];
     [self.view addSubview:self.backgroundView];
     
@@ -68,11 +69,17 @@
                                                       secure:NO
                                                  placeholder:@"请输入对方的账号或昵称"
                                                         font:[UIFont systemFontOfSize:15]
-                                                       color:[UIColor redColor]
+                                                       color:RGBCOLOR(63, 63, 63)
                                                     delegate:self];
     self.inputTextfield.borderStyle = UITextBorderStyleNone;
     self.inputTextfield.clearButtonMode = UITextFieldViewModeNever;
     [self.backgroundView addSubview:self.inputTextfield];
+    
+    
+    //分割线
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 73, 300, 1)];
+    [lineView setBackgroundColor:[UIColor blackColor]];
+    [self.backgroundView addSubview:lineView];
     
 
     self.searchButton = [UIFactory createButtonWithRect:CGRectMake(260, 40, 40, 35)
@@ -93,8 +100,10 @@
                                                         style:UITableViewStylePlain];
     self.resultTableView.dataSource = self;
     self.resultTableView.delegate = self;
+    [self.resultTableView setBackgroundColor:[UIColor clearColor]];
     self.resultTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.backgroundView addSubview:self.resultTableView];
+
     
     
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -201,6 +210,7 @@
 
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
+        [self reportNetworkError:err];
     }];
 }
 
@@ -234,24 +244,73 @@
     }
     NSDictionary *user = [self.resultArr objectAtIndex:indexPath.row];
 
-    //设置头像
-    id avatarURL = [user valueForKey:@"u_head_photo"];
-    if ([avatarURL isKindOfClass:[NSNull class]]) {
-        [cell.avatarImgView setImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]];
+    //头像
+    NSString *avatarurl = nil;
+    id url = [user valueForKey:@"u_head_photo"];
+    
+    if ((url == nil) || [url isKindOfClass:[NSNull class]]) {
+        avatarurl = nil;
     } else {
-        [cell.avatarImgView setImageWithURL:[user valueForKey:@"u_head_photo"]
-                           placeholderImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]
-                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          [cell.avatarImgView setImage:image];
-                                      });
-                                  }];
+        avatarurl = [user valueForKey:@"u_head_photo"];
     }
     
-    //设置昵称
-    cell.nameLabel.text = [user valueForKey:@"u_nick_name"];
-    cell.inviteButton.tag = 1000+indexPath.row;
+    //昵称
+    NSString *name = @"匿名用户";
+    id nameId = [user valueForKey:@"u_nick_name"];
+    if ((nameId == nil) || [nameId isKindOfClass:[NSNull class]]) {
+        name = @"";
+    } else {
+        name = [user valueForKey:@"u_nick_name"];
+    }
     
+    //性别
+    BOOL isMale = YES;
+    id sex = [user valueForKey:@"u_sex"];
+    if ((sex == nil) || [sex isKindOfClass:[NSNull class]]) {
+        isMale = YES;
+    } else {
+        isMale = [[user valueForKey:@"u_sex"] integerValue] == 0;
+    }
+    
+    //年龄
+    NSInteger age = 20;
+    id birth = [user valueForKey:@"u_birth"];
+    if ((birth == nil) || [birth isKindOfClass:[NSNull class]]) {
+        age = 20;
+    } else {
+        NSString *birthday = [user valueForKey:@"u_birth"];
+        NSDate *today = [NSDate date];
+        age = today.year - [[birthday substringToIndex:4] integerValue];
+    }
+    
+    
+    //距离
+    CGFloat distance = 1;
+    id dis = [user valueForKey:@"u_distance"];
+    if ((dis == nil) || [dis isKindOfClass:[NSNull class]]) {
+        distance = 1;
+    } else {
+        distance = [[user valueForKey:@"u_distance"] floatValue];
+    }
+    
+    //状态
+    NSInteger status = UserSportStatus_offline;
+    id stat = [user valueForKey:@"status"];
+    if ((stat == nil) || [stat isKindOfClass:[NSNull class]]) {
+        status = UserSportStatus_offline;
+    } else {
+        status = [[user valueForKey:@"status"] integerValue];
+    }
+    
+    [cell updateViewByAvatarUrl:avatarurl
+                       NickName:name
+                         IsMale:isMale
+                            Age:age
+                       Distance:distance
+                         Status:status];
+    
+    //设置邀请按钮
+    cell.inviteButton.tag = 1000+indexPath.row;
     cell.inviteButton.titleLabel.font = [UIFont systemFontOfSize: 14.0];
     [cell.inviteButton setTitle:@"加好友" forState:UIControlStateNormal];
     [cell.inviteButton addTarget:self
@@ -267,8 +326,6 @@
 {
     
 }
-
-
 
 
 #pragma mark - UIGesture delegate

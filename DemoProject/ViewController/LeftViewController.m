@@ -128,6 +128,8 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
     self.bodyTableView.dataSource = self;
     self.bodyTableView.delegate = self;
     
+    [self.bodyTableView setScrollEnabled:NO];
+    
     [self.bodyTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:self.bodyTableView];
 }
@@ -288,9 +290,14 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 {
     [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
         
-        [kAppDelegate.rootNav setViewControllers:[NSArray arrayWithObjects:kAppDelegate.mainVC, nil]];
-        self.viewDeckController.centerController = kAppDelegate.rootNav;
-        
+        if ([[CommonVariable shareCommonVariable] isRunning]) {
+            [kAppDelegate.rootNav setViewControllers:[NSArray arrayWithObjects:kAppDelegate.sportVC, nil]];
+            self.viewDeckController.centerController = kAppDelegate.rootNav;
+            
+        } else {
+            [kAppDelegate.rootNav setViewControllers:[NSArray arrayWithObjects:kAppDelegate.mainVC, nil]];
+            self.viewDeckController.centerController = kAppDelegate.rootNav;
+        }
     }];
 }
 
@@ -335,7 +342,8 @@ static NSString *cellIdentifier = @"LeftCellIdentifier";
 {
     [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
 
-        [kAppDelegate.rootNav setViewControllers:[NSArray arrayWithObjects:kAppDelegate.moreVC, nil]];
+        MoreViewController *moreVC = [[MoreViewController alloc] init];
+        [kAppDelegate.rootNav setViewControllers:[NSArray arrayWithObjects:moreVC, nil]];
         self.viewDeckController.centerController = kAppDelegate.rootNav;
         
     }];

@@ -29,6 +29,7 @@
 #import "CorePlot-CocoaTouch.h"
 #import "CoreData+MagicalRecord.h"
 #import "PullTableView.h"
+#import "JSMessageKit.h"
 
 
 #import "HttpRequest.h"

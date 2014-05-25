@@ -21,6 +21,18 @@
     return self;
 }
 
+
+- (void)awakeFromNib
+{
+    [self setBackgroundColor:RGBCOLOR(240, 240, 240)];
+    
+    [self.friendCountLabel setTextColor:[UIColor colorWithHex:@"#404040"]];
+    [self.friendTitleLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+    
+    [self.nearbyCountLabel setTextColor:[UIColor colorWithHex:@"#404040"]];
+    [self.nearbyTitleLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+}
+
 - (void)setCurViewStatus:(NSInteger)status
 {
     _curViewStatus = status;
@@ -37,10 +49,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    CGRect frame = [self bounds];
+    //CGRect frame = [self bounds];
     [self.sportButton setBackgroundColor:[UIColor clearColor]];
-    [self.sportButton setBackgroundImage:[UIImage imageNamed:@"Lvbu_startsport.png"]
-                                forState:UIControlStateNormal];
     
     switch (self.curViewStatus) {
         case ViewStatus_nonRequest:
@@ -53,7 +63,7 @@
         case ViewStatus_Requested:
         {
             [self showPeople];
-            [self setBackgroundColor:[UIColor whiteColor]];
+            [self setBackgroundColor:RGBCOLOR(240, 240, 240)];
             break;
         }
         default:

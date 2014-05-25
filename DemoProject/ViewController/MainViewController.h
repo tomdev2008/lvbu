@@ -16,7 +16,6 @@
 @interface MainViewController: BaseViewController
 <UIScrollViewDelegate, MKMapViewDelegate, UIGestureRecognizerDelegate, IIViewDeckControllerDelegate>
 
-
 @property(nonatomic, strong)UIView *mainView;                               //主视图
 @property(nonatomic, strong)UIImageView *customNavigationBar;               //导航栏
 @property(nonatomic, strong)UIButton    *menuButton;                        //菜单按钮

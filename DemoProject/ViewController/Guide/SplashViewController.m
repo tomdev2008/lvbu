@@ -74,10 +74,13 @@
         if (ret == 0) {
             
             //登陆成功, 保存用户信息
+            NSDictionary *user = [result valueForKey:@"user"];
+
             NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
             [userDefault setValue:[result valueForKey:@"scode"] forKey:KEY_GLOBAL_SESSIONCODE];
+            [userDefault setValue:[user valueForKey:@"u_id"] forKey:KEY_CurrentUserid];
             [userDefault synchronize];
-            
+
             [self onStart];
             
         } else {

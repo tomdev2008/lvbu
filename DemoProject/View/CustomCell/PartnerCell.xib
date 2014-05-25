@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="J1h-hs-u0q">
-                        <rect key="frame" x="11" y="8" width="56" height="55"/>
+                        <rect key="frame" x="11" y="8" width="56" height="56"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="冬天的鱼" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vwV-Eb-BGK">
@@ -25,38 +25,67 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Partner_cell_male.png" id="oiR-rv-6bU">
+                        <rect key="frame" x="75" y="46" width="32" height="12"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DTT-dm-UCb">
+                        <rect key="frame" x="90" y="41" width="15" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Partner_cell_position.png" id="UFk-cD-jvy">
+                        <rect key="frame" x="115" y="45" width="10" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.2km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Be4-HB-vSb">
+                        <rect key="frame" x="126" y="41" width="42" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Partner_cell_run_no.png" id="Yzx-8q-8gA">
+                        <rect key="frame" x="170" y="46" width="24" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[离线]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o2p-Ug-bON">
+                        <rect key="frame" x="115" y="40" width="79" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="90K-CQ-bdk">
-                        <rect key="frame" x="242" y="16" width="43" height="43"/>
+                        <rect key="frame" x="264" y="16" width="43" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <state key="normal" title="邀跑" backgroundImage="Partner_cell_invite_n.png">
+                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <state key="highlighted" backgroundImage="Partner_cell_invite_c.png"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SbN-q5-jFl">
-                        <rect key="frame" x="242" y="16" width="43" height="43"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <state key="normal" title="删除" backgroundImage="Partner_cell_delete_n.png">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <state key="highlighted" title="删除" backgroundImage="Partner_cell_delete_c.png"/>
-                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="ageLabel" destination="DTT-dm-UCb" id="P4J-74-VkQ"/>
                 <outlet property="avatarImgView" destination="J1h-hs-u0q" id="5Qh-ez-hAr"/>
-                <outlet property="deleteButton" destination="SbN-q5-jFl" id="hrt-fu-D9F"/>
+                <outlet property="distanceLabel" destination="Be4-HB-vSb" id="nEu-o8-Uc5"/>
                 <outlet property="inviteButton" destination="90K-CQ-bdk" id="DPV-q7-rKw"/>
                 <outlet property="nameLabel" destination="vwV-Eb-BGK" id="yl9-Zy-njX"/>
+                <outlet property="offlineLabel" destination="o2p-Ug-bON" id="Irv-Oz-rf1"/>
+                <outlet property="positionImageView" destination="UFk-cD-jvy" id="Xrg-AN-fSu"/>
+                <outlet property="sexImageView" destination="oiR-rv-6bU" id="ny3-HE-fvr"/>
+                <outlet property="statusImageView" destination="Yzx-8q-8gA" id="ofi-OG-W1g"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Partner_cell_delete_c.png" width="86" height="86"/>
-        <image name="Partner_cell_delete_n.png" width="80" height="80"/>
         <image name="Partner_cell_invite_c.png" width="86" height="86"/>
         <image name="Partner_cell_invite_n.png" width="80" height="80"/>
+        <image name="Partner_cell_male.png" width="66" height="26"/>
+        <image name="Partner_cell_position.png" width="20" height="24"/>
+        <image name="Partner_cell_run_no.png" width="48" height="26"/>
     </resources>
 </document>

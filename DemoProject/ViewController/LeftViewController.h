@@ -12,7 +12,6 @@
 @interface LeftViewController : BaseViewController
 <UITableViewDelegate, UITableViewDataSource>
 
-
 @property(retain, nonatomic)UITableView *bodyTableView;
 
 @end

@@ -8,19 +8,43 @@
 
 #import <UIKit/UIKit.h>
 
+
+enum CellEditStatus {
+    CellEditStatus_StartEdit = 0,
+    CellEditStatus_endEdit = 1,
+    };
+
+
+enum UserSportStatus {
+    UserSportStatus_offline = 0,
+    UserSportStatus_nosport,
+    UserSportStatus_single,
+    UserSportStatus_double,
+    };
+
 @interface PartnerCell : UITableViewCell
 
+@property(assign, nonatomic)NSInteger cellEditStatus;
+
+@property (weak, nonatomic) IBOutlet UIImageView    *avatarImgView;             //头像
+@property (weak, nonatomic) IBOutlet UILabel        *nameLabel;                 //昵称
+@property (weak, nonatomic) IBOutlet UIImageView    *sexImageView;              //性别
+@property (weak, nonatomic) IBOutlet UILabel        *ageLabel;                  //年龄
+@property (weak, nonatomic) IBOutlet UIImageView    *positionImageView;         //位置
+@property (weak, nonatomic) IBOutlet UILabel        *distanceLabel;             //距离
+@property (weak, nonatomic) IBOutlet UIImageView    *statusImageView;           //状态
+@property (weak, nonatomic) IBOutlet UIButton       *inviteButton;              //邀请
 
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImgView;        //头像
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;                //昵称
-@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;            //距离
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;                //描述
+@property (weak, nonatomic) IBOutlet UILabel *offlineLabel;
 
 
-@property (weak, nonatomic) IBOutlet UIButton *inviteButton;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
-
+- (void)updateViewByAvatarUrl:(NSString *)avatarUrl
+                     NickName:(NSString *)name
+                       IsMale:(BOOL)isMale
+                          Age:(NSInteger)age
+                     Distance:(CGFloat)distance
+                       Status:(NSInteger)status;
 
 @end

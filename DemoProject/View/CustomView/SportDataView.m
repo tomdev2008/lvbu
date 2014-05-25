@@ -29,6 +29,40 @@
     [self setNeedsLayout];
 }
 
+- (void)awakeFromNib
+{
+    
+    [self setBackgroundColor:RGBCOLOR(240, 240, 240)];
+    
+    //设置字体颜色
+    [self.dataViewTitleLabel setTextColor:[UIColor colorWithHex:@"#08519d"]];
+    
+    //KM
+    [self.kmTitleLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+    [self.kmValueLabel setTextColor:[UIColor colorWithHex:@"#08519d"]];
+    //卡路里
+    [self.calTitleLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+    [self.calValueLabel setTextColor:[UIColor colorWithHex:@"#08519d"]];
+    
+    //分割线
+    [self.lineView1 setBackgroundColor:[UIColor blackColor]];
+    [self.lineView2 setBackgroundColor:[UIColor blackColor]];
+    
+    //分钟
+    [self.minTitleLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+    [self.minValueLabel setTextColor:[UIColor colorWithHex:@"#08519d"]];
+    
+    //次数
+    [self.timesTitleLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+    [self.timesValueLabel setTextColor:[UIColor colorWithHex:@"#08519d"]];
+    
+    //步数
+    [self.stepTitleLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+    [self.stepValueLabel setTextColor:[UIColor colorWithHex:@"#08519d"]];
+    
+}
+
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -58,13 +92,14 @@
 
         
         switch (self.curViewStatus) {
-            case DataViewStatus_NonSync:
+            case DataViewStatus_Sync:
             {
-                //未同步数据
+                //已同步数据
                 //分钟
-                iconImgFrame = CGRectMake(26, 145, 25, 25);
-                titleFrame   = CGRectMake(50, 148, 60, 21);
-                valueFrame   = CGRectMake(0, 168, 106, 42);
+                iconImgFrame = CGRectMake(26, 155, 25, 25);
+                titleFrame   = CGRectMake(50, 159, 60, 21);
+                valueFrame   = CGRectMake(0, 173, 106, 42);
+                
                 [self.minIconImgView setFrame:iconImgFrame];
                 [self.minTitleLabel setFrame:titleFrame];
                 [self.minValueLabel setFrame:valueFrame];
@@ -89,13 +124,14 @@
                 [self.stepValueLabel setFrame:valueFrame];
                 break;
             }
-            case DataViewStatus_Sync:
+            
+            case DataViewStatus_NonSync:
             {
-                //同步数据
+                //未同步数据
                 //分钟
-                iconImgFrame = CGRectMake(50, 145, 25, 25);
-                titleFrame   = CGRectMake(78, 148, 80, 21);
-                valueFrame   = CGRectMake(0, 168, 160, 40);
+                iconImgFrame = CGRectMake(50, 155, 25, 25);
+                titleFrame   = CGRectMake(78, 159, 80, 21);
+                valueFrame   = CGRectMake(0, 173, 160, 40);
                 [self.minIconImgView setFrame:iconImgFrame];
                 [self.minTitleLabel setFrame:titleFrame];
                 [self.minValueLabel setFrame:valueFrame];

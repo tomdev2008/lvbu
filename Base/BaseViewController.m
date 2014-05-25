@@ -243,7 +243,8 @@
 {
     CommonVariable *commVars = [CommonVariable shareCommonVariable];
     commVars.curUser = user;
-    [[NSUserDefaults standardUserDefaults] setValue:commVars.curUser.name forKey:KEY_CurrentUserName];
+    [[NSUserDefaults standardUserDefaults] setValue:commVars.curUser.nickname forKey:KEY_CurrentUserName];
+    [[NSUserDefaults standardUserDefaults] setValue:commVars.curUser.password forKey:KEY_CurrentPassword];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -254,7 +255,7 @@
     CommonVariable *commVars = [CommonVariable shareCommonVariable];
     if (commVars.curUser == nil) {
         NSString *username = [[NSUserDefaults standardUserDefaults] valueForKey:KEY_CurrentUserName];
-        NSArray *userArr = [User findByAttribute:@"name" withValue:username];
+        NSArray *userArr = [User findByAttribute:@"nickname" withValue:username];
         if ([userArr count] > 0) {
             commVars.curUser =  [userArr objectAtIndex:0];
         }

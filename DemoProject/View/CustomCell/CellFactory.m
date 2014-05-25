@@ -16,17 +16,6 @@
 
 @implementation CellFactory
 
-+ (MemberTableViewCell *)createMemberTableViewCell
-{
-    MemberTableViewCell *cell = nil;
-    NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"MemberTableViewCell"
-                                                      owner:self
-                                                    options:nil];
-    if ([nibArray count] > 0) {
-        cell = [nibArray objectAtIndex:0];
-    }
-    return cell;
-}
 
 
 + (PartnerCell *)createPartnerCell

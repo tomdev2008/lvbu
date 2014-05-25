@@ -12,18 +12,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="P4J-Gj-UWZ">
-                    <rect key="frame" x="10" y="10" width="110" height="110"/>
+                    <rect key="frame" x="12" y="10" width="110" height="110"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" backgroundImage="Lvbu_startsport_n.png"/>
+                    <state key="highlighted" backgroundImage="Lvbu_startsport_c.png"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jCF-hC-tmS">
                     <rect key="frame" x="130" y="0.0" width="190" height="130"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YWu-X2-TwH">
                     <rect key="frame" x="166" y="0.0" width="154" height="40"/>
@@ -75,5 +75,7 @@
     <resources>
         <image name="Lvbu_friend.png" width="30" height="30"/>
         <image name="Lvbu_nearby.png" width="30" height="30"/>
+        <image name="Lvbu_startsport_c.png" width="221" height="222"/>
+        <image name="Lvbu_startsport_n.png" width="221" height="222"/>
     </resources>
 </document>

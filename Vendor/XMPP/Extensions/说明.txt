@@ -1,0 +1,224 @@
+
+
+
+
+XMPPFramework目前只实现了几个常用到的扩展。包括
+
+协议
+协议简介
+XEP-0009
+在两个XMPP实体间传输XML-RPC编码请求和响应
+
+XEP-0006
+使能与网络上某个XMPP实体间的通信
+
+XEP-0045
+多人聊天相关协议
+
+XEP-0054
+名片格式的标准文档
+
+XEP-0060
+提供通用公共订阅功能
+
+XEP-0065
+两个XMPP用户之间建立一个带外流，主要用于文件传输
+
+XEP-0082
+日期和时间信息的标准化表示
+
+XEP-0085
+聊天对话中通知用户状态
+
+XEP-0100
+表述了XMPP客户端与提供传统的IM服务的代理网关之间交换的最佳实践
+
+XEP-0115
+广播和动态发现客户端、设备、或一般实体能力。
+
+XEP-0136
+为服务端备份和检索XMPP消息定义机制和偏好设置
+
+XEP-0153
+用于交换用户头像
+
+XEP-0184
+消息送达回执协议
+
+XEP-0199
+XMPP ping 协议
+
+XEP-0202
+用于交换实体间的本地时间信息
+
+XEP-0203
+用于延迟发送
+
+XEP-0224
+引起另一个用户注意的协议
+
+
+
+项目中需要用到openfire的文件传输，但是客户端使用flex，官方提供的xiff包中并没有封装文件传输的功能，没办法，研究了几天，在google和官方smock源码的帮助下终于实现了xiff下的文件传输，在这里做个总结。
+openfire服务器是基于xmpp协议的，XMPP支持两种文件流传输协议，SOCKS5 Bytestreams和 In-Band Bytestreams，SOCKS5是直接发送二进制流，而IBB是将文件转成base64码进行然后用message的形式进行传输，我这里仅实现了SOCKS5的文件代理传输。
+SOCKS5文件传输需要用到两个协议，XEP-0065和XEP-0096
+XEP-0096定义文件传输协议，提供了一个模块化框架使能交换被传输文件的信息以及参数的协商，也就是在传输文件之前协商将要传输的文件信息。
+XEP-0065定义SOCKS5流传输标准协议，提供用于在任意两个XMPP用户之间建立字节流并进行文件传输。
+根据我的理解，文件传输的过程分为协商，建立socks5连接，二进制传输这三个阶段
+协商的过程最复杂，然后是建立连接，传输就比较简单，下面一个一个来讲
+协商包括初始方、目标方、代理方，初始方就是发送文件方，目标方即文件接收方，代理方是socks5代理服务器，
+协商过程就是三方互相发送xml来交换信息的过程，通俗点就是三个人沟通一下传什么文件和怎么传文件。
+首先遵循XMP-0096协议，初始方给目标方发送包含文件信息的xml
+Xml代码  
+<iq to="android@192.168.1.113/Spark 2.6.3" type="set" id="iq_13" from="iphone@192.168.1.113/xiff">  
+    <si profile="http://jabber.org/protocol/si/profile/file-transfer" mime-type="text/plain" id="82B0C697-C1DE-93F9-103E-481C8E7A3BD8" xmlns="http://jabber.org/protocol/si">  
+        <feature xmlns="http://jabber.org/protocol/feature-neg">  
+            <x xmlns="jabber:x:data" type="form">  
+                <field var="stream-method" type="list-single">  
+                    <option><value>http://jabber.org/protocol/bytestreams</value></option>  
+                    <option><value>http://jabber.org/protocol/ibb</value></option>  
+                </field>  
+            </x>  
+        </feature>  
+        <file xmlns="http://jabber.org/protocol/si/profile/file-transfer" name="img0545.png" size="152443"><desc>send</desc></file>  
+    </si>  
+</iq>  
+ 
+目标方接收到信息后发送回执，表示同意接收文件
+Xml代码  
+<iq id="iq_13" to="iphone@192.168.1.113/xiff" from="android@192.168.1.113/Spark 2.6.3" type="result">  
+    <si xmlns="http://jabber.org/protocol/si">  
+        <feature xmlns="http://jabber.org/protocol/feature-neg">  
+            <x xmlns="jabber:x:data" type="submit">  
+                <field var="stream-method">  
+                     <value>http://jabber.org/protocol/bytestreams</value>  
+                     <value>http://jabber.org/protocol/ibb</value>  
+                </field>  
+             </x>  
+        </feature>  
+     </si>  
+</iq>  
+ 
+这时进入XEP-0065协议阶段
+初始方给服务器发送信息，请求提供代理服务器
+Xml代码  
+<iq id="iq_15" type="get"><query xmlns="http://jabber.org/protocol/disco#items" /></iq>  
+
+服务器回复信息，告知可用的代理
+Xml代码  
+<iq type="result" id="iq_15" to="iphone@192.168.1.113/xiff">  
+    <query xmlns="http://jabber.org/protocol/disco#items">  
+        <item jid="proxy.192.168.1.113" name="Socks 5 Bytestreams Proxy"/>  
+        <item jid="pubsub.192.168.1.113" name="Publish-Subscribe service"/>  
+        <item jid="conference.192.168.1.113" name="公共房间"/>  
+        <item jid="search.192.168.1.113" name="User Search"/>  
+    </query>  
+</iq>  
+ 
+这里选择name=“Socks 5 Bytestreams Proxy”的代理，初始方给这个代理发送信息获取代理连接信息
+Xml代码  
+<iq id="iq_17" to="proxy.192.168.1.113" type="get"><query xmlns="http://jabber.org/protocol/bytestreams" /></iq>  
+ 
+代理方回复信息，告知初始方代理的jid、IP、端口等信息
+Xml代码  
+<iq type="result" id="iq_17" from="proxy.192.168.1.113" to="iphone@192.168.1.113/xiff">  
+    <query xmlns="http://jabber.org/protocol/bytestreams">  
+        <streamhost jid="proxy.192.168.1.113" host="192.168.1.113" port="7777"/>  
+    </query>  
+</iq>  
+ 
+初始方收到代理信息后将代理的信息发送给目标方
+Xml代码  
+<iq to="android@192.168.1.113/Spark 2.6.3" type="set" id="iq_19" from="iphone@192.168.1.113/xiff">  
+    <query xmlns="http://jabber.org/protocol/bytestreams" mode="tcp" sid="82B0C697-C1DE-93F9-103E-481C8E7A3BD8">  
+        <streamhost port="7777" host="192.168.1.113" jid="proxy.192.168.1.113" />  
+    </query>  
+</iq>  
+ 
+然后就进入连接阶段，也就是初始方和目标方分别和代理建立socks5连接的过程。（关于SOCKS5协议连接，我之后会补充）。
+目标方收到代理信息后和代理建立socket连接(使用SOCKS5协议连接)，连接成功后通知初始方使用的代理jid
+Xml代码  
+<iq id="iq_19" to="iphone@192.168.1.113/xiff" type="result" from="android@192.168.1.113/Spark 2.6.3">  
+    <query xmlns="http://jabber.org/protocol/bytestreams">  
+        <streamhost-used jid="proxy.192.168.1.113"/>  
+    </query>  
+</iq>  
+ 
+初始方开始与代理建立socket连接(也使用SOCKS5协议)，连接成功后给代理发送请求，要求激活文件流
+Xml代码  
+<iq to="proxy.192.168.1.113" type="set" id="iq_21" from="iphone@192.168.1.113/xiff">  
+<query xmlns="http://jabber.org/protocol/bytestreams" sid="82B0C697-C1DE-93F9-103E-481C8E7A3BD8">  
+<activate>android@192.168.1.113/Spark 2.6.3</activate>  
+</query>  
+</iq>  
+ 
+代理回复激活成功信息
+Xml代码  
+<iq type="result" id="iq_21" from="proxy.192.168.1.113" to="iphone@192.168.1.113/xiff"/>  
+初始方收到回复信息后就进入二进制流传输阶段，这时就可以开始发送二进制流了
+等初始方将流发送完毕后把socket流关闭传输就完成了文件的传输。
+ 
+注意：type为result的回复信息使用的id一定要和请求的信息id一样。
+
+
+
+
+
+
+XMPP的文件传输通常分两步，就像QQ传文件一样，先是将文件名 大小等等信息发给对方，对象接受就开始传输文件
+
+第一步的就是XEP-0096这个协议；
+
+第二步有几种方法实现：
+
+1.socks5 bytestreams 对应的协议是XEP-0065，建立P2P连接传输文件流
+2.In-Band Bytestreams(ibb) 对应的协议是XEP-0047，带内传输，好像是将文件Base64转成文本传输,效率较慢
+
+3.google的Jingle（不了解，据说是对xmpp的扩展）
+
+这里，我觉得第一种方法较为好。
+
+下面是第一步中，XEP-0096的oc实现代码：
+
+    NSXMLElement *si = [NSXMLElement elementWithName:@"si" xmlns:@"http://jabber.org/protocol/si"];
+    [si addAttributeWithName:@"id" stringValue:uuid];
+    [si addAttributeWithName:@"mime-type" stringValue:@"text/plain"];
+    [si addAttributeWithName:@"profile" stringValue:@"http://jabber.org/protocol/si/profile/file-transfer"];
+    
+    NSXMLElement *file = [NSXMLElement elementWithName:@"file" xmlns:@"http://jabber.org/protocol/si/profile/file-transfer"];
+
+    NSXMLElement *des = [NSXMLElement elementWithName:@"desc" stringValue:@"this is a test file"];
+
+    NSXMLElement *feature = [NSXMLElement elementWithName:@"feature" xmlns:@"http://jabber.org/protocol/feature-neg"];
+    NSXMLElement *x = [NSXMLElement elementWithName:@"x" xmlns:@"jabber:x:data"];
+    [x addAttributeWithName:@"type" stringValue:@"form"];
+    NSXMLElement *field = [NSXMLElement elementWithName:@"field"];
+    [field addAttributeWithName:@"var" stringValue:@"stream-method"];
+    [field addAttributeWithName:@"type" stringValue:@"list-single"];
+    NSXMLElement *option1 = [NSXMLElement elementWithName:@"option"];
+    NSXMLElement *value1 = [NSXMLElement elementWithName:@"value" stringValue:@"http://jabber.org/protocol/bytestreams"];
+    [option1 addChild:value1];
+    [field addChild:option1];
+    
+    NSXMLElement *option2 = [NSXMLElement elementWithName:@"option"];
+    NSXMLElement *value2 = [NSXMLElement elementWithName:@"value" stringValue:@"http://jabber.org/protocol/ibb"];
+    [option2  addChild:value2];
+    [field addChild:option2];
+    
+    [x addChild:field];
+    [feature addChild:x];
+    [si addChild:file];
+    [si addChild:feature];
+    [self updateDiscoUUID];
+    
+    XMPPIQ *iq= [XMPPIQ iqWithType:@"set" to:[XMPPJID jidWithString:hadrCodeJidString] elementID:discoUUID child:si];
+    
+    [iq addAttributeWithName:@"from" stringValue:[xmppStream.myJID full]] ;
+    [xmppStream sendElement:iq];
+
+其中[XMPPJID jidWithString:hadrCodeJidString] 替换为你要发送的对方的XMPPJID对象。
+
+
+测试过这个是木有问题的，至于下面的步骤怎么实现我还在看，稍后再贴出。
+
+

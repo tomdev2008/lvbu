@@ -14,7 +14,14 @@
 
 
 static NSInteger count = 0;
-static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
+static NSString * const lvbuStoreName = @"LvbuDatabase.sqlite";
+
+
+@interface AppDelegate()
+
+@property(nonatomic, strong)NSDateFormatter *formatter;
+
+@end
 
 @implementation AppDelegate
 
@@ -26,6 +33,9 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
+    self.formatter = [[NSDateFormatter alloc] init];
+    [self.formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+
     //coredata初始化
     [self copyDefaultStoreIfNecessary];
     [MagicalRecord setupCoreDataStackWithStoreNamed:lvbuStoreName];
@@ -34,7 +44,7 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
     //初始化各个主界面
     self.mainVC = [[MainViewController alloc] init];
     self.parterVC = [[PartnerViewController alloc] init];
-    self.moreVC = [[MoreViewController alloc] init];
+//    self.moreVC = [[MoreViewController alloc] init];
     self.leftVC = [[LeftViewController alloc] init];
     
     self.rootNav = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
@@ -255,21 +265,132 @@ static NSString * const lvbuStoreName = @"MyDatabase.sqlite";
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    //以警告框的方式来显示推送消息
+    NSLog(@"Receive Notify: %@", [userInfo JSONString]);
     NSDictionary *apsDic = [userInfo objectForKey:@"aps"];
     if (apsDic != nil) {
+        PushMessage *pushMsg = [PushMessage createEntity];
 
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"经过推送发送过来的消息"
-                                                        message:[[apsDic objectForKey:@"alert"] valueForKey:@"body"]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"关闭"
-                                              otherButtonTitles:@"处理",nil];
-        [alert show];
+        //获取本地当前时间
+        NSDate * date = [NSDate date];
+        NSString * dateString = [self.formatter stringFromDate:date];
+        pushMsg.tick = dateString;
+        
+        pushMsg.alert = [apsDic objectForKey:@"alert"];
+        pushMsg.badge = [apsDic objectForKey:@"badge"];
+        pushMsg.sound = [apsDic objectForKey:@"sound"];;
+        
+        pushMsg.src     = [userInfo objectForKey:@"src"];
+        pushMsg.dst     = [userInfo objectForKey:@"dst"];
+        pushMsg.msgid   = [userInfo objectForKey:@"msgid"];
+        pushMsg.func    = [userInfo objectForKey:@"func"];
+        pushMsg.msgtype = [userInfo objectForKey:@"msg_type"];
+        pushMsg.msg     = [userInfo objectForKey:@"msg"];
+        
+        //持久保存
+        [[NSManagedObjectContext defaultContext] saveToPersistentStoreAndWait];
+        [self dispatchPushMessage:pushMsg];
+    
     }
     [application setApplicationIconBadgeNumber:0];
     
     [BPush handleNotification:userInfo];
+
 }
+
+
+- (void)dispatchPushMessage:(PushMessage *)pushMsg
+{
+    if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_SYSTEM_ADD_FANS]) {
+        //被加粉丝
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_SYSTEM_ADD_FANS
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_SYSTEM_CHG_STATUS]) {
+        //好友状态变更
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_SYSTEM_CHG_STATUS
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_SYSTEM_RECOMMAND]) {
+        
+        //推荐伴跑
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_SYSTEM_RECOMMAND
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_PARTNER_INVITE_RUN]) {
+        
+        //邀请伴跑
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_PARTNER_INVITE_RUN
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_PARTNER_INVITE_CANCEL]) {
+        
+        //取消邀请
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_PARTNER_INVITE_CANCEL
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_PARTNER_INVITE_RET]) {
+        
+        //回复邀请
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_PARTNER_INVITE_RET
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_IM_TEXT]) {
+        
+        //IM消息：文本
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_IM_TEXT
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_IM_VOICE]) {
+        
+        //IM消息：语音
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_IM_VOICE
+                                                            object:pushMsg];
+        
+    } else if ([pushMsg.func isEqualToString:PUSHMESSAGE_FUNC_IM_IMAGE]) {
+        
+        //IM消息：图片
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPUSHMESSAGENOTIFY_IM_IMAGE
+                                                            object:pushMsg];
+    }
+    
+//    switch ([pushMsg.msgtype integerValue]) {
+//        case PUSHMESSAGE_TYPE_TEXT:
+//        {
+//            //0文本
+//            break;
+//        }
+//        case PUSHMESSAGE_TYPE_LONGTEXT:
+//        {
+//            // 1长文本
+//            break;
+//        }
+//        case PUSHMESSAGE_TYPE_VOICEURL:
+//        {
+//            //2音频url
+//            break;
+//        }
+//        case PUSHMESSAGE_TYPE_IMAGEURL:
+//        {
+//            //3图片url
+//            break;
+//        }
+//        case PUSHMESSAGE_TYPE_SYSTEM:
+//        {
+//            //4系统通知
+//            
+//            break;
+//        }
+//        case PUSHMESSAGE_TYPE_INVITENOTIFY:
+//        {
+//            //5邀跑通知
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+    
+}
+
 
 
 - (void)onMethod:(NSString *)method response:(NSDictionary *)data

@@ -15,6 +15,8 @@
 #import "PartnerViewController.h"
 #import "LeftViewController.h"
 #import "LoginViewController.h"
+#import "SportViewController.h"
+
 
 
 @interface AppDelegate : BaseAppDelegate
@@ -38,6 +40,9 @@
 @property (strong, nonatomic) MoreViewController        *moreVC;            //更多
 @property (strong, nonatomic) PartnerViewController     *parterVC;          //陪伴
 @property (strong, nonatomic) LeftViewController        *leftVC;            //左侧栏
+@property (strong, nonatomic) SportViewController       *sportVC;           //运动界面
+
+
 @property (strong, nonatomic) UINavigationController    *rootNav;
 @property (strong, nonatomic) IIViewDeckController      *viewDeckController;
 

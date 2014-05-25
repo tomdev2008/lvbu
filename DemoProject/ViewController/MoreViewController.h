@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface MoreViewController : BaseViewController
+@interface MoreViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
 
 
 @property(nonatomic, strong)UIImageView *customNavigationBar;

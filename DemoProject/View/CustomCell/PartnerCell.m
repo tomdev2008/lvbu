@@ -31,31 +31,19 @@
 
 - (void)awakeFromNib
 {
-    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                              action:@selector(onTap)];
-    self.tapGesture.delegate = self;
-    [self.tapGesture setNumberOfTapsRequired:1];
-    [self.tapGesture setNumberOfTouchesRequired:1];
     
-    self.leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                      action:@selector(onLeftSwipe)];
-    self.leftSwipeGesture.numberOfTouchesRequired = 1;
-    self.leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.cellEditStatus = CellEditStatus_endEdit;
+
+    [self setBackgroundColor:RGBCOLOR(240, 240, 240)];
+    [self.nameLabel setTextColor:[UIColor colorWithHex:@"#08519d"]];
+    [self.ageLabel setTextColor:[UIColor colorWithHex:@"#ffffff"]];
+    [self.distanceLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
+    [self.inviteButton setTitleColor:[UIColor colorWithHex:@"#08519d"]
+                            forState:UIControlStateNormal];
     
-    self.rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                       action:@selector(onRightSwipe)];
-    self.rightSwipeGesture.numberOfTouchesRequired = 1;
-    self.rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.offlineLabel setTextColor:[UIColor colorWithHex:@"#808080"]];
     
-    [self addGestureRecognizer:self.tapGesture];
-    [self addGestureRecognizer:self.leftSwipeGesture];
-    [self addGestureRecognizer:self.rightSwipeGesture];
-    
-    
-    [self.inviteButton setTitleColor:RGBCOLOR(106, 161, 209) forState:UIControlStateNormal];
-    [self.deleteButton setTitleColor:RGBCOLOR(106, 161, 209) forState:UIControlStateNormal];
-    [self.inviteButton setHidden:NO];
-    [self.deleteButton setHidden:YES];
+
 }
 
 
@@ -66,48 +54,115 @@
     // Configure the view for the selected state
 }
 
-
-- (void)onTap
+- (void)layoutSubviews
 {
+    [super layoutSubviews];
+    
+    if (IOS7_OR_LATER) {
+
+        self.avatarImgView.frame    = CGRectMake(11, 8, 56, 56);
+        self.nameLabel.frame        = CGRectMake(75, 16, 144, 22);
+        self.sexImageView.frame     = CGRectMake(75, 46, 32, 12);
+        self.ageLabel.frame         = CGRectMake(90, 41, 15, 21);
+        self.positionImageView.frame = CGRectMake(115, 45, 10, 13);
+        self.distanceLabel.frame    = CGRectMake(126, 41, 42, 21);
+        self.statusImageView.frame  = CGRectMake(170, 46, 24, 13);
+        self.inviteButton.frame     = CGRectMake(264, 16, 43, 43);
+        self.offlineLabel.frame     = CGRectMake(115, 40, 79, 21);
+        
+    } else {
+        
+        if (self.cellEditStatus == CellEditStatus_StartEdit) {
+            
+            self.avatarImgView.frame    = CGRectMake(11, 8, 56, 56);
+            self.nameLabel.frame        = CGRectMake(75, 16, 144, 22);
+            self.sexImageView.frame     = CGRectMake(75, 46, 32, 12);
+            self.ageLabel.frame         = CGRectMake(90, 41, 15, 21);
+            self.positionImageView.frame = CGRectMake(115, 45, 10, 13);
+            self.distanceLabel.frame    = CGRectMake(126, 41, 42, 21);
+            self.statusImageView.frame  = CGRectMake(170, 46, 24, 13);
+            self.inviteButton.frame     = CGRectMake(264 - 60, 16, 43, 43);
+            
+            self.offlineLabel.frame     = CGRectMake(115, 40, 79, 21);
+            
+        } else {
+            self.avatarImgView.frame    = CGRectMake(11, 8, 56, 56);
+            self.nameLabel.frame        = CGRectMake(75 , 16, 144, 22);
+            self.sexImageView.frame     = CGRectMake(75, 46, 32, 12);
+            self.ageLabel.frame         = CGRectMake(90, 41, 15, 21);
+            self.positionImageView.frame = CGRectMake(115, 45, 10, 13);
+            self.distanceLabel.frame    = CGRectMake(126, 41, 42, 21);
+            self.statusImageView.frame  = CGRectMake(170, 46, 24, 13);
+            self.inviteButton.frame     = CGRectMake(264, 16, 43, 43);
+            
+            self.offlineLabel.frame     = CGRectMake(115, 40, 79, 21);
+        }
+    }
+}
+
+
+- (void)showNormalView
+{
+    [self.avatarImgView setHidden:NO];
+    [self.nameLabel setHidden:NO];
+    [self.sexImageView setHidden:NO];
+    [self.ageLabel setHidden:NO];
+    [self.positionImageView setHidden:NO];
+    [self.distanceLabel setHidden:NO];
+    [self.statusImageView setHidden:NO];
     [self.inviteButton setHidden:NO];
-    [self.deleteButton setHidden:YES];
+    [self.offlineLabel setHidden:YES];
 }
 
-- (void)onLeftSwipe
+
+- (void)updateViewByAvatarUrl:(NSString *)avatarUrl
+                     NickName:(NSString *)name
+                       IsMale:(BOOL)isMale
+                          Age:(NSInteger)age
+                     Distance:(CGFloat)distance
+                       Status:(NSInteger)status
 {
-    if (self.deleteButton.isHidden) {
-        [self.inviteButton setHidden:YES];
-        [self.deleteButton setHidden:NO];
+    [self showNormalView];
+    
+    //设置头像
+    if ([avatarUrl length] > 0) {
+        [self.avatarImgView setImageWithURL:[NSURL URLWithString:avatarUrl] placeholderImage:[UIImage imageNamed:DefaultHeadIconFileName]];
     } else {
-        [self.inviteButton setHidden:NO];
-        [self.deleteButton setHidden:YES];
+        [self.avatarImgView setImage:[UIImage imageNamed:DefaultHeadIconFileName]];
     }
 
-}
-
-
-- (void)onRightSwipe
-{
-    if (self.deleteButton.isHidden) {
-        [self.inviteButton setHidden:YES];
-        [self.deleteButton setHidden:NO];
-    } else {
-        [self.inviteButton setHidden:NO];
-        [self.deleteButton setHidden:YES];
-    }
-
-}
-
-
-#pragma mark - UIGesture delegate
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
-    if ([[touch view] isKindOfClass:[UITextField class]] ||
-        [[touch view] isKindOfClass:[UIButton class]]) {
-        return NO;
-    } else {
-        return YES;
+    [self.nameLabel setText:name];
+    [self.sexImageView setImage:[UIImage imageNamed:isMale? @"Partner_cell_male.png":@"Partner_cell_female.png"]];
+    [self.ageLabel setText:[NSString stringWithFormat:@"%d", age]];
+    [self.distanceLabel setText:[NSString stringWithFormat:@"%.1fkm", distance]];
+    
+    switch (status) {
+        case UserSportStatus_offline:
+        {
+            [self.positionImageView setHidden:YES];
+            [self.distanceLabel setHidden:YES];
+            [self.statusImageView setHidden:YES];
+            [self.inviteButton setHidden:YES];
+            [self.offlineLabel setHidden:NO];
+            break;
+        }
+        case UserSportStatus_nosport:
+        {
+            [self.statusImageView setImage:[UIImage imageNamed:@"Partner_cell_run_no.png"]];
+            break;
+        }
+        case UserSportStatus_single:
+        {
+            [self.statusImageView setImage:[UIImage imageNamed:@"Partner_cell_run_single.png"]];
+            break;
+        }
+        case UserSportStatus_double:
+        {
+            [self.statusImageView setImage:[UIImage imageNamed:@"Partner_cell_run_double.png"]];
+            break;
+        }
+        default:
+            break;
     }
 }
 

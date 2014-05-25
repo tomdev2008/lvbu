@@ -15,56 +15,80 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="1rY-Tz-Uoh">
-                        <rect key="frame" x="12" y="8" width="57" height="56"/>
+                        <rect key="frame" x="11" y="8" width="56" height="56"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Efo-iD-tV5">
-                        <rect key="frame" x="77" y="15" width="138" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="冬天的鱼" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Efo-iD-tV5">
+                        <rect key="frame" x="75" y="16" width="144" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u5V-VK-9GL">
-                        <rect key="frame" x="119" y="40" width="73" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Partner_cell_male.png" id="lJu-wF-IZW">
+                        <rect key="frame" x="75" y="46" width="32" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J2z-4n-IiE">
+                        <rect key="frame" x="90" y="41" width="15" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Partner_cell_position.png" id="otY-eM-mds">
+                        <rect key="frame" x="115" y="45" width="10" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.2km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u5V-VK-9GL">
+                        <rect key="frame" x="126" y="41" width="42" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Partner_cell_run_no.png" id="BuD-h6-k0n">
+                        <rect key="frame" x="170" y="46" width="24" height="13"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dFD-72-mxb">
-                        <rect key="frame" x="193" y="13" width="48" height="48"/>
+                        <rect key="frame" x="215" y="16" width="43" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="邀跑" backgroundImage="Partner_cell_invite_n.png">
+                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <state key="highlighted" backgroundImage="Partner_cell_invite_c.png"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WaZ-Tz-44p">
-                        <rect key="frame" x="249" y="13" width="48" height="48"/>
+                        <rect key="frame" x="264" y="16" width="43" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <state key="normal" title="加好友" backgroundImage="Partner_cell_invite_n.png">
+                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <state key="highlighted" backgroundImage="Partner_cell_invite_n.png"/>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="lJu-wF-IZW">
-                        <rect key="frame" x="77" y="40" width="34" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="addButton" destination="WaZ-Tz-44p" id="oB0-iH-JVn"/>
+                <outlet property="ageLabel" destination="J2z-4n-IiE" id="h3p-KL-y3i"/>
                 <outlet property="avatarImgView" destination="1rY-Tz-Uoh" id="UOd-gb-fxJ"/>
-                <outlet property="distanceLabel" destination="u5V-VK-9GL" id="cfr-8m-YoJ"/>
+                <outlet property="distanceLabel" destination="u5V-VK-9GL" id="BWT-3p-SCu"/>
                 <outlet property="inviteButton" destination="dFD-72-mxb" id="Lqg-Nj-fhS"/>
                 <outlet property="nameLabel" destination="Efo-iD-tV5" id="27G-Ld-ZXD"/>
+                <outlet property="positionImageView" destination="otY-eM-mds" id="SOv-A2-B5T"/>
+                <outlet property="sexImageView" destination="lJu-wF-IZW" id="MGf-gC-4Gb"/>
+                <outlet property="statusImageView" destination="BuD-h6-k0n" id="1jN-KJ-lYV"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
         <image name="Partner_cell_invite_c.png" width="86" height="86"/>
         <image name="Partner_cell_invite_n.png" width="80" height="80"/>
+        <image name="Partner_cell_male.png" width="66" height="26"/>
+        <image name="Partner_cell_position.png" width="20" height="24"/>
+        <image name="Partner_cell_run_no.png" width="48" height="26"/>
     </resources>
 </document>

@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-#import "MemberTableViewCell.h"
 #import "PartnerCell.h"
 #import "NearbyCell.h"
 #import "LeftViewCell.h"
@@ -17,7 +16,7 @@
 
 @interface CellFactory : NSObject
 
-+ (MemberTableViewCell *)createMemberTableViewCell;
+
 + (PartnerCell *)createPartnerCell;
 + (NearbyCell *)createNearbyCell;
 + (LeftViewCell *)createLeftViewCellWithIdentifier:(NSString *)identifier;

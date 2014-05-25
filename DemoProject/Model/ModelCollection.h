@@ -9,4 +9,12 @@
 #import <Foundation/Foundation.h>
 
 #import "User.h"
+#import "PushMessage.h"
+#import "SportSum.h"
+#import "SportHistory.h"
+#import "FragmentHistory.h"
+
+
+
+#import "PartnerRelation.h"
 

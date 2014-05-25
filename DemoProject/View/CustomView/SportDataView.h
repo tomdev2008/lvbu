@@ -37,6 +37,9 @@ enum SportDataViewStatus {
 @property (weak, nonatomic) IBOutlet UILabel *calTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *calValueLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *lineView1;
+@property (weak, nonatomic) IBOutlet UIView *lineView2;
+
 
 //分钟
 @property (weak, nonatomic) IBOutlet UIImageView *minIconImgView;

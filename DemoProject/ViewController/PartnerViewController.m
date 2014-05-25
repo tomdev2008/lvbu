@@ -8,8 +8,9 @@
 
 #import "PartnerViewController.h"
 #import "SearchViewController.h"
+#import "SportViewController.h"
+#import "AppDelegate.h"
 
-#import "TestHttpRequest.h"
 
 @interface PartnerViewController ()
 
@@ -290,6 +291,65 @@
 //邀跑好友
 - (void)onInvite:(id)sender
 {
+
+    PartnerRelation *partRelation = [[CommonVariable shareCommonVariable] partRelation];
+    if (partRelation != nil) {
+        switch (partRelation.runStatus) {
+            case RunningStatus_NORUN:
+            {
+                //没有运动
+                break;
+            }
+            case RunningStatus_INVITEING:
+            {
+                //陪跑正在邀请
+                break;
+            }
+            case RunningStatus_CANCEL:
+            {
+                //陪跑邀请被取消
+                break;
+            }
+            case RunningStatus_REJECT:
+            {
+                //陪跑邀请被拒绝
+                break;
+            }
+            case RunningStatus_ACCEPT:
+            {
+                //陪跑邀请被接受
+                break;
+            }
+            case RunningStatus_TIMEOUT:
+            {
+                //陪跑等待超时
+                break;
+            }
+            case RunningStatus_RUNING:
+            {
+                //陪跑运动中
+                break;
+            }
+            case RunningStatus_FINISH:
+            {
+                //陪跑结束
+                break;
+            }
+            default:
+                break;
+        }
+        
+        [PRPAlertView showWithTitle:@"你正在邀跑或者跑步中, 不能再邀跑其他人哦~"
+                            message:nil
+                        cancelTitle:@"确定"
+                        cancelBlock:^{
+                            
+                            [self.navigationController pushViewController:kAppDelegate.sportVC animated:YES];
+                        }
+                         otherTitle:nil
+                         otherBlock:nil];
+    }
+    
     UIButton *btn = (UIButton *)sender;
     NSInteger index = btn.tag - 10000;
     NSDictionary *fan = [self.partnerArr objectAtIndex:index];
@@ -297,7 +357,6 @@
     NSLog(@"invite [%@]~~~", [fan valueForKey:@"u_nick_name"]);
     NSInteger uid = [[fan valueForKey:@"u_id"] integerValue];
 
-    
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
     [bodyParams setValue:[[NSUserDefaults standardUserDefaults] valueForKey:KEY_GLOBAL_SESSIONCODE] forKey:@"scode"];
     [bodyParams setValue:[NSNumber numberWithInt:uid] forKey:@"uid"];
@@ -305,17 +364,31 @@
     HttpRequest *httpReq = [[HttpRequest alloc] init];
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_INVITE];
     httpReq.bodyParams = bodyParams;
+
+    
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
-        NSLog(@"result = %@", result);
-        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
         
-        NSString *msg = [result valueForKey:@"msg"];
-//        if (msg == nil  || [msg isKindOfClass:[NSNull class]]) {
-//            msg = @"邀请成功";
-//        }
-//        [PRPAlertView showWithTitle:msg
-//                            message:nil
-//                        buttonTitle:@"确定"];
+        NSLog(@"result = %@", result);
+        NSInteger ret = [[result valueForKey:@"ret"] integerValue];
+        if (ret == 0) {
+
+            //请求成功
+            kAppDelegate.sportVC = [[SportViewController alloc] init];
+            kAppDelegate.sportVC.curViewStatus = SPORTTYPE_PARTNER;
+            kAppDelegate.sportVC.curParterBodyViewStatus = ViewStatus_SportView_inviting;
+            [self.navigationController pushViewController:kAppDelegate.sportVC animated:YES];
+            
+        } else {
+            
+            //请求失败
+            NSString *msg = [result valueForKey:@"msg"];
+            if (msg != nil  && [msg isKindOfClass:[NSString class]]) {
+                [PRPAlertView showWithTitle:msg
+                                    message:nil
+                                buttonTitle:@"确定"];
+            }
+        }
+        
         
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
@@ -330,7 +403,7 @@
     NSInteger index = btn.tag - 20000;
     NSDictionary *fan = [self.partnerArr objectAtIndex:index];
     
-    NSLog(@"invite [%@]~~~", [fan valueForKey:@"u_nick_name"]);
+    NSLog(@"delete [%@]~~~", [fan valueForKey:@"u_nick_name"]);
     NSInteger uid = [[fan valueForKey:@"u_id"] integerValue];
     
     [self.partnerArr removeObjectAtIndex:index];
@@ -347,7 +420,6 @@
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         NSLog(@"result = %@", result);
-        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
         NSString *msg = [result valueForKey:@"msg"];
         if (msg == nil  || [msg isKindOfClass:[NSNull class]]) {
             msg = @"删除成功";
@@ -366,7 +438,7 @@
 - (void)onInviteNearby:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSInteger index = btn.tag - 30000;
+    NSInteger index = btn.tag - 20000;
     
     NSDictionary *user = [self.nearbyArr objectAtIndex:index];
     
@@ -381,11 +453,32 @@
     httpReq.url = [NSString stringWithFormat:@"%@%@", BASE_URL, URL_INVITE];
     httpReq.bodyParams = bodyParams;
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
+        
+        
         NSLog(@"result = %@", result);
-        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
-        [PRPAlertView showWithTitle:[result valueForKey:@"msg"]
-                            message:nil
-                        buttonTitle:@"确定"];
+        NSInteger ret = [[result valueForKey:@"ret"] integerValue];
+        if (ret == 0) {
+            
+            //请求成功
+            SportViewController *sportVC = [[SportViewController alloc] init];
+            sportVC.curViewStatus = SPORTTYPE_PARTNER;
+            sportVC.curParterBodyViewStatus = ViewStatus_SportView_inviting;
+            [self.navigationController pushViewController:sportVC animated:YES];
+            
+        } else {
+            
+            //请求失败
+            NSString *msg = [result valueForKey:@"msg"];
+            if (msg != nil  && [msg isKindOfClass:[NSString class]]) {
+                [PRPAlertView showWithTitle:msg
+                                    message:nil
+                                buttonTitle:@"确定"];
+            }
+        }
+
+        
+        
+        
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
@@ -396,10 +489,10 @@
 - (void)onAddNearby:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSInteger index = btn.tag - 40000;
+    NSInteger index = btn.tag - 30000;
     NSDictionary *user = [self.nearbyArr objectAtIndex:index];
     
-    NSLog(@"invite [%@]~~~", [user valueForKey:@"u_nick_name"]);
+    NSLog(@"add [%@]~~~", [user valueForKey:@"u_nick_name"]);
     NSInteger uid = [[user valueForKey:@"u_id"] integerValue];
     
     NSMutableDictionary *bodyParams = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -412,7 +505,6 @@
     [httpReq sendPostJSONRequestWithSuccess:^(NSDictionary *result) {
         
         NSLog(@"result = %@", result);
-        NSLog(@"testEye.msg = %@", [result valueForKey:@"msg"]);
         NSString *msg = [result valueForKey:@"msg"];
         if (msg == nil  || [msg isKindOfClass:[NSNull class]]) {
             msg = @"添加成功";
@@ -421,11 +513,172 @@
                             message:nil
                         buttonTitle:@"确定"];
 
+        NSLog(@"result = %@", result);
+        NSInteger ret = [[result valueForKey:@"ret"] integerValue];
+        if (ret == 0) {
+            
+            //添加成功
+            [PRPAlertView showWithTitle:@"添加成功"
+                                message:nil
+                            buttonTitle:@"确定"];
+            
+        } else {
+            
+            //添加失败
+            NSString *msg = [result valueForKey:@"msg"];
+            if (msg != nil  && [msg isKindOfClass:[NSString class]]) {
+                [PRPAlertView showWithTitle:msg
+                                    message:nil
+                                buttonTitle:@"确定"];
+            }
+        }
+
         
     } Failure:^(NSError *err) {
         NSLog(@"error = %@", [err description]);
     }];
     
+    
+}
+
+
+
+- (void)updatePartCell:(PartnerCell *)cell byFans:(NSDictionary *)fan
+{
+    //头像
+    NSString *avatarurl = nil;
+    id url = [fan valueForKey:@"u_head_photo"];
+    
+    if ((url == nil) || [url isKindOfClass:[NSNull class]]) {
+        avatarurl = nil;
+    } else {
+        avatarurl = [fan valueForKey:@"u_head_photo"];
+    }
+    
+    //昵称
+    NSString *name = @"匿名用户";
+    id nameId = [fan valueForKey:@"u_nick_name"];
+    if ((nameId == nil) || [nameId isKindOfClass:[NSNull class]]) {
+        name = @"";
+    } else {
+        name = [fan valueForKey:@"u_nick_name"];
+    }
+    
+    //性别
+    BOOL isMale = YES;
+    id sex = [fan valueForKey:@"u_sex"];
+    if ((sex == nil) || [sex isKindOfClass:[NSNull class]]) {
+        isMale = YES;
+    } else {
+        isMale = [[fan valueForKey:@"u_sex"] integerValue] == 0;
+    }
+    
+    //年龄
+    NSInteger age = 20;
+    id birth = [fan valueForKey:@"u_birth"];
+    if ((birth == nil) || [birth isKindOfClass:[NSNull class]]) {
+        age = 20;
+    } else {
+        NSString *birthday = [fan valueForKey:@"u_birth"];
+        NSDate *today = [NSDate date];
+        age = today.year - [[birthday substringToIndex:4] integerValue];
+    }
+    
+    
+    //距离
+    CGFloat distance = 1;
+    id dis = [fan valueForKey:@"u_distance"];
+    if ((dis == nil) || [dis isKindOfClass:[NSNull class]]) {
+        distance = 1;
+    } else {
+        distance = [[fan valueForKey:@"u_distance"] floatValue];
+    }
+    
+    //状态
+    NSInteger status = UserSportStatus_offline;
+    id stat = [fan valueForKey:@"status"];
+    if ((stat == nil) || [stat isKindOfClass:[NSNull class]]) {
+        status = UserSportStatus_offline;
+    } else {
+        status = [[fan valueForKey:@"status"] integerValue];
+    }
+    
+    
+    [cell updateViewByAvatarUrl:avatarurl
+                       NickName:name
+                         IsMale:isMale
+                            Age:age
+                       Distance:distance
+                         Status:status];
+}
+
+
+- (void)updateNearbyCell:(NearbyCell *)cell byUser:(NSDictionary *)user
+{
+    //头像
+    NSString *avatarurl = nil;
+    id url = [user valueForKey:@"u_head_photo"];
+    
+    if ((url == nil) || [url isKindOfClass:[NSNull class]]) {
+        avatarurl = nil;
+    } else {
+        avatarurl = [user valueForKey:@"u_head_photo"];
+    }
+    
+    //昵称
+    NSString *name = @"匿名用户";
+    id nameId = [user valueForKey:@"u_nick_name"];
+    if ((nameId == nil) || [nameId isKindOfClass:[NSNull class]]) {
+        name = @"";
+    } else {
+        name = [user valueForKey:@"u_nick_name"];
+    }
+    
+    //性别
+    BOOL isMale = YES;
+    id sex = [user valueForKey:@"u_sex"];
+    if ((sex == nil) || [sex isKindOfClass:[NSNull class]]) {
+        isMale = YES;
+    } else {
+        isMale = [[user valueForKey:@"u_sex"] integerValue] == 0;
+    }
+    
+    //年龄
+    NSInteger age = 20;
+    id birth = [user valueForKey:@"u_birth"];
+    if ((birth == nil) || [birth isKindOfClass:[NSNull class]]) {
+        age = 20;
+    } else {
+        NSString *birthday = [user valueForKey:@"u_birth"];
+        NSDate *today = [NSDate date];
+        age = today.year - [[birthday substringToIndex:4] integerValue];
+    }
+    
+    
+    //距离
+    CGFloat distance = 1;
+    id dis = [user valueForKey:@"u_distance"];
+    if ((dis == nil) || [dis isKindOfClass:[NSNull class]]) {
+        distance = 1;
+    } else {
+        distance = [[user valueForKey:@"u_distance"] floatValue];
+    }
+    
+    //状态
+    NSInteger status = UserSportStatus_nosport;
+    id stat = [user valueForKey:@"status"];
+    if ((stat == nil) || [stat isKindOfClass:[NSNull class]]) {
+        status = UserSportStatus_nosport;
+    } else {
+        status = [[user valueForKey:@"status"] integerValue];
+    }
+    
+    [cell updateViewByAvatarUrl:avatarurl
+                       NickName:name
+                         IsMale:isMale
+                            Age:age
+                       Distance:distance
+                         Status:status];
     
 }
 
@@ -546,6 +799,7 @@
 }
 
 
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *partCellIdentifier     = @"PartnerCell";
@@ -554,42 +808,20 @@
     UITableViewCell *resultCell = nil;
     if (tableView == self.partTableView) {
         
-        //跑友
+        //炮友
         PartnerCell *cell = [tableView dequeueReusableCellWithIdentifier:partCellIdentifier];
         if(!cell) {
             cell = [CellFactory createPartnerCell];
         }
         
         NSDictionary *fan = [self.partnerArr objectAtIndex:indexPath.row];
+        [self updatePartCell:cell byFans:fan];
         
-        //设置头像
-        id avatarURL = [fan valueForKey:@"u_head_photo"];
-        if ([avatarURL isKindOfClass:[NSNull class]]) {
-            [cell.avatarImgView setImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]];
-        } else {
-            [cell.avatarImgView setImageWithURL:[fan valueForKey:@"u_head_photo"]
-                               placeholderImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]
-                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              [cell.avatarImgView setImage:image];
-                                          });
-                                      }];
-        }
-        
-
-        
-        //设置昵称
-        cell.nameLabel.text = [fan valueForKey:@"u_nick_name"];
-        cell.inviteButton.tag = 10000+indexPath.row;
+        [cell.inviteButton setTag:10000+indexPath.row];
         [cell.inviteButton addTarget:self
                               action:@selector(onInvite:)
                     forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.deleteButton.tag = 20000+indexPath.row;
-        [cell.deleteButton addTarget:self
-                              action:@selector(onDelete:)
-                    forControlEvents:UIControlEventTouchUpInside];
-        
+
         resultCell = cell;
         
         
@@ -602,30 +834,14 @@
         }
         
         NSDictionary *user = [self.nearbyArr objectAtIndex:indexPath.row];
+        [self updateNearbyCell:cell byUser:user];
         
-        //设置头像
-        id avatarURL = [user valueForKey:@"u_head_photo"];
-        if ([avatarURL isKindOfClass:[NSNull class]]) {
-            [cell.avatarImgView setImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]];
-        } else {
-            [cell.avatarImgView setImageWithURL:[user valueForKey:@"u_head_photo"]
-                               placeholderImage:[UIImage imageNamed:@"DefaultHeadIcon.png"]
-                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              [cell.avatarImgView setImage:image];
-                                          });
-                                      }];
-        }
-        
-
-        //设置昵称
-        cell.nameLabel.text = [user valueForKey:@"u_nick_name"];
-        cell.inviteButton.tag = 30000+indexPath.row;
+        cell.inviteButton.tag = 20000+indexPath.row;
         [cell.inviteButton addTarget:self
                               action:@selector(onInviteNearby:)
                     forControlEvents:UIControlEventTouchUpInside];
         
-        cell.addButton.tag = 40000+indexPath.row;
+        cell.addButton.tag = 30000+indexPath.row;
         [cell.addButton addTarget:self
                               action:@selector(onAddNearby:)
                     forControlEvents:UIControlEventTouchUpInside];
@@ -640,26 +856,59 @@
 
 
 
+-(UITableViewCellEditingStyle)tableView:(UITableView*)tableView  editingStyleForRowAtIndexPath:(NSIndexPath*)indexPath;
+{
+    NSInteger cellEditingStyle = UITableViewCellEditingStyleNone;
+    if (tableView == self.partTableView) {
+        cellEditingStyle = UITableViewCellEditingStyleDelete;
+    }
+    return cellEditingStyle;
+}
+
 ////通过UITableViewDelegate方法可以实现删除 tableview中某一行
 ////滑动删除
-//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    NSUInteger row = [indexPath row];
-//    
-//    if (tableView == self.nearbyTableView) {
-//        //附近的人
-//        [self.nearbyArr removeObjectAtIndex:row];
-//    } else {
-//        //炮友
-//        [self.partnerArr removeObjectAtIndex:row];
-//    }
-//    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-//}
-//
-////此时删除按钮为Delete，如果想显示为“删除” 中文的话，则需要实现
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return @"删除";
-//}
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger row = [indexPath row];
+    
+    if (tableView == self.partTableView) {
+        //附近的人
+        [self.partnerArr removeObjectAtIndex:row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+    }
+}
+
+//此时删除按钮为Delete，如果想显示为“删除” 中文的话，则需要实现
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSString *title = nil;
+    if (tableView == self.partTableView) {
+         title = @"删除";
+    }
+    return title;
+}
+
+
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    NSLog(@"hello,  row = %d", indexPath.row);
+    if (tableView == self.partTableView) {
+        PartnerCell *partnerCell = (PartnerCell *)[tableView cellForRowAtIndexPath:indexPath];
+        partnerCell.cellEditStatus = CellEditStatus_StartEdit;
+    }
+    
+    
+}
+
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    NSLog(@"world,  row = %d", indexPath.row);
+    if (tableView == self.partTableView) {
+        PartnerCell *partnerCell = (PartnerCell *)[tableView cellForRowAtIndexPath:indexPath];
+        partnerCell.cellEditStatus = CellEditStatus_endEdit;
+    }
+}
 
 
 #pragma mark - UITableView delegate
@@ -687,7 +936,6 @@
 
 - (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
 {
-
     [self performSelector:@selector(loadMoreDataToTable:) withObject:pullTableView afterDelay:2.0f];
 }
 
